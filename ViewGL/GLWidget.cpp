@@ -36,6 +36,8 @@ void GLWidget::initializeGL() {
 
     initShadersGPU();
     // Call setAmbientGlobalToGPU function
+    Controller::getInstance()->getSetUp()->toGPU(program);
+
 
     // Creacio d'una Light per a poder modificar el seus valors amb la interficie
     // TO DO: Pràctica 2: Fase 1:  Canviar per a que siguin GPULigths i usar la factory GPULightFactory que facis nova

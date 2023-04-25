@@ -3,8 +3,8 @@
 GPUSetUp::GPUSetUp()
 {
   camera = make_shared<GPUCamera>(500, 500);
+  globalLight = vec3(0.1,0.1,0.1);
 }
-
 
 shared_ptr<GPUCamera> GPUSetUp::getCamera() {
     return(camera);
@@ -18,8 +18,6 @@ vec3 GPUSetUp::getGlobalLight() {
 std::vector<shared_ptr<GPULight>> GPUSetUp::getLights() {
     return lights;
 }
-
-
 
 void GPUSetUp::setCamera(shared_ptr<GPUCamera> cam) {
     this->camera = cam;
@@ -67,10 +65,13 @@ void GPUSetUp::addLight(shared_ptr<GPULight> l) {
  */
 void GPUSetUp::setAmbientGlobalToGPU(shared_ptr<QGLShaderProgram> program){
     // Pràctica 2: TO DO: A implementar a la fase 1
-    program->bind();
-    program->setUniformValue("ambientGlobalLight", QVector3D(0.2f, 0.2f, 0.2f)); // Global ambient light values
-    program->release();
+    GLuint ambientGlobalLight;
+    ambientGlobalLight = program->uniformLocation("ambientGlobalLight");
+    glUniform3fv(ambientGlobalLight, 1, globalLight);
+}
 
+void GPUSetUp::toGPU(shared_ptr<QGLShaderProgram> program){
+    setAmbientGlobalToGPU(program);
 }
 
 /**
@@ -154,5 +155,3 @@ void GPUSetUp::print(int indentation) const
     }
     QTextStream(stdout) << indent << "globalLight:\t" << globalLight[0] << ", "<< globalLight[1] << ", "<< globalLight[2] << "\n";
 }
-
-
