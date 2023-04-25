@@ -32,6 +32,7 @@ void GPUSetUp::setLights(std::vector<shared_ptr<GPULight>> lights) {
     this->lights = lights;
 }
 
+
 /**
  * @brief GPUSetUp::getLightActual
  * @return
@@ -66,6 +67,9 @@ void GPUSetUp::addLight(shared_ptr<GPULight> l) {
  */
 void GPUSetUp::setAmbientGlobalToGPU(shared_ptr<QGLShaderProgram> program){
     // Pràctica 2: TO DO: A implementar a la fase 1
+    program->bind();
+    program->setUniformValue("ambientGlobalLight", QVector3D(0.2f, 0.2f, 0.2f)); // Global ambient light values
+    program->release();
 
 }
 

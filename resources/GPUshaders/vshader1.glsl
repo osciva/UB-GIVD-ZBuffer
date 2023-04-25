@@ -5,6 +5,7 @@ layout (location = 1) in vec4 vColor;
 
 uniform mat4 model_view;
 uniform mat4 projection;
+uniform vec3 ambientGlobalLight;
 
 out vec4 color;
 
