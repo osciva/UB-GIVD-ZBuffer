@@ -113,8 +113,8 @@ void GPUMaterial::toGPU(QGLShaderProgram *program){
     components_id.ka_id = program->uniformLocation("material.ka");
     components_id.shininess_id = program->uniformLocation("material.shininess");
 
-    glUniform4fv(components_id.kd_id,1,Kd);
-    glUniform4fv(components_id.ks_id,1,Ks);
-    glUniform4fv(components_id.ka_id,1,Ka);
+    glUniform3fv(components_id.kd_id,1,Kd);
+    glUniform3fv(components_id.ks_id,1,Ks);
+    glUniform3fv(components_id.ka_id,1,Ka);
     glUniform1f(components_id.shininess_id,shininess);
 }
