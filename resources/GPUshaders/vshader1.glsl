@@ -12,6 +12,8 @@ out vec4 color;
 struct Light
 {
     vec4 position;
+    vec3 direction;
+    float opening;
     vec3 ia;
     vec3 id;
     vec3 is;

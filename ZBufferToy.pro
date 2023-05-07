@@ -27,7 +27,6 @@ SOURCES += \
     GPUConnections/GPUSpotLight.cpp \
     Main.cpp \
     Model/Modelling/Animation.cpp \
-    Model/Modelling/Lights/AreaLight.cpp \
     Model/Modelling/Lights/DirectionalLight.cpp \
     Model/Modelling/Lights/Light.cpp \
     Model/Modelling/Lights/LightFactory.cpp \
@@ -77,7 +76,6 @@ HEADERS += \
     GPUConnections/GPUSpotLight.hh \
     Model/Modelling/Animation.hh \
     Model/Modelling/Hitable.hh \
-    Model/Modelling/Lights/AreaLight.hh \
     Model/Modelling/Lights/DirectionalLight.hh \
     Model/Modelling/Lights/Light.hh \
     Model/Modelling/Lights/LightFactory.hh \
