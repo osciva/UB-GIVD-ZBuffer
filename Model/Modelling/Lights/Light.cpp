@@ -27,7 +27,6 @@ vec3 Light::getIs() {
  */
 void Light::setId(vec3 i) {
     // TO DO: Pràctica 2: A canviar a la fase 1
-
 }
 
 /**
@@ -75,9 +74,6 @@ void Light::setCoeficients(const vec3 &value)
 {
    // TO DO: Pràctica 2: A canviar a la fase 1
 }
-
-
-
 
 void Light::read (const QJsonObject &json)
 {
@@ -127,6 +123,4 @@ void Light::print(int indentation) const
     QTextStream(stdout) << indent << "Ia:\t" << Ia[0] << ", "<< Ia[1] << ", "<< Ia[2] << "\n";
     QTextStream(stdout) << indent << "Id:\t" << Id[0] << ", "<< Id[1] << ", "<< Id[2] << "\n";
     QTextStream(stdout) << indent << "Is:\t" << Is[0] << ", "<< Is[1] << ", "<< Is[2] << "\n";
-
 }
-

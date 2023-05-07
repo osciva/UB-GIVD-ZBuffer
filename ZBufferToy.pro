@@ -13,6 +13,7 @@ SOURCES += \
     DataInOut/AttributeMapping.cpp \
     DataInOut/VisualMapping.cpp \
     GPUConnections/GPUCamera.cpp \
+    GPUConnections/GPUDirectionalLight.cpp \
     GPUConnections/GPULight.cpp \
     GPUConnections/GPULightFactory.cpp \
     GPUConnections/GPUMesh.cpp \
@@ -23,11 +24,15 @@ SOURCES += \
     GPUConnections/GPUSceneFactoryData.cpp \
     GPUConnections/GPUSceneFactoryVirtual.cpp \
     GPUConnections/GPUSetUp.cpp \
+    GPUConnections/GPUSpotLight.cpp \
     Main.cpp \
     Model/Modelling/Animation.cpp \
+    Model/Modelling/Lights/AreaLight.cpp \
+    Model/Modelling/Lights/DirectionalLight.cpp \
     Model/Modelling/Lights/Light.cpp \
     Model/Modelling/Lights/LightFactory.cpp \
     Model/Modelling/Lights/PointLight.cpp \
+    Model/Modelling/Lights/SpotLight.cpp \
     Model/Modelling/Materials/ColorMapStatic.cpp \
     Model/Modelling/Materials/GPUMaterial.cpp \
     Model/Modelling/Materials/Lambertian.cpp \
@@ -58,6 +63,7 @@ HEADERS += \
     DataInOut/VisualMapping.hh \
     GPUConnections/GPUCamera.hh \
     GPUConnections/GPUConnectable.hh \
+    GPUConnections/GPUDirectionalLight.hh \
     GPUConnections/GPULight.hh \
     GPUConnections/GPULightFactory.hh \
     GPUConnections/GPUMesh.hh \
@@ -68,11 +74,15 @@ HEADERS += \
     GPUConnections/GPUSceneFactoryData.hh \
     GPUConnections/GPUSceneFactoryVirtual.hh \
     GPUConnections/GPUSetUp.hh \
+    GPUConnections/GPUSpotLight.hh \
     Model/Modelling/Animation.hh \
     Model/Modelling/Hitable.hh \
+    Model/Modelling/Lights/AreaLight.hh \
+    Model/Modelling/Lights/DirectionalLight.hh \
     Model/Modelling/Lights/Light.hh \
     Model/Modelling/Lights/LightFactory.hh \
     Model/Modelling/Lights/PointLight.hh \
+    Model/Modelling/Lights/SpotLight.hh \
     Model/Modelling/Materials/ColorMap.hh \
     Model/Modelling/Materials/ColorMapStatic.hh \
     Model/Modelling/Materials/GPUMaterial.hh \

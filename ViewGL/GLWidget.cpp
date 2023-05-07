@@ -255,6 +255,8 @@ void GLWidget::setLookAt(const QVector3D &eye, const QVector3D &center, const QV
     updateGL();
 }
 
+/* Hem de passar les dades de llum a la GPU sempre que canvïin les propietats de la llum o s'actualitzi
+   l'escena. No cal passar les dades de llum a la GPU al principi ni cada vegada que es visualitzi l'escena.*/
 void GLWidget::setLighting(const QVector3D &lightPos, const QVector3D &Ia, const QVector3D &Id,
                            const QVector3D &Is, const QVector3D &coefs)
 {
@@ -268,6 +270,9 @@ void GLWidget::setLighting(const QVector3D &lightPos, const QVector3D &Ia, const
     lights[0]->setId(intensityD);
     lights[0]->setIs(intensityS);
     lights[0]->setLightPosition(lightPosition);
+
+    /* Cridem a updateGL() per assegurar-nos que l'escena es torna a dibuixar amb la nova configuració de
+       la llum. */
     updateGL();
 }
 
