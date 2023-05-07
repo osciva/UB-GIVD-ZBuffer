@@ -43,7 +43,13 @@ void GLWidget::initializeGL() {
     // TO DO: Pràctica 2: Fase 1:  Canviar per a que siguin GPULigths i usar la factory GPULightFactory que facis nova
     std::vector<shared_ptr<GPULight>> ligths;
     auto l  = GPULightFactory::getInstance().createLight(LightFactory::POINTLIGHT);
+    auto s = GPULightFactory::getInstance().createLight(LightFactory::DIRECTIONALLIGHT);
+    auto t = GPULightFactory::getInstance().createLight(LightFactory::SPOTLIGHT);
+
     ligths.push_back(l);
+    ligths.push_back(s);
+    ligths.push_back(t);
+
     Controller::getInstance()->getSetUp()->setLights(ligths);
 
     shared_ptr<GPUCamera> camera = Controller::getInstance()->getSetUp()->getCamera();

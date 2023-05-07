@@ -52,16 +52,13 @@ GLMainWindow::GLMainWindow(QWidget *parent) :
 
     connect(builder, SIGNAL(newObj(shared_ptr<GPUMesh>)), glWidget, SLOT(updateObject(shared_ptr<GPUMesh>)));
     connect(builder, SIGNAL(newScene()), glWidget, SLOT(updateScene()));
-
 }
-
 
 GLMainWindow::~GLMainWindow()
 {
     delete builder;
     delete ui;
 }
-
 
 void GLMainWindow::aboutMenu() {
     QDialog dialog;
@@ -79,8 +76,6 @@ void GLMainWindow::keyPressEvent(QKeyEvent *e)
     else
         QWidget::keyPressEvent(e);
 }
-
-
 
 void GLMainWindow::on_persNearSpin_valueChanged(double arg1)
 {
