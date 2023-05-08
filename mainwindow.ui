@@ -611,7 +611,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="diffuseLightTab">
+      <widget class="QWidget" name="directionalLightTab">
        <attribute name="title">
         <string>Directional Light</string>
        </attribute>
@@ -632,7 +632,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightIa1Spin">
+           <widget class="QDoubleSpinBox" name="lightIa1SpinDir">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -642,7 +642,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightIa2Spin">
+           <widget class="QDoubleSpinBox" name="lightIa2SpinDir">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -652,7 +652,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightIa3Spin">
+           <widget class="QDoubleSpinBox" name="lightIa3SpinDir">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -679,7 +679,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightIs1Spin">
+           <widget class="QDoubleSpinBox" name="lightIs1SpinDir">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -689,7 +689,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightIs2Spin">
+           <widget class="QDoubleSpinBox" name="lightIs2SpinDir">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -699,7 +699,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightIs3Spin">
+           <widget class="QDoubleSpinBox" name="lightIs3SpinDir">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -773,7 +773,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightPosXSpin">
+           <widget class="QDoubleSpinBox" name="lightPosXSpinDir">
             <property name="minimum">
              <double>-99999.000000000000000</double>
             </property>
@@ -789,7 +789,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightPosYSpin">
+           <widget class="QDoubleSpinBox" name="lightPosYSpinDir">
             <property name="minimum">
              <double>-99999.000000000000000</double>
             </property>
@@ -805,7 +805,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightPosZSpin">
+           <widget class="QDoubleSpinBox" name="lightPosZSpinDir">
             <property name="minimum">
              <double>-99999.000000000000000</double>
             </property>
@@ -838,7 +838,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightId1Spin">
+           <widget class="QDoubleSpinBox" name="lightId1SpinDir">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -848,7 +848,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightId2Spin">
+           <widget class="QDoubleSpinBox" name="lightId2SpinDir">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -858,7 +858,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightId3Spin">
+           <widget class="QDoubleSpinBox" name="lightId3SpinDir">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -871,7 +871,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="diffuseLightTab">
+      <widget class="QWidget" name="spotLightTab">
        <attribute name="title">
         <string>SpotLight</string>
        </attribute>
@@ -892,7 +892,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightIa1Spin">
+           <widget class="QDoubleSpinBox" name="lightIa1SpinSpot">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -902,7 +902,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightIa2Spin">
+           <widget class="QDoubleSpinBox" name="lightIa2SpinSpot">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -912,7 +912,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightIa3Spin">
+           <widget class="QDoubleSpinBox" name="lightIa3SpinSpot">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -939,7 +939,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightIs1Spin">
+           <widget class="QDoubleSpinBox" name="lightIs1SpinSpot">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -949,7 +949,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightIs2Spin">
+           <widget class="QDoubleSpinBox" name="lightIs2SpinSpot">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -959,7 +959,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightIs3Spin">
+           <widget class="QDoubleSpinBox" name="lightIs3SpinSpot">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -1005,7 +1005,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QSlider" name="persNearSlider">
+           <widget class="QSlider" name="persNearSliderSpot">
             <property name="maximum">
              <number>99900</number>
             </property>
@@ -1035,7 +1035,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightPosXSpin">
+           <widget class="QDoubleSpinBox" name="lightPosXSpinSpot">
             <property name="minimum">
              <double>-99999.000000000000000</double>
             </property>
@@ -1051,7 +1051,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightPosYSpin">
+           <widget class="QDoubleSpinBox" name="lightPosYSpinSpot">
             <property name="minimum">
              <double>-99999.000000000000000</double>
             </property>
@@ -1067,7 +1067,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightPosZSpin">
+           <widget class="QDoubleSpinBox" name="lightPosZSpinSpot">
             <property name="minimum">
              <double>-99999.000000000000000</double>
             </property>
@@ -1100,7 +1100,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightId1Spin">
+           <widget class="QDoubleSpinBox" name="lightId1SpinSpot">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -1110,7 +1110,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightId2Spin">
+           <widget class="QDoubleSpinBox" name="lightId2SpinSpot">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -1120,7 +1120,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QDoubleSpinBox" name="lightId3Spin">
+           <widget class="QDoubleSpinBox" name="lightId3SpinSpot">
             <property name="singleStep">
              <double>0.100000000000000</double>
             </property>
@@ -1397,6 +1397,8 @@
   <tabstop>lookUpXSpin</tabstop>
   <tabstop>lookUpYSpin</tabstop>
   <tabstop>lookUpZSpin</tabstop>
+  
+  <!-- Point Light -->
   <tabstop>lightPosXSpin</tabstop>
   <tabstop>lightPosYSpin</tabstop>
   <tabstop>lightPosZSpin</tabstop>
@@ -1406,8 +1408,38 @@
   <tabstop>lightId1Spin</tabstop>
   <tabstop>lightId2Spin</tabstop>
   <tabstop>lightId3Spin</tabstop>
+  <tabstop>lightIs1Spin</tabstop>
   <tabstop>lightIs2Spin</tabstop>
   <tabstop>lightIs3Spin</tabstop>
+  
+  <!-- Directional Light -->
+  <tabstop>lightPosXSpinDir</tabstop>
+  <tabstop>lightPosYSpinDir</tabstop>
+  <tabstop>lightPosZSpinDir</tabstop>
+  <tabstop>lightIa1SpinDir</tabstop>
+  <tabstop>lightIa2SpinDir</tabstop>
+  <tabstop>lightIa3SpinDir</tabstop>
+  <tabstop>lightId1SpinDir</tabstop>
+  <tabstop>lightId2SpinDir</tabstop>
+  <tabstop>lightId3SpinDir</tabstop>
+  <tabstop>lightIs1SpinDir</tabstop>
+  <tabstop>lightIs2SpinDir</tabstop>
+  <tabstop>lightIs3SpinDir</tabstop>
+  
+  <!-- SpotLight -->
+  <tabstop>lightPosXSpinSpot</tabstop>
+  <tabstop>lightPosYSpinSpot</tabstop>
+  <tabstop>lightPosZSpinSpot</tabstop>
+  <tabstop>lightIa1SpinSpot</tabstop>
+  <tabstop>lightIa2SpinSpot</tabstop>
+  <tabstop>lightIa3SpinSpot</tabstop>
+  <tabstop>lightId1SpinSpot</tabstop>
+  <tabstop>lightId2SpinSpot</tabstop>
+  <tabstop>lightId3SpinSpot</tabstop>
+  <tabstop>lightIs1SpinSpot</tabstop>
+  <tabstop>lightIs2SpinSpot</tabstop>
+  <tabstop>lightIs3SpinSpot</tabstop>
+  <tabstop>persNearSliderSpot</tabstop>
  </tabstops>
  <resources/>
  <connections/>
