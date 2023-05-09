@@ -17,6 +17,8 @@ public:
     GPULight();
     virtual ~GPULight() {};
 
+    int index;
+    void setIndex(int index){ this->index = index; }
     //Calcula el factor d'atenuacio de la llum al punt passat per parametre
     virtual float attenuation(vec3 point) override = 0;
     //Calcula el vector L amb origen el punt passat per parametre

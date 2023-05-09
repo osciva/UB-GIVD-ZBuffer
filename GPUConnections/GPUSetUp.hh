@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class GPUSetUp : public SetUp
+class GPUSetUp : public SetUp, public GPUConnectable
 {
 public:
     GPUSetUp();
@@ -24,8 +24,11 @@ public:
     virtual void read (const QJsonObject &json) override;
     virtual void write (QJsonObject &json) const override;
     virtual void print (int indentation) const override;
+    virtual void toGPU (shared_ptr<QGLShaderProgram> p) override;
+
 
     virtual ~GPUSetUp() {};
+
 
 private:
 
@@ -48,4 +51,3 @@ private:
     void setAmbientGlobalToGPU(shared_ptr<QGLShaderProgram> program);
 
 };
-

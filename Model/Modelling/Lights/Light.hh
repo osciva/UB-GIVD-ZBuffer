@@ -1,10 +1,8 @@
 #pragma once
 
-
 #include <memory>
 #include "library/Common.h"
 #include "DataInOut/Serializable.hh"
-
 
 using namespace std;
 
@@ -25,7 +23,6 @@ public:
     Light();
     vec3 getIa();
     vec3 getId();
-
 
     vec3 getIs();
 
@@ -52,7 +49,5 @@ public:
 
     vec3 getCoeficients() const;
     void setCoeficients(const vec3 &value);
-
-
 };
 

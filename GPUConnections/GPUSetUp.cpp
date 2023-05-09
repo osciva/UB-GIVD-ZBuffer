@@ -3,8 +3,8 @@
 GPUSetUp::GPUSetUp()
 {
   camera = make_shared<GPUCamera>(500, 500);
+  globalLight = vec3(0.1,0.1,0.1);
 }
-
 
 shared_ptr<GPUCamera> GPUSetUp::getCamera() {
     return(camera);
@@ -19,8 +19,6 @@ std::vector<shared_ptr<GPULight>> GPUSetUp::getLights() {
     return lights;
 }
 
-
-
 void GPUSetUp::setCamera(shared_ptr<GPUCamera> cam) {
     this->camera = cam;
 }
@@ -31,6 +29,7 @@ void GPUSetUp::setGlobalLight(vec3 globalLight) {
 void GPUSetUp::setLights(std::vector<shared_ptr<GPULight>> lights) {
     this->lights = lights;
 }
+
 
 /**
  * @brief GPUSetUp::getLightActual
@@ -66,7 +65,14 @@ void GPUSetUp::addLight(shared_ptr<GPULight> l) {
  */
 void GPUSetUp::setAmbientGlobalToGPU(shared_ptr<QGLShaderProgram> program){
     // Pràctica 2: TO DO: A implementar a la fase 1
+    GLuint ambientGlobalLight;
+    ambientGlobalLight = program->uniformLocation("ambientGlobalLight");
+    glUniform3fv(ambientGlobalLight, 1, globalLight);
+}
 
+void GPUSetUp::toGPU(shared_ptr<QGLShaderProgram> program){
+    setAmbientGlobalToGPU(program);
+    lightsToGPU(program);
 }
 
 /**
@@ -76,6 +82,14 @@ void GPUSetUp::setAmbientGlobalToGPU(shared_ptr<QGLShaderProgram> program){
 void GPUSetUp::lightsToGPU(shared_ptr<QGLShaderProgram> program){
     // Practica 2: TO DO: A implementar a la fase 1
 
+    /* Set the number of lights in the shader program */
+    GLuint numLightsLocation = program->uniformLocation("numLights");
+    glUniform1i(numLightsLocation, this->lights.size());
+
+    for(int i = 0; i < lights.size(); i++){
+        lights[i]->setIndex(i);
+        lights[i]->toGPU(program);
+    }
 }
 
 // TODO (opcional) si es llegeix el setUp de fitxer cal alctualitzar aquest codi per
@@ -150,5 +164,3 @@ void GPUSetUp::print(int indentation) const
     }
     QTextStream(stdout) << indent << "globalLight:\t" << globalLight[0] << ", "<< globalLight[1] << ", "<< globalLight[2] << "\n";
 }
-
-
