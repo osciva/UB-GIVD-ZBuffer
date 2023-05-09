@@ -16,6 +16,7 @@ SOURCES += \
     GPUConnections/GPUDirectionalLight.cpp \
     GPUConnections/GPULight.cpp \
     GPUConnections/GPULightFactory.cpp \
+    GPUConnections/GPUMaterial.cpp \
     GPUConnections/GPUMesh.cpp \
     GPUConnections/GPUObject.cpp \
     GPUConnections/GPUObjectFactory.cpp \
@@ -34,7 +35,6 @@ SOURCES += \
     Model/Modelling/Lights/PointLight.cpp \
     Model/Modelling/Lights/SpotLight.cpp \
     Model/Modelling/Materials/ColorMapStatic.cpp \
-    Model/Modelling/Materials/GPUMaterial.cpp \
     Model/Modelling/Materials/Lambertian.cpp \
     Model/Modelling/Materials/Material.cpp \
     Model/Modelling/Materials/MaterialFactory.cpp \
@@ -66,6 +66,7 @@ HEADERS += \
     GPUConnections/GPUDirectionalLight.hh \
     GPUConnections/GPULight.hh \
     GPUConnections/GPULightFactory.hh \
+    GPUConnections/GPUMaterial.hh \
     GPUConnections/GPUMesh.hh \
     GPUConnections/GPUObject.hh \
     GPUConnections/GPUObjectFactory.hh \
@@ -85,7 +86,6 @@ HEADERS += \
     Model/Modelling/Lights/SpotLight.hh \
     Model/Modelling/Materials/ColorMap.hh \
     Model/Modelling/Materials/ColorMapStatic.hh \
-    Model/Modelling/Materials/GPUMaterial.hh \
     Model/Modelling/Materials/Lambertian.hh \
     Model/Modelling/Materials/Material.hh \
     Model/Modelling/Materials/MaterialFactory.hh \

@@ -5,8 +5,8 @@ in vec4 fPosition;
 
 uniform vec4 material;
 
-out vec4 materialOut;
+out vec4 materialDifus;
 
 void main() {
-    materialOut = material;
+    materialDifus = material;
 }
