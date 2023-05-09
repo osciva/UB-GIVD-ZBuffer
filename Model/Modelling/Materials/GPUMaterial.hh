@@ -4,9 +4,11 @@
 #include "Model/Modelling/Ray.hh"
 #include "Model/Modelling/Hitable.hh"
 #include "DataInOut/Serializable.hh"
+#include "GPUConnections/GPUConnectable.hh"
+#include "Model/Modelling/Lights/Light.hh"
 
 // Classe abstracte Material. Totes les seves filles hauran de definir el metode abstracte sccater implementat
-class GPUMaterial: public Serializable //, public Light, public GPUConnectable
+class GPUMaterial: public Serializable, public Light, public GPUConnectable
 {
 public:
 
