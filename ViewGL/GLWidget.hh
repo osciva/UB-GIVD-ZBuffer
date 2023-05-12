@@ -95,13 +95,15 @@ private:
     unsigned int currentFrame;
     unsigned int currentImage;
 
+    //Variable enum dels tipus de shaders implementats
+    enum ShaderType {DEPTH, PHONG, GOURAUD, TOON, TEXT_PHONG, CUBEMAP, EXAMPLE};
     QPoint lastPos;   // per interactuar amb la camera
 
     // TO DO: Pràctica 2: Fase 1: Per ara nomes es té un parell vertex-fragment
     // i cal estendre-ho a tenir mé parells
     shared_ptr<QGLShaderProgram> program;
 
-    void initShadersGPU();
+    void initShadersGPU(ShaderType s);
 
 };
 

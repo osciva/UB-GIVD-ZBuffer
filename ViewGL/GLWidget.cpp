@@ -34,7 +34,7 @@ void GLWidget::initializeGL() {
     glEnable(GL_RGBA);
     glEnable(GL_DOUBLE);
 
-    initShadersGPU();
+    initShadersGPU(EXAMPLE);
     // Call setAmbientGlobalToGPU function
     Controller::getInstance()->getSetUp()->toGPU(program);
 
@@ -99,8 +99,32 @@ void GLWidget::resizeGL(int width, int height) {
 /**
  * @brief GLWidget::initShadersGPU
  */
-void GLWidget::initShadersGPU(){
-    GLShader *glshader = new GLShader("://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl", program);
+void GLWidget::initShadersGPU(ShaderType s){
+    GLShader *glshader;
+
+    switch (s) {
+            case DEPTH:
+                glshader = new GLShader("://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl", program);
+                break;
+            case PHONG:
+                glshader = new GLShader("://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl", program);
+                break;
+            case GOURAUD:
+                glshader = new GLShader("://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl", program);
+                break;
+            case TOON:
+                glshader = new GLShader("://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl", program);
+                break;
+            case TEXT_PHONG:
+                glshader = new GLShader("://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl", program);
+                break;
+            case CUBEMAP:
+                glshader = new GLShader("://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl", program);
+                break;
+            default:
+                glshader = new GLShader("://resources/GPUshaders/vshader1.glsl", "://resources/GPUshaders/fshader1.glsl", program);
+        }
+
     if (glshader != nullptr) {
         program->link();
         program->bind();
@@ -182,11 +206,14 @@ void GLWidget::saveAnimation() {
 void GLWidget::activaColorShader() {
     //TO DO: Pràctica 2: A implementar a la fase 1
     qDebug()<<"Estic a Color Shader";
+    initShadersGPU(DEPTH);
+
 }
 
 void GLWidget::activaDepthShader() {
     //TO DO: Pràctica 2: A implementar a la fase 1
     qDebug()<<"Estic a Depth Shader";
+    initShadersGPU(DEPTH);
 }
 
 void GLWidget::activaNormalShader() {
