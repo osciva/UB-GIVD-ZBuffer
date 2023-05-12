@@ -202,7 +202,7 @@ void GLWidget::saveAnimation() {
 void GLWidget::activaColorShader() {
     //TO DO: Pràctica 2: A implementar a la fase 1
     qDebug()<<"Estic a Color Shader";
-    initShadersGPU(DEPTH);
+    initShadersGPU(COLOR);
 
 }
 
