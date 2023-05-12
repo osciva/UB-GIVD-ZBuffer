@@ -96,7 +96,7 @@ private:
     unsigned int currentImage;
 
     //Variable enum dels tipus de shaders implementats
-    enum ShaderType {DEPTH, PHONG, GOURAUD, TOON, TEXT_PHONG, CUBEMAP, EXAMPLE};
+    enum ShaderType {COLOR, NORMAL, DEPTH, PHONG, GOURAUD, BLINNPHONG, EXAMPLE};
     QPoint lastPos;   // per interactuar amb la camera
 
     // TO DO: Pràctica 2: Fase 1: Per ara nomes es té un parell vertex-fragment

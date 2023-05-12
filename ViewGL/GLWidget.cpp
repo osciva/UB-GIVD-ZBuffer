@@ -103,25 +103,21 @@ void GLWidget::initShadersGPU(ShaderType s){
     GLShader *glshader;
 
     switch (s) {
+            case COLOR:
+                glshader = new GLShader("://resources/GPUshaders/vColorShader.glsl", "://resources/GPUshaders/fColorShader.glsl", program);
+                break;
+            case PHONG:
+                break;
+            case GOURAUD:
+                break;
             case DEPTH:
                 glshader = new GLShader("://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl", program);
                 break;
-            case PHONG:
-                glshader = new GLShader("://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl", program);
+            case BLINNPHONG:
                 break;
-            case GOURAUD:
-                glshader = new GLShader("://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl", program);
+            case NORMAL:
                 break;
-            case TOON:
-                glshader = new GLShader("://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl", program);
-                break;
-            case TEXT_PHONG:
-                glshader = new GLShader("://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl", program);
-                break;
-            case CUBEMAP:
-                glshader = new GLShader("://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl", program);
-                break;
-            default:
+            case EXAMPLE:
                 glshader = new GLShader("://resources/GPUshaders/vshader1.glsl", "://resources/GPUshaders/fshader1.glsl", program);
         }
 
