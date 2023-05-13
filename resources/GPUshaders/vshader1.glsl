@@ -30,5 +30,5 @@ void main()
     gl_Position = projection*model_view*vPosition;
     gl_Position = gl_Position/gl_Position.w;
 
-    //color = vec4(ambientGlobalLight, 1.0);
+    color = vec4(ambientGlobalLight, 1.0);
 }

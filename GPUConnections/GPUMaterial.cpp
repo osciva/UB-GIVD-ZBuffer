@@ -35,9 +35,9 @@ void GPUMaterial::toGPU(shared_ptr<QGLShaderProgram> program){
     }gl_material;
 
 
-    gl_material.kd = program->uniformLocation("material.kd");
-    gl_material.ks = program->uniformLocation("material.ks");
-    gl_material.ka = program->uniformLocation("material.ka");
+    gl_material.kd = program->uniformLocation("material.Kd");
+    gl_material.ka = program->uniformLocation("material.Ka");
+    gl_material.ks = program->uniformLocation("material.Ks");
     gl_material.shininess = program->uniformLocation("material.shininess");
     gl_material.opacity = program->uniformLocation("material.opacity");
 
