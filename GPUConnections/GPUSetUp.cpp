@@ -82,11 +82,7 @@ void GPUSetUp::toGPU(shared_ptr<QGLShaderProgram> program){
 void GPUSetUp::lightsToGPU(shared_ptr<QGLShaderProgram> program){
     // Practica 2: TO DO: A implementar a la fase 1
 
-    /* Set the number of lights in the shader program */
-    GLuint numLightsLocation = program->uniformLocation("numLights");
-    glUniform1i(numLightsLocation, this->lights.size());
-
-    for(int i = 0; i < lights.size(); i++){
+    for(unsigned int i = 0; i < lights.size(); i++){
         lights[i]->setIndex(i);
         lights[i]->toGPU(program);
     }

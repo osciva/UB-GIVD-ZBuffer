@@ -3,10 +3,10 @@
 in vec4 fNormal;
 in vec4 fPosition;
 
-uniform vec4 material;
+uniform vec4 color;
 
-out vec4 materialDifus;
+out vec4 colorOut;
 
 void main() {
-    materialDifus = material;
+    colorOut = color;
 }

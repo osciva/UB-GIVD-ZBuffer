@@ -35,12 +35,10 @@ void GLWidget::initializeGL() {
     glEnable(GL_DOUBLE);
 
     initShadersGPU();
-    // Call setAmbientGlobalToGPU function
-    Controller::getInstance()->getSetUp()->toGPU(program);
 
-
-    // Creacio d'una Light per a poder modificar el seus valors amb la interficie
+    /* Creacio d'una Light per a poder modificar el seus valors amb la interficie */
     // TO DO: Pràctica 2: Fase 1:  Canviar per a que siguin GPULigths i usar la factory GPULightFactory que facis nova
+    /*
     std::vector<shared_ptr<GPULight>> ligths;
     auto l  = GPULightFactory::getInstance().createLight(LightFactory::POINTLIGHT);
     auto s = GPULightFactory::getInstance().createLight(LightFactory::DIRECTIONALLIGHT);
@@ -49,8 +47,16 @@ void GLWidget::initializeGL() {
     ligths.push_back(l);
     ligths.push_back(s);
     ligths.push_back(t);
+    */
 
-    Controller::getInstance()->getSetUp()->setLights(ligths);
+    std::vector<shared_ptr<GPULight>> lights;
+    auto l = GPULightFactory::getInstance().createLight(LightFactory::POINTLIGHT);
+    lights.push_back(l);
+
+    /* Call setAmbientGlobalToGPU function */
+    Controller::getInstance()->getSetUp()->setAmbientGlobalToGPU(program);
+
+    Controller::getInstance()->getSetUp()->setLights(lights);
 
     shared_ptr<GPUCamera> camera = Controller::getInstance()->getSetUp()->getCamera();
     auto scene = Controller::getInstance()->getScene();
@@ -101,7 +107,11 @@ void GLWidget::resizeGL(int width, int height) {
  */
 void GLWidget::initShadersGPU(){
     GLShader *glshader = new GLShader("://resources/GPUshaders/vshader1.glsl", "://resources/GPUshaders/fshader1.glsl", program);
-    if (glshader != nullptr) {
+
+
+    GLShader *glshader2 = new GLShader("://resources/GPUshaders/vColorShader.glsl", "://resources/GPUshaders/fColorShader.glsl", program);
+
+    if (glshader2 != nullptr) {
         program->link();
         program->bind();
     }

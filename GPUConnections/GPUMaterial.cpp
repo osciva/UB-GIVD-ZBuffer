@@ -1,120 +1,49 @@
 #include "GPUMaterial.hh"
 
-//Valors arbitraris. Podem decKdir canviar-los
-GPUMaterial::GPUMaterial(): Ka(1.0f), Kd(1.0f), Ks(1.0f) {
-    shininess = 1.0f;
+/* Valors arbitraris. Podem decidir canviar-los */
+GPUMaterial::GPUMaterial(): Material(){
 }
 
 GPUMaterial::~GPUMaterial()
 {}
 
-GPUMaterial::GPUMaterial(vec3 d) {
-    Kd = d;
-    //Valors arbitraris. Podem decidir canviar-los.
-    Ka = vec3(1.0f, 1.0f, 1.0f);
-    Ks = vec3(1.0f, 1.0f, 1.0f);
-    shininess = 1.0f;
-
+GPUMaterial::GPUMaterial(vec3 d) : Material(d){
 }
 
-GPUMaterial::GPUMaterial(vec3 a, vec3 d, vec3 s, float shin) {
-    //Fase 2
-    Ka = a;
-    Kd = d;
-    Ks = s;
-    shininess = shin;
+GPUMaterial::GPUMaterial(vec3 a, vec3 d, vec3 s, float shin) : Material(a, d, s, shin){
 }
 
-GPUMaterial::GPUMaterial(vec3 a, vec3 d, vec3 s, float shin, float opac) {
-    //Fase 2
-    Ka = a;
-    Kd = d;
-    Ks = s;
-    shininess = shin;
-    opacity = opac;
+GPUMaterial::GPUMaterial(vec3 a, vec3 d, vec3 s, float shin, float opac) : Material(a, d, s, shin, opac){
 }
 
-
-vec3 GPUMaterial::getDiffuse(vec2 point) const {
-    return Kd;
+bool GPUMaterial::scatter(const Ray& r_in, const HitInfo& rec, vec3& color, Ray & r_out) const  {
+    return false;
 }
 
 void GPUMaterial::read (const QJsonObject &json)
 {
-    if (json.contains("ka") && json["ka"].isArray()) {
-        QJsonArray auxVec = json["ka"].toArray();
-        Ka[0] = auxVec[0].toDouble();
-        Ka[1] = auxVec[1].toDouble();
-        Ka[2] = auxVec[2].toDouble();
-    }
-    if (json.contains("kd") && json["kd"].isArray()) {
-        QJsonArray auxVec = json["kd"].toArray();
-        Kd[0] = auxVec[0].toDouble();
-        Kd[1] = auxVec[1].toDouble();
-        Kd[2] = auxVec[2].toDouble();
-    }
-    if (json.contains("ks") && json["ks"].isArray()) {
-        QJsonArray auxVec = json["ks"].toArray();
-        Ks[0] = auxVec[0].toDouble();
-        Ks[1] = auxVec[1].toDouble();
-        Ks[2] = auxVec[2].toDouble();
-    }
-    if (json.contains("shininess") && json["shininess"].isDouble())
-        shininess = json["shininess"].toDouble();
-    if (json.contains("opacity") && json["opacity"].isDouble())
-        opacity = json["opacity"].toDouble();
-
+    Material::read(json);
 }
 
-
-//! [1]
-void GPUMaterial::write(QJsonObject &json) const
-{
-    QJsonArray auxArray;
-    auxArray.append(Ka[0]);auxArray.append(Ka[1]);auxArray.append(Ka[2]);
-    json["ka"] = auxArray;
-
-    QJsonArray auxArray2;
-    auxArray2.append(Kd[0]);auxArray2.append(Kd[1]);auxArray2.append(Kd[2]);
-    json["kd"] = auxArray2;
-
-    QJsonArray auxArray3;
-    auxArray3.append(Ks[0]);auxArray3.append(Ks[1]);auxArray3.append(Ks[2]);
-    json["ks"] = auxArray3;
-    json["opacity"] = opacity;
-    json["shininess"] = shininess;
-}
-
-//! [1]
-
-void GPUMaterial::print(int indentation) const
-{
-    const QString indent(indentation * 2, ' ');
-
-    QTextStream(stdout) << indent << "Ka:\t" << Ka[0] << ", "<< Ka[1] << ", "<< Ka[2] << "\n";
-    QTextStream(stdout) << indent << "Kd:\t" << Kd[0] << ", "<< Kd[1] << ", "<< Kd[2] << "\n";
-    QTextStream(stdout) << indent << "Ks:\t" << Ks[0] << ", "<< Ks[1] << ", "<< Ks[2] << "\n";
-    QTextStream(stdout) << indent << "shininess:\t" << shininess<< "\n";
-    QTextStream(stdout) << indent << "opacity:\t" << opacity<< "\n";
-}
-
-
-void GPUMaterial::toGPU(QGLShaderProgram *program){
+void GPUMaterial::toGPU(shared_ptr<QGLShaderProgram> program){
     struct{
-        GLuint kd_id;
-        GLuint ks_id;
-        GLuint ka_id;
-        GLuint shininess_id;
-    }components_id;
+        GLuint kd;
+        GLuint ks;
+        GLuint ka;
+        GLuint shininess;
+        GLuint opacity;
+    }gl_material;
 
 
-    components_id.kd_id = program->uniformLocation("material.kd");
-    components_id.ks_id = program->uniformLocation("material.ks");
-    components_id.ka_id = program->uniformLocation("material.ka");
-    components_id.shininess_id = program->uniformLocation("material.shininess");
+    gl_material.kd = program->uniformLocation("material.kd");
+    gl_material.ks = program->uniformLocation("material.ks");
+    gl_material.ka = program->uniformLocation("material.ka");
+    gl_material.shininess = program->uniformLocation("material.shininess");
+    gl_material.opacity = program->uniformLocation("material.opacity");
 
-    glUniform3fv(components_id.kd_id,1,Kd);
-    glUniform3fv(components_id.ks_id,1,Ks);
-    glUniform3fv(components_id.ka_id,1,Ka);
-    glUniform1f(components_id.shininess_id,shininess);
+    glUniform3fv(gl_material.kd, 1, Kd);
+    glUniform3fv(gl_material.ks, 1, Ks);
+    glUniform3fv(gl_material.ka, 1, Ka);
+    glUniform1f(gl_material.shininess, shininess);
+    glUniform1f(gl_material.opacity, opacity);
 }

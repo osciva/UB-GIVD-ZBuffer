@@ -71,9 +71,11 @@ void GPUSceneFactoryVirtual::read(const QJsonObject &json)
 
         for (int objectIndex = 0; objectIndex < objectsArray.size(); objectIndex++) {
             QJsonObject objectObject = objectsArray[objectIndex].toObject();
+
             shared_ptr<GPUMesh> o;
             if (objectObject.contains("type") && objectObject["type"].isString()) {
                 QString objStr = objectObject["type"].toString().toUpper();
+
                 o = dynamic_pointer_cast<GPUMesh>(
                             GPUObjectFactory::getInstance().createObject(ObjectFactory::getInstance().getObjectType(objStr)));
                 o->read(objectObject);

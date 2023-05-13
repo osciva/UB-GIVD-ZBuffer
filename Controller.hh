@@ -6,6 +6,8 @@
 #include "GPUConnections/GPUSceneFactoryVirtual.hh"
 #include "GPUConnections/GPUSceneFactoryData.hh"
 #include "GPUConnections/GPUSetUp.hh"
+#include "GPUConnections/GPUMaterial.hh"
+#include "GPUConnections/GPUMesh.hh"
 
 class Controller
 {
