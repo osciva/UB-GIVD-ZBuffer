@@ -21,12 +21,12 @@
 #include "Model/Modelling/Lights/LightFactory.hh"
 #include "Model/Modelling/Animation.hh"
 
-
 #define PROGRAM_VERTEX_ATTRIBUTE 0
 #define PROGRAM_COLOR_ATTRIBUTE 1
 
-class QGLShaderProgram;
+const int numShaders = 6;
 
+class QGLShaderProgram;
 
 class GLWidget : public QGLWidget
 {
@@ -44,6 +44,7 @@ public slots:
 
     void updateObject(shared_ptr<GPUMesh> obj);
     void updateScene();
+
     void saveImage();
     void saveAnimation();
 
@@ -69,11 +70,9 @@ public slots:
     // Acció per activar a cada update del timer
     void setCurrentFrame();
 
-
 signals:
     void ObsCameraChanged(shared_ptr<GPUCamera> cam);
     void FrustumCameraChanged(shared_ptr<GPUCamera> cam);
-
 
 protected:
     void initializeGL() override;
@@ -89,19 +88,24 @@ protected:
 
     void Zoom (int positiu);
     void saveFrame();
-private:
 
+private:
     QTimer *timer;
     unsigned int currentFrame;
     unsigned int currentImage;
 
-    QPoint lastPos;   // per interactuar amb la camera
+    GLShader::SHADER_TYPES currentShader;
+
+    QPoint lastPos;   /* per interactuar amb la camera */
 
     // TO DO: Pràctica 2: Fase 1: Per ara nomes es té un parell vertex-fragment
     // i cal estendre-ho a tenir mé parells
     shared_ptr<QGLShaderProgram> program;
 
+    shared_ptr<GLShader> shaderList[numShaders];
+    void initShader(GLShader::SHADER_INDEX index, const char* vertexFile, const char* fragmentFile);
     void initShadersGPU();
-
+    void updateShader();
+    void useShader(GLShader::SHADER_TYPES s);
 };
 

@@ -27,6 +27,5 @@ public:
     virtual float distanceToLight(vec3 point) override = 0;
 
     virtual void toGPU(shared_ptr<QGLShaderProgram> p) override;
-
 };
 

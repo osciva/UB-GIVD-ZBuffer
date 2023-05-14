@@ -5,11 +5,11 @@
   {
   "name": "Br Objecte",
   "type":  "MESH",
-    "objFileName": "://resources/models/cube.obj",
+    "objFileName": "://resources/models/rectangle.obj",
     "material": {
       "type": "lambertian",
       "ka": [0.2, 0.2, 0.2],
-      "kd": [0.0, 1.0, 1.0],
+      "kd": [1, 1, 1],
       "ks": [0.7, 0.7, 0.7],
       "shininess": 10.0,
       "kt": [0.0, 0.0, 0.0],

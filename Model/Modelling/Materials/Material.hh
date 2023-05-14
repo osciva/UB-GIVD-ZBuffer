@@ -30,7 +30,6 @@ public:
     virtual void read (const QJsonObject &json);
     virtual void write(QJsonObject &json) const;
     virtual void print(int indentation) const;
-
 };
 
 
