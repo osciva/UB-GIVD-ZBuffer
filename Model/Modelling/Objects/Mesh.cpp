@@ -115,6 +115,7 @@ void Mesh::load (QString fileName) {
 void Mesh::loadMaterial(QString materialFileName) {
     QFile materialFile(materialFileName);
     if(materialFile.exists()) {
+        areMaterialValuesZero = false;
         if(materialFile.open(QFile::ReadOnly | QFile::Text)) {
             while(!materialFile.atEnd()) {
                 QString line = materialFile.readLine().trimmed();
