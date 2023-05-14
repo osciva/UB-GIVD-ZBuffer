@@ -26,7 +26,7 @@ GPUMesh::GPUMesh(const int npoints, const QString &fileName): Mesh(fileName)
     points = new vec4[numPoints];
     normals = new vec4[numPoints];
     colors = new vec4[numPoints];
-    this->material = make_shared<GPUMaterial> ();
+    this->material = make_shared<GPUMaterial>(Ka, Kd, Ks, shininess);
     make();
 }
 

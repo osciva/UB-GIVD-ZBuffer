@@ -9,7 +9,6 @@ Mesh::Mesh(const QString &fileName): Object()
     load(fileName);
 }
 
-
 /**
  * @brief Mesh::~Mesh()
  */
@@ -18,19 +17,14 @@ Mesh::~Mesh() {
     if (vertexs.size() > 0) vertexs.clear();
 }
 
-
 void Mesh::makeTriangles() {
     // Practica 1: TO DO Fase 1: A implementar
 }
 
-
 bool Mesh::hit(Ray &raig, float tmin, float tmax, HitInfo& info) const {
-
     // Practica 1: TODO Fase 1: A implementar
     return false;
-
 }
-
 
 void Mesh::aplicaTG(shared_ptr<TG> t) {
     // Practica 1: TO DO: Fase 1
@@ -39,6 +33,12 @@ void Mesh::aplicaTG(shared_ptr<TG> t) {
 void Mesh::load (QString fileName) {
     QFile file(fileName);
     if(file.exists()) {
+        QString materialFileName;
+
+        /* Extraiem el path del fileName per fer-lo servir per l'arxiu de material */
+        QFileInfo fileInfo(fileName);
+        QString basePath = fileInfo.absolutePath();
+
         if(file.open(QFile::ReadOnly | QFile::Text)) {
             while(!file.atEnd()) {
                 QString line = file.readLine().trimmed();
@@ -97,6 +97,11 @@ void Mesh::load (QString fileName) {
                         // cara->calculaNormal();
 
                         cares.push_back(*face);
+                    } else if(lineParts.at(0).compare("mtllib", Qt::CaseInsensitive) == 0)
+                    {
+                        materialFileName = lineParts.at(1);
+                        QString fullPath = basePath + QDir::separator() + materialFileName;
+                        loadMaterial(fullPath);
                     }
                 }
             }
@@ -106,6 +111,42 @@ void Mesh::load (QString fileName) {
         }
     } else  qWarning("Boundary object file not found.");
 }
+
+void Mesh::loadMaterial(QString materialFileName) {
+    QFile materialFile(materialFileName);
+    if(materialFile.exists()) {
+        if(materialFile.open(QFile::ReadOnly | QFile::Text)) {
+            while(!materialFile.atEnd()) {
+                QString line = materialFile.readLine().trimmed();
+                QStringList lineParts = line.split(QRegularExpression("\\s+"));
+                if(lineParts.count() > 0) {
+                    if(lineParts.at(0).compare("Ka", Qt::CaseInsensitive) == 0)
+                    {
+                        Ka = vec3(lineParts.at(1).toFloat(), lineParts.at(2).toFloat(), lineParts.at(3).toFloat());
+                    }
+                    else if(lineParts.at(0).compare("Kd", Qt::CaseInsensitive) == 0)
+                    {
+                        Kd = vec3(lineParts.at(1).toFloat(), lineParts.at(2).toFloat(), lineParts.at(3).toFloat());
+                    }
+                    else if(lineParts.at(0).compare("Ks", Qt::CaseInsensitive) == 0)
+                    {
+                        Ks = vec3(lineParts.at(1).toFloat(), lineParts.at(2).toFloat(), lineParts.at(3).toFloat());
+                    }
+                    else if(lineParts.at(0).compare("Ns", Qt::CaseInsensitive) == 0)
+                    {
+                        shininess = lineParts.at(1).toFloat();
+                    }
+                }
+            }
+            materialFile.close();
+        } else {
+            qWarning("Material file can not be opened.");
+        }
+    } else {
+        qWarning("Material file not found.");
+    }
+}
+
 
 void Mesh::read (const QJsonObject &json)
 {
