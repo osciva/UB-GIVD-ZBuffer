@@ -79,23 +79,30 @@ void GPUSceneFactoryVirtual::read(const QJsonObject &json)
                 o = dynamic_pointer_cast<GPUMesh>(
                             GPUObjectFactory::getInstance().createObject(ObjectFactory::getInstance().getObjectType(objStr)));
                 o->read(objectObject);
-                auto obj = make_shared<GPUMesh>(1000000, objStr);
-                //checkea si tiene material
+
+                /* Comprovem si l'objecte té un material associat */
                 if (objectObject.contains("material") && objectObject["material"].isObject()) {
+                    /* Obtenim l'objecte material del json */
                     QJsonObject auxMat = objectObject["material"].toObject();
-                    //si lee un material crea su GPUMaterial
-                    auto mat = make_shared<GPUMaterial>();
-                    mat->read(auxMat);
-                    //añade el material al objeto
-                    obj->setMaterial(mat);
+
+                    /* Comprovem el tipus del material */
+                    if (auxMat.contains("type") && auxMat["type"].isString()) {
+                        QString tipus = auxMat["type"].toString().toUpper();
+                        MaterialFactory::MATERIAL_TYPES t = MaterialFactory::getInstance().getMaterialType(tipus);
+                        auto mat = GPUMaterialFactory::getInstance().createMaterial(t);
+                        mat->read(auxMat);
+
+                        /* Afegeix el material a l'objecte */
+                        o->setMaterial(mat);
+                    }
                 }
-                // Afegir objecte a l'escena virtual ja amb el seu material corresponent
+                /* Afegir objecte a l'escena virtual ja amb el seu material corresponent */
 				scene->addObject(o);
             }
         }
     }
-
 }
+
 //! [0]
 void GPUSceneFactoryVirtual:: write(QJsonObject &json) const
 {
