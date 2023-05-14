@@ -1,6 +1,6 @@
 #include "GLShader.hh"
 
-GLShader::GLShader(const char* vShaderFile, const char* fShaderFile, shared_ptr<QGLShaderProgram> &program){
+GLShader::GLShader(const char* vShaderFile, const char* fShaderFile){
     QGLShader *vshader = new QGLShader(QGLShader::Vertex);
     QGLShader *fshader = new QGLShader(QGLShader::Fragment);
 
@@ -13,13 +13,12 @@ GLShader::GLShader(const char* vShaderFile, const char* fShaderFile, shared_ptr<
 }
 
 //Metode per activar un shader
-void GLShader::activateShader(){
-
-
-;}
+void GLShader::activateShader(shared_ptr<QGLShaderProgram> &program){
+    program->link();
+    program->bind();
+}
 
 //Metode per activar shaders de textures
 void GLShader::activateShaderTexture(){
     //TO DO: Pràctica 2:  implementar a la fase 1
-
 }

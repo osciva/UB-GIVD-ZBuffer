@@ -28,10 +28,12 @@ public:
 
     void setAmbientGlobalToGPU(shared_ptr<QGLShaderProgram> program);
 
+    // TODO Pràctica 2: FASE 1: Enviar les llums a la GPU
+    void lightsToGPU(shared_ptr<QGLShaderProgram> program);
+
     virtual ~GPUSetUp() {}
 
 private:
-
     // Camera
     shared_ptr<GPUCamera> camera;
 
@@ -44,10 +46,4 @@ private:
     shared_ptr<GPULight> getLightActual();
     void setLightActual(shared_ptr<GPULight> l);
     void addLight(shared_ptr<GPULight> l);
-
-    // TODO Pràctica 2: FASE 1: Enviar les llums a la GPU
-
-    void lightsToGPU(shared_ptr<QGLShaderProgram> program);
-
-
 };
