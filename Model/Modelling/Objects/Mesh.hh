@@ -30,6 +30,11 @@ public:
     virtual void read (const QJsonObject &json) override;
     virtual void write(QJsonObject &json) const override;
     virtual void print(int indentation) const override;
+    void loadMaterial(QString materialFileName);
+
+    vec3 Ka, Kd, Ks;
+    float shininess;
+    bool areMaterialValuesZero = true;
 
     virtual ~Mesh();
 

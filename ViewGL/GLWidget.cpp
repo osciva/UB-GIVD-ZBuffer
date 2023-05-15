@@ -34,13 +34,15 @@ void GLWidget::initializeGL() {
     glEnable(GL_RGBA);
     glEnable(GL_DOUBLE);
 
-    initShadersGPU(EXAMPLE);
-    // Call setAmbientGlobalToGPU function
-    Controller::getInstance()->getSetUp()->toGPU(program);
+    /* Inicialitzem la llista de shaders */
+    initShadersGPU();
 
+    /* Indiquem quin shader volem fer servir */
+    useShader(GLShader::DEFAULT);
 
-    // Creacio d'una Light per a poder modificar el seus valors amb la interficie
+    /* Creacio d'una Light per a poder modificar el seus valors amb la interficie */
     // TO DO: Pràctica 2: Fase 1:  Canviar per a que siguin GPULigths i usar la factory GPULightFactory que facis nova
+    /*
     std::vector<shared_ptr<GPULight>> ligths;
     auto l  = GPULightFactory::getInstance().createLight(LightFactory::POINTLIGHT);
     auto s = GPULightFactory::getInstance().createLight(LightFactory::DIRECTIONALLIGHT);
@@ -49,8 +51,16 @@ void GLWidget::initializeGL() {
     ligths.push_back(l);
     ligths.push_back(s);
     ligths.push_back(t);
+    */
 
-    Controller::getInstance()->getSetUp()->setLights(ligths);
+    std::vector<shared_ptr<GPULight>> lights;
+    auto l = GPULightFactory::getInstance().createLight(LightFactory::POINTLIGHT);
+    lights.push_back(l);
+
+    /* Call setAmbientGlobalToGPU function */
+    Controller::getInstance()->getSetUp()->setAmbientGlobalToGPU(program);
+
+    Controller::getInstance()->getSetUp()->setLights(lights);
 
     shared_ptr<GPUCamera> camera = Controller::getInstance()->getSetUp()->getCamera();
     auto scene = Controller::getInstance()->getScene();
@@ -83,8 +93,6 @@ void GLWidget::paintGL() {
  * @brief GLWidget::resizeGL()
  */
 void GLWidget::resizeGL(int width, int height) {
-
-
     shared_ptr<GPUCamera> camera = Controller::getInstance()->getSetUp()->getCamera();
 
     camera->vp.a = width;
@@ -99,32 +107,17 @@ void GLWidget::resizeGL(int width, int height) {
 /**
  * @brief GLWidget::initShadersGPU
  */
-void GLWidget::initShadersGPU(ShaderType s){
-    GLShader *glshader;
+void GLWidget::initShadersGPU(){
+    initShader(GLShader::DEFAULT_SHADER, "://resources/GPUshaders/vshader1.glsl", "://resources/GPUshaders/fshader1.glsl");
+    initShader(GLShader::COLOR_SHADER, "://resources/GPUshaders/vColorShader.glsl", "://resources/GPUshaders/fColorShader.glsl");
+}
 
-    switch (s) {
-            case COLOR:
-                glshader = new GLShader("://resources/GPUshaders/vColorShader.glsl", "://resources/GPUshaders/fColorShader.glsl", program);
-                break;
-            case PHONG:
-                break;
-            case GOURAUD:
-                break;
-            case DEPTH:
-                glshader = new GLShader("://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl", program);
-                break;
-            case BLINNPHONG:
-                break;
-            case NORMAL:
-                break;
-            case EXAMPLE:
-                glshader = new GLShader("://resources/GPUshaders/vshader1.glsl", "://resources/GPUshaders/fshader1.glsl", program);
-        }
-
-    if (glshader != nullptr) {
-        program->link();
-        program->bind();
-    }
+/**
+ * @brief GLWidget::initShader
+ * Compiles and links vertex & fragment shader
+ */
+void GLWidget::initShader(GLShader::SHADER_INDEX index, const char *vertexFile, const char *fragmentFile) {
+    shaderList[index] = make_shared<GLShader>(vertexFile, fragmentFile);
 }
 
 QSize GLWidget::minimumSizeHint() const {
@@ -136,9 +129,7 @@ QSize GLWidget::sizeHint() const {
 }
 
 /** Gestio de les animacions i la gravació d'imatges ***/
-
 void GLWidget::setCurrentFrame(){
-
     auto scene = Controller::getInstance()->getScene();
     scene->update(currentFrame);
     updateGL();
@@ -147,7 +138,6 @@ void GLWidget::setCurrentFrame(){
 
     if (currentFrame == MAXFRAMES)
         timer->stop();
-
 }
 
 void GLWidget::saveFrame(){
@@ -159,11 +149,8 @@ void GLWidget::saveImage(){
     currentImage++;
 }
 
-
-
 /** Metodes SLOTS que serveixen al builder per a actualitzar l'escena i els objectes */
 void GLWidget::updateObject(shared_ptr<GPUMesh> obj) {
-
     obj->toGPU(program);
     updateGL();
 }
@@ -184,7 +171,6 @@ void GLWidget::updateScene() {
     emit FrustumCameraChanged(camera);
 
     updateGL();
-
 }
 
 /** Metodes que es criden des dels menús */
@@ -202,14 +188,14 @@ void GLWidget::saveAnimation() {
 void GLWidget::activaColorShader() {
     //TO DO: Pràctica 2: A implementar a la fase 1
     qDebug()<<"Estic a Color Shader";
-    initShadersGPU(COLOR);
-
+    currentShader = GLShader::COLOR;
+    useShader(currentShader);
+    updateShader();
 }
 
 void GLWidget::activaDepthShader() {
     //TO DO: Pràctica 2: A implementar a la fase 1
     qDebug()<<"Estic a Depth Shader";
-    initShadersGPU(DEPTH);
 }
 
 void GLWidget::activaNormalShader() {
@@ -220,30 +206,26 @@ void GLWidget::activaNormalShader() {
 void GLWidget::activaGouraudShader() {
     //TO DO: Pràctica 2:  implementar a la fase 1
     qDebug()<<"Estic a Gouraud - Phong shader";
-
 }
 void GLWidget::activaPhongShader() {
     //TO DO: Pràctica 2:  implementar a la fase 1
     qDebug()<<"Estic a Phong - Phong Shader";
-
 }
 
 void GLWidget::activaGouraudBlinnShader() {
     //TO DO: Pràctica 2:  implementar a la fase 1
     qDebug()<<"Estic a Gouraud - Blinn-Phong shader";
-
 }
+
 void GLWidget::activaBlinnPhongShader() {
     //TO DO: Pràctica 2:  implementar a la fase 1
     qDebug()<<"Estic a Phong - Blinn-Phong Shader";
-
 }
 
 void GLWidget::activaToonShader() {
     //TO DO: Pràctica 2:  implementar a la fase 1
     qDebug()<<"Estic a Toon";
 }
-
 
 void GLWidget::activaReflection() {
    //TO DO: Pràctica 2:  implementar a la fase 2
@@ -260,7 +242,24 @@ void GLWidget::activaTransparency() {
     qDebug()<<"Estic a Transparencia";
 }
 
+void GLWidget::useShader(GLShader::SHADER_TYPES s) {
+    switch (s) {
+        case GLShader::COLOR:
+            program = shaderList[GLShader::COLOR_SHADER]->getProgram();
+            shaderList[GLShader::COLOR_SHADER]->activateShader(program);
+            break;
+        default:
+            program = shaderList[GLShader::DEFAULT_SHADER]->getProgram();
+            shaderList[GLShader::DEFAULT_SHADER]->activateShader(program);
+            break;
+    }
+}
 
+void GLWidget::updateShader() {
+    Controller::getInstance()->getSetUp()->lightsToGPU(program);
+    Controller::getInstance()->getScene()->toGPU(program);
+    updateGL();
+}
 
 void GLWidget::setPerspective(float nearPlane, float farPlane)
 {
@@ -305,9 +304,7 @@ void GLWidget::setLighting(const QVector3D &lightPos, const QVector3D &Ia, const
     updateGL();
 }
 
-
 /**  Mètodes d'interacció amb el ratolí */
-
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
     lastPos = event->pos();

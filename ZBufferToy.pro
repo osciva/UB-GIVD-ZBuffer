@@ -14,8 +14,11 @@ SOURCES += \
     DataInOut/VisualMapping.cpp \
     GPUConnections/GPUCamera.cpp \
     GPUConnections/GPUDirectionalLight.cpp \
+    GPUConnections/GPULambertian.cpp \
     GPUConnections/GPULight.cpp \
     GPUConnections/GPULightFactory.cpp \
+    GPUConnections/GPUMaterial.cpp \
+    GPUConnections/GPUMaterialFactory.cpp \
     GPUConnections/GPUMesh.cpp \
     GPUConnections/GPUObjectFactory.cpp \
     GPUConnections/GPUPointLight.cpp \
@@ -33,7 +36,6 @@ SOURCES += \
     Model/Modelling/Lights/PointLight.cpp \
     Model/Modelling/Lights/SpotLight.cpp \
     Model/Modelling/Materials/ColorMapStatic.cpp \
-    Model/Modelling/Materials/GPUMaterial.cpp \
     Model/Modelling/Materials/Lambertian.cpp \
     Model/Modelling/Materials/Material.cpp \
     Model/Modelling/Materials/MaterialFactory.cpp \
@@ -63,8 +65,11 @@ HEADERS += \
     GPUConnections/GPUCamera.hh \
     GPUConnections/GPUConnectable.hh \
     GPUConnections/GPUDirectionalLight.hh \
+    GPUConnections/GPULambertian.hh \
     GPUConnections/GPULight.hh \
     GPUConnections/GPULightFactory.hh \
+    GPUConnections/GPUMaterial.hh \
+    GPUConnections/GPUMaterialFactory.hh \
     GPUConnections/GPUMesh.hh \
     GPUConnections/GPUObjectFactory.hh \
     GPUConnections/GPUPointLight.hh \
@@ -83,7 +88,6 @@ HEADERS += \
     Model/Modelling/Lights/SpotLight.hh \
     Model/Modelling/Materials/ColorMap.hh \
     Model/Modelling/Materials/ColorMapStatic.hh \
-    Model/Modelling/Materials/GPUMaterial.hh \
     Model/Modelling/Materials/Lambertian.hh \
     Model/Modelling/Materials/Material.hh \
     Model/Modelling/Materials/MaterialFactory.hh \

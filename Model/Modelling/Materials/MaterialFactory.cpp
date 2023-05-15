@@ -12,7 +12,6 @@ shared_ptr<Material> MaterialFactory::createMaterial(MATERIAL_TYPES t) {
     return m;
 }
 
-
 shared_ptr<Material> MaterialFactory::createMaterial(vec3 a, vec3 d, vec3 s, float beta, float opacity, MATERIAL_TYPES t) {
     shared_ptr<Material> m;
     switch (t) {

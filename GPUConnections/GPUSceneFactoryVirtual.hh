@@ -3,7 +3,9 @@
 
 #include "GPUConnections/GPUSceneFactory.hh"
 #include "GPUConnections/GPUObjectFactory.hh"
+#include "GPUConnections/GPUMaterialFactory.hh"
 #include "GPUConnections/GPUScene.hh"
+#include "Model/Modelling/Materials/MaterialFactory.hh"
 
 
 class GPUSceneFactoryVirtual : public GPUSceneFactory

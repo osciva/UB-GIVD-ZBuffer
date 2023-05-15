@@ -7,6 +7,7 @@ using namespace Common;
 
 #include "GPUConnections/GPUConnectable.hh"
 #include "Model/Modelling/Objects/Mesh.hh"
+#include "GPUConnections/GPUMaterial.hh"
 
 static int NUMPOINTS = 10000;
 
@@ -23,7 +24,10 @@ public:
     virtual void draw() override;
     Capsa3D calculCapsa3D();
 
+    shared_ptr<QGLShaderProgram> program;
+
     void read(const QJsonObject &json) override;
+    void setMaterial(shared_ptr<GPUMaterial> m);
 private:
     // Estructures per passar a la GPU
     GLuint buffer;
@@ -33,6 +37,9 @@ private:
     int   numPoints;
     vec4 *points;
     vec4 *normals;
+
+    /* Materials */
+    shared_ptr<GPUMaterial> material;
 
     // Els colors s'usen en la primera execució però després són prescindibles
     vec4 *colors;

@@ -1,8 +1,12 @@
 #include "Material.hh"
 
-//Valors arbitraris. Podem decKdir canviar-los
-Material::Material(): Ka(1.0f), Kd(1.0f), Ks(1.0f) {
-    shininess = 1.0f;
+/* Valors arbitraris. Podem decidir canviar-los */
+Material::Material() {
+    this->Ka = vec3(0.2,0.2,0.2);
+    this->Kd = vec3(0.8,0.5,0.5);
+    this->Ks = vec3(1.,1.,1.);
+    this->shininess = 20.0;
+    this->opacity = 0;
 }
 
 Material::~Material()
@@ -10,11 +14,10 @@ Material::~Material()
 
 Material::Material(vec3 d) {
     Kd = d;
-    //Valors arbitraris. Podem decidir canviar-los.
+    /* Valors arbitraris. Podem decidir canviar-los. */
     Ka = vec3(1.0f, 1.0f, 1.0f);
     Ks = vec3(1.0f, 1.0f, 1.0f);
     shininess = 1.0f;
-
 }
 
 Material::Material(vec3 a, vec3 d, vec3 s, float shin) {
@@ -63,7 +66,6 @@ void Material::read (const QJsonObject &json)
         shininess = json["shininess"].toDouble();
     if (json.contains("opacity") && json["opacity"].isDouble())
         opacity = json["opacity"].toDouble();
-
 }
 
 

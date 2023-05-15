@@ -12,7 +12,21 @@ using namespace std;
 class GLShader
 {
 public:
-    GLShader(const char* vertexShaderFile, const char* fragmentShaderFile, shared_ptr<QGLShaderProgram> &program);
-    void activateShader();
+    typedef enum SHADER_TYPES {
+        DEFAULT,
+        COLOR
+    } SHADER_TYPES;
+
+    typedef enum SHADER_INDEX {
+        DEFAULT_SHADER,
+        COLOR_SHADER
+    } SHADER_INDEX;
+
+    GLShader(const char* vertexShaderFile, const char* fragmentShaderFile);
+    void activateShader(shared_ptr<QGLShaderProgram> &program);
     void activateShaderTexture();
+    shared_ptr<QGLShaderProgram> getProgram() const {return program;}
+
+private:
+    shared_ptr<QGLShaderProgram> program;
 };

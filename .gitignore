@@ -1,0 +1,81 @@
+# Qt Creator specific files
+*.autosave
+*.user
+*.user.*
+*.pro.user
+*.pro.user.*
+*.qmlproject.user
+*.qmlproject.user.*
+*.qbs.user
+*.qbs.user.*
+
+# Build and output directories
+build-*/
+bin/
+obj/
+debug/
+release/
+*_build*/
+
+# Object files, libraries, and executables
+*.o
+*.a
+*.so
+*.dll
+*.dylib
+*.exe
+*.app
+*.prl
+*.qmlc
+*.jsc
+
+# Generated files
+ui_*.h
+moc_*.cpp
+qrc_*.cpp
+*.moc
+*_resource.rc
+*_plugin_import.cpp
+*_resource.h
+*_resource.qmltypes
+*_resource.qrc
+*_resource.qmlcache
+*.cpp.qmltypes
+*.qmlcache
+*.qmlc
+*.jsc
+*.qrc
+
+# Logs and databases
+*.log
+*.db
+*.ldb
+
+# Makefile
+Makefile*
+*.qm
+*.qmake.stash
+*.moc
+*.tlog
+*.manifest
+*.cache
+*.spec
+
+# CMake
+CMakeLists.txt.user*
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+
+# Qt Creator backups
+*.bak
+
+# Temporary and swap files
+*.tmp
+*.swp
+*~ 
+
+# macOS .DS_Store files
+.DS_Store
+
