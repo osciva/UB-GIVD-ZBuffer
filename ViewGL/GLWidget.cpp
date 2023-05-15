@@ -110,6 +110,7 @@ void GLWidget::resizeGL(int width, int height) {
 void GLWidget::initShadersGPU(){
     initShader(GLShader::DEFAULT_SHADER, "://resources/GPUshaders/vshader1.glsl", "://resources/GPUshaders/fshader1.glsl");
     initShader(GLShader::COLOR_SHADER, "://resources/GPUshaders/vColorShader.glsl", "://resources/GPUshaders/fColorShader.glsl");
+    initShader(GLShader::DEPTH_SHADER, "://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl");
 }
 
 /**
@@ -196,6 +197,9 @@ void GLWidget::activaColorShader() {
 void GLWidget::activaDepthShader() {
     //TO DO: Pràctica 2: A implementar a la fase 1
     qDebug()<<"Estic a Depth Shader";
+    currentShader = GLShader::DEPTH;
+    useShader(currentShader);
+    updateShader();
 }
 
 void GLWidget::activaNormalShader() {
@@ -247,6 +251,10 @@ void GLWidget::useShader(GLShader::SHADER_TYPES s) {
         case GLShader::COLOR:
             program = shaderList[GLShader::COLOR_SHADER]->getProgram();
             shaderList[GLShader::COLOR_SHADER]->activateShader(program);
+            break;
+        case GLShader::DEPTH:
+            program = shaderList[GLShader::DEPTH_SHADER]->getProgram();
+            shaderList[GLShader::DEPTH_SHADER]->activateShader(program);
             break;
         default:
             program = shaderList[GLShader::DEFAULT_SHADER]->getProgram();

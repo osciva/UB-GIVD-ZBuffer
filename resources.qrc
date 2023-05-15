@@ -11,5 +11,7 @@
         <file>resources/GPUshaders/vColorShader.glsl</file>
         <file>resources/GPUshaders/fColorShader.glsl</file>
         <file>resources/models/rectangle.obj</file>
+        <file>resources/GPUshaders/fdepthshader.glsl</file>
+        <file>resources/GPUshaders/vdepthshader.glsl</file>
     </qresource>
 </RCC>

@@ -14,12 +14,26 @@ class GLShader
 public:
     typedef enum SHADER_TYPES {
         DEFAULT,
-        COLOR
+        COLOR,
+        DEPTH,
+        NORMAL,
+        GOURAUDPHONG,
+        GOURAUDBLINNPHONG,
+        PHONG,
+        PHONGBLINNPHONG,
+        TOON
     } SHADER_TYPES;
 
     typedef enum SHADER_INDEX {
         DEFAULT_SHADER,
-        COLOR_SHADER
+        COLOR_SHADER,
+        DEPTH_SHADER,
+        NORMAL_SHADER,
+        GOURAUDPHONG_SHADER,
+        GOURAUDBLINNPHONG_SHADEER,
+        PHONG_SHADER,
+        PHONGBLINNPHONG_SHADER,
+        TOON_SHADER
     } SHADER_INDEX;
 
     GLShader(const char* vertexShaderFile, const char* fragmentShaderFile);
