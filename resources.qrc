@@ -13,5 +13,7 @@
         <file>resources/models/rectangle.obj</file>
         <file>resources/GPUshaders/fdepthshader.glsl</file>
         <file>resources/GPUshaders/vdepthshader.glsl</file>
+        <file>resources/GPUshaders/vnormalshader.glsl</file>
+        <file>resources/GPUshaders/fnormalshader.glsl</file>
     </qresource>
 </RCC>
