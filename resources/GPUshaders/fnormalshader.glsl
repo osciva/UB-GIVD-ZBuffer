@@ -1,15 +1,15 @@
 #version 330
 
-in vec4 fNormal; // aquesta és la normal que rebem del vertex shader
+in vec4 fNormal; /* Aquesta és la normal que rebem del vertex shader */
 
 out vec4 colorOut;
 
 void main()
 {
-    // normalitzem la normal per assegurar-nos que té longitud 1
+    /* Normalitzem la normal per assegurar-nos que té longitud 1 */
     vec4 normal = normalize(fNormal);
 
-    // convertim la normal de l'espai [-1, 1] a l'espai [0, 1] per usar-la com a color
+    /* Convertim la normal de l'espai [-1, 1] a l'espai [0, 1] per usar-la com a color */
     vec4 color = normal * 0.5 + 0.5;
 
     colorOut = color;

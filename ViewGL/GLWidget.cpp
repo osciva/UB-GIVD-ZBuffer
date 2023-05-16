@@ -68,7 +68,7 @@ void GLWidget::initializeGL() {
     camera->init(this->size().width(), this->size().height(), scene->capsaMinima);
     emit ObsCameraChanged(camera);
     emit FrustumCameraChanged(camera);
-
+    Controller::getInstance()->getSetUp()->toGPU(program);
     glViewport(camera->vp.pmin[0], camera->vp.pmin[1], camera->vp.a, camera->vp.h);
 
 }
@@ -77,7 +77,6 @@ void GLWidget::initializeGL() {
  * @brief GLWidget::paintGL()
  */
 void GLWidget::paintGL() {
-
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -85,6 +84,8 @@ void GLWidget::paintGL() {
     shared_ptr<GPUCamera> camera = Controller::getInstance()->getSetUp()->getCamera();
     auto scene = Controller::getInstance()->getScene();
 
+    Controller::getInstance()->getSetUp()->toGPU(program);
+    scene->toGPU(program);
     camera->toGPU(program);
     scene->draw();
 }
@@ -113,7 +114,6 @@ void GLWidget::initShadersGPU(){
     initShader(GLShader::DEPTH_SHADER, "://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl");
     initShader(GLShader::NORMAL_SHADER, "://resources/GPUshaders/vnormalshader.glsl", "://resources/GPUshaders/fnormalshader.glsl");
     initShader(GLShader::PHONG_SHADER, "://resources/GPUshaders/vphongshader.glsl", "://resources/GPUshaders/fphongshader.glsl");
-
 }
 
 /**

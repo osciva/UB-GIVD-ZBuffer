@@ -5,7 +5,7 @@
 
 class GPUPointLight: public GPULight, public PointLight {
 public:
-    GPUPointLight() {}
+    GPUPointLight();
     /*
      * Constructor de la classe PointLight.
      * param posicio: posició de la llum.

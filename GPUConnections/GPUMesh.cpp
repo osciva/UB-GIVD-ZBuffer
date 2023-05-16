@@ -122,7 +122,6 @@ void GPUMesh::draw(){
  * @brief GPUMesh::make
  */
 void GPUMesh::make(){
-
     // TO  DO: A modificar a la fase 1 de la practica 2
     // Cal calcular la normal a cada vertex a la CPU
     Index = 0;
