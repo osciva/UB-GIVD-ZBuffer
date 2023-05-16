@@ -60,7 +60,7 @@ void main()
         }
 
         //Luz direccional (no tenemos posición, solo dirección)
-        else if(lights[i].direction == (0,0,0)){
+        else if(lights[i].a != 0){
             L = normalize(-lights[i].direction);
             attenuation = 1.0;
         }
