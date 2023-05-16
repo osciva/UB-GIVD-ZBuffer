@@ -24,7 +24,7 @@
 #define PROGRAM_VERTEX_ATTRIBUTE 0
 #define PROGRAM_COLOR_ATTRIBUTE 1
 
-const int numShaders = 6;
+const int numShaders = 10;
 
 class QGLShaderProgram;
 
