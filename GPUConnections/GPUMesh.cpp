@@ -171,16 +171,21 @@ void GPUMesh::initTexture()
     // TO DO: A implementar a la fase 1 de la practica 2
     // Cal inicialitzar la textura de l'objecte: veure l'exemple del CubGPUTextura
     qDebug() << "Initializing textures...";
+    //trabaja con la primera unidad de textura (GLTexture0)
     glActiveTexture(GL_TEXTURE0);
+    //configuración wrapmode, la textura se repetirá si está fuera de 0-1
     texture->setWrapMode(QOpenGLTexture::Repeat);
+    //aplica filtros
     texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
     texture->setMagnificationFilter(QOpenGLTexture::Linear);
+    //enlaza con el canal
     texture->bind(0);
 
  }
 
 void GPUMesh::setTexture(shared_ptr<QOpenGLTexture> t){
    texture = t;
+   initTexture();
 }
 
 void GPUMesh::setMaterial(shared_ptr<GPUMaterial> m) {
