@@ -112,6 +112,8 @@ void GLWidget::initShadersGPU(){
     initShader(GLShader::COLOR_SHADER, "://resources/GPUshaders/vColorShader.glsl", "://resources/GPUshaders/fColorShader.glsl");
     initShader(GLShader::DEPTH_SHADER, "://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl");
     initShader(GLShader::NORMAL_SHADER, "://resources/GPUshaders/vnormalshader.glsl", "://resources/GPUshaders/fnormalshader.glsl");
+    initShader(GLShader::PHONG_SHADER, "://resources/GPUshaders/vphongshader.glsl", "://resources/GPUshaders/fphongshader.glsl");
+
 }
 
 /**
@@ -216,8 +218,11 @@ void GLWidget::activaGouraudShader() {
     qDebug()<<"Estic a Gouraud - Phong shader";
 }
 void GLWidget::activaPhongShader() {
-    //TO DO: Pràctica 2:  implementar a la fase 1
-    qDebug()<<"Estic a Phong - Phong Shader";
+    //TO DO: Pràctica 2: A implementar a la fase 1
+    qDebug()<<"Estic a Phong Shader";
+    currentShader = GLShader::PHONG;
+    useShader(currentShader);
+    updateShader();
 }
 
 void GLWidget::activaGouraudBlinnShader() {
@@ -263,6 +268,10 @@ void GLWidget::useShader(GLShader::SHADER_TYPES s) {
         case GLShader::NORMAL:
             program = shaderList[GLShader::NORMAL_SHADER]->getProgram();
             shaderList[GLShader::NORMAL_SHADER]->activateShader(program);
+            break;
+        case GLShader::PHONG:
+            program = shaderList[GLShader::PHONG_SHADER]->getProgram();
+            shaderList[GLShader::PHONG_SHADER]->activateShader(program);
             break;
         default:
             program = shaderList[GLShader::DEFAULT_SHADER]->getProgram();
