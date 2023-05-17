@@ -215,6 +215,11 @@ void GLWidget::activaGouraudShader() {
     qDebug()<<"Estic a Gouraud - Phong shader";
     currentShader = GLShader::GOURAUDPHONG;
     useShader(currentShader);
+
+    /* Set the useBlinnPhong uniform variable */
+    GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
+    glUniform1i(useBlinnPhongLocation, false);
+
     updateShader();
 }
 
@@ -231,8 +236,15 @@ void GLWidget::activaPhongShader() {
 }
 
 void GLWidget::activaGouraudBlinnShader() {
-    //TO DO: Pràctica 2:  implementar a la fase 1
     qDebug()<<"Estic a Gouraud - Blinn-Phong shader";
+    currentShader = GLShader::GOURAUDPHONG;
+    useShader(currentShader);
+
+    /* Set the useBlinnPhong uniform variable */
+    GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
+    glUniform1i(useBlinnPhongLocation, true);
+
+    updateShader();
 }
 
 void GLWidget::activaBlinnPhongShader() {

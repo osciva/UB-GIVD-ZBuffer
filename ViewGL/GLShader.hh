@@ -18,7 +18,6 @@ public:
         DEPTH,
         NORMAL,
         GOURAUDPHONG,
-        GOURAUDBLINNPHONG,
         PHONG,
         TOON
     } SHADER_TYPES;
@@ -29,7 +28,6 @@ public:
         DEPTH_SHADER,
         NORMAL_SHADER,
         GOURAUDPHONG_SHADER,
-        GOURAUDBLINNPHONG_SHADER,
         PHONG_SHADER,
         TOON_SHADER
     } SHADER_INDEX;
