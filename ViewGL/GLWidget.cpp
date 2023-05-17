@@ -246,6 +246,9 @@ void GLWidget::activaBlinnPhongShader() {
 void GLWidget::activaToonShader() {
     //TO DO: Pràctica 2:  implementar a la fase 1
     qDebug()<<"Estic a Toon";
+    currentShader = GLShader::TOON;
+    useShader(currentShader);
+    updateShader();
 }
 
 void GLWidget::activaReflection() {
@@ -288,6 +291,10 @@ void GLWidget::useShader(GLShader::SHADER_TYPES s) {
         case GLShader::PHONGBLINNPHONG:
             program = shaderList[GLShader::PHONGBLINNPHONG_SHADER]->getProgram();
             shaderList[GLShader::PHONGBLINNPHONG_SHADER]->activateShader(program);
+            break;
+        case GLShader::TOON:
+            program = shaderList[GLShader::TOON_SHADER]->getProgram();
+            shaderList[GLShader::TOON_SHADER]->activateShader(program);
             break;
         default:
             program = shaderList[GLShader::DEFAULT_SHADER]->getProgram();
