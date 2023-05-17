@@ -115,6 +115,7 @@ void GLWidget::initShadersGPU(){
     initShader(GLShader::NORMAL_SHADER, "://resources/GPUshaders/vnormalshader.glsl", "://resources/GPUshaders/fnormalshader.glsl");
     initShader(GLShader::PHONG_SHADER, "://resources/GPUshaders/vphongshader.glsl", "://resources/GPUshaders/fphongshader.glsl");
     initShader(GLShader::GOURAUDPHONG_SHADER, "://resources/GPUshaders/vgouraudphongshader.glsl", "://resources/GPUshaders/fgouraudphongshader.glsl");
+    initShader(GLShader::TOON_SHADER, "://resources/GPUshaders/vtoonshader.glsl", "://resources/GPUshaders/ftoonshader.glsl");
 }
 
 /**
@@ -260,7 +261,6 @@ void GLWidget::activaBlinnPhongShader() {
 }
 
 void GLWidget::activaToonShader() {
-    //TO DO: Pràctica 2:  implementar a la fase 1
     qDebug()<<"Estic a Toon";
     currentShader = GLShader::TOON;
     useShader(currentShader);
