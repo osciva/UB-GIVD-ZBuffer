@@ -1,6 +1,8 @@
 #include "PointLight.hh"
 
-PointLight::PointLight(vec3 posicio, vec3 Ia, vec3 Id, vec3 Is, float a, float b, float c): Light(Ia, Id, Is) {
+PointLight::PointLight() : Light(POINT) {}
+
+PointLight::PointLight(vec3 posicio, vec3 Ia, vec3 Id, vec3 Is, float a, float b, float c): Light(POINT, vec4(posicio, 1.0), Ia, Id, Is, vec3(a,b,c)) {
     this->pos = posicio;
     this->a = a;
     this->b = b;

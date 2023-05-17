@@ -13,9 +13,9 @@ public:
      * param Id: component difosa de la llum.
      * param Is: component especular de la llum.
      * */
-    GPULight(vec3 Ia, vec3 Id, vec3 Is);
-    GPULight();
-    virtual ~GPULight() {};
+    GPULight(LightType t, vec4 position, vec3 Ia, vec3 Id, vec3 Is, vec3 coeficients);
+    GPULight(LightType t);
+    virtual ~GPULight() {}
 
     int index;
     void setIndex(int index){ this->index = index; }

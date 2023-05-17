@@ -5,7 +5,7 @@
 
 class GPUDirectionalLight : public GPULight, public DirectionalLight {
 public:
-    GPUDirectionalLight() {};
+    GPUDirectionalLight();
     GPUDirectionalLight(vec3 direction, vec3 Ia, vec3 Id, vec3 Is);
     virtual ~GPUDirectionalLight() {}
 

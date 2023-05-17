@@ -92,9 +92,6 @@ void GPUMesh::toGPU(shared_ptr<QGLShaderProgram> pr) {
 
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0,  (void*)(sizeof(vec4)*Index));
     glEnableVertexAttribArray(1);
-
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0,  (void*)(2*sizeof(vec4)*Index));
-    glEnableVertexAttribArray(2);
 }
 
 
@@ -125,7 +122,6 @@ void GPUMesh::draw(){
  * @brief GPUMesh::make
  */
 void GPUMesh::make(){
-
     // TO  DO: A modificar a la fase 1 de la practica 2
     // Cal calcular la normal a cada vertex a la CPU
     Index = 0;

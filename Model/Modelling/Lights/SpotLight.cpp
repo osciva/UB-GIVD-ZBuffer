@@ -1,6 +1,8 @@
 #include "SpotLight.hh"
 
-SpotLight::SpotLight(vec3 posicio, vec3 direction, float opening, vec3 Ia, vec3 Id, vec3 Is, float a, float b, float c): Light(Ia, Id, Is) {
+SpotLight::SpotLight() : Light(SPOTLIGHT) {}
+
+SpotLight::SpotLight(vec3 posicio, vec3 direction, float opening, vec3 Ia, vec3 Id, vec3 Is, float a, float b, float c): Light(SPOTLIGHT, vec4(posicio, 1.0), Ia, Id, Is, vec3(a,b,c)) {
     this->pos = posicio;
     this->direction = normalize(direction);
     this->opening = opening;

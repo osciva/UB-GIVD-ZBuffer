@@ -12,15 +12,14 @@ out vec4 color;
 /* Struct light */
 struct Light
 {
+    int type;
     vec4 position;
-    vec3 direction;
+    vec4 direction;
     float opening;
     vec3 ia;
     vec3 id;
     vec3 is;
-    float a;
-    float b;
-    float c;
+    vec3 coeficients;
 };
 
 uniform Light lights[1];

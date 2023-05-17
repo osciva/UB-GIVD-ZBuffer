@@ -3,7 +3,7 @@
 GPUSetUp::GPUSetUp()
 {
   camera = make_shared<GPUCamera>(500, 500);
-  globalLight = vec3(0.1,0.1,0.1);
+  globalLight = vec3(0.3,0.3,0.3);
 }
 
 shared_ptr<GPUCamera> GPUSetUp::getCamera() {

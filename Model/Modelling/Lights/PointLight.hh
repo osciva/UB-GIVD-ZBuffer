@@ -6,7 +6,7 @@
 
 class PointLight: public Light {
 public:
-    PointLight() {};
+    PointLight();
     /*
      * Constructor de la classe PointLight.
      * param posicio: posició de la llum.
