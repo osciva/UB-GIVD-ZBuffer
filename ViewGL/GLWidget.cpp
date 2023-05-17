@@ -114,7 +114,7 @@ void GLWidget::initShadersGPU(){
     initShader(GLShader::DEPTH_SHADER, "://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl");
     initShader(GLShader::NORMAL_SHADER, "://resources/GPUshaders/vnormalshader.glsl", "://resources/GPUshaders/fnormalshader.glsl");
     initShader(GLShader::PHONG_SHADER, "://resources/GPUshaders/vphongshader.glsl", "://resources/GPUshaders/fphongshader.glsl");
-    initShader(GLShader::PHONG_SHADER, "://resources/GPUshaders/vgouraudphongshader.glsl", "://resources/GPUshaders/fgouraudphongshader.glsl");
+    initShader(GLShader::GOURAUDPHONG_SHADER, "://resources/GPUshaders/vgouraudphongshader.glsl", "://resources/GPUshaders/fgouraudphongshader.glsl");
 }
 
 /**
