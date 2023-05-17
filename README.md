@@ -1,10 +1,6 @@
 # ZBufferToy
 Codi de la Pràctica 2 de GiVD: ZBufferToy 2022-23
 
-::
-
-    Aquest és el model base del README.rst que haureu d'omplir com a documentació de la pràctica. De cara a la presentació d'aquests document, si us plau, esborreu les notes i aquest text. 
-    
 **Abstract**
 
 Petit resum de fins on heu arribat a fer
@@ -14,24 +10,24 @@ Petit resum de fins on heu arribat a fer
 A continuació s'indica quines parts s'han fet i qui les ha implementat
 - Fase 1
     - Lights
-        - [ ] Ambient Global 
-        - [ ] Puntual
-        - [ ] Direccional 
-        - [ ] Spotlight 
+        - [✅] Ambient Global 
+        - [✅] Puntual
+        - [✅] Direccional 
+        - [✅] Spotlight 
     - Materials: 
-       - [ ] Pas a la GPU
-       - [ ] Lectura de fitxers .json
+       - [✅] Pas a la GPU
+       - [✅] Lectura de fitxers .json
     - Shading
-        - [ ] Color
-        - [ ] Normal
-        - [ ] Depth 
-        - [ ] Phong-Gouraud 
-        - [ ] Phong-Phong
-        - [ ] BlinnPhong-Gouraud 
-        - [ ] BlinnPhong-Phong
-        - [ ] Cel-shading
+        - [✅] Color
+        - [✅] Normal
+        - [✅] Depth 
+        - [✅] Phong-Gouraud 
+        - [✅] Phong-Phong
+        - [✅] BlinnPhong-Gouraud 
+        - [✅] BlinnPhong-Phong
+        - [✅] Cel-shading
     - Textures
-        - [ ] Textura com material en un objecte 
+        - [✅] Textura com material en un objecte 
         - [ ] Textura al pla base 
     - Adaptació a la lectura de fitxers de dades
         - [ ] Escenes virtuals 
