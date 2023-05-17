@@ -114,7 +114,6 @@ void GLWidget::initShadersGPU(){
     initShader(GLShader::DEPTH_SHADER, "://resources/GPUshaders/vdepthshader.glsl", "://resources/GPUshaders/fdepthshader.glsl");
     initShader(GLShader::NORMAL_SHADER, "://resources/GPUshaders/vnormalshader.glsl", "://resources/GPUshaders/fnormalshader.glsl");
     initShader(GLShader::PHONG_SHADER, "://resources/GPUshaders/vphongshader.glsl", "://resources/GPUshaders/fphongshader.glsl");
-    initShader(GLShader::PHONGBLINNPHONG_SHADER, "://resources/GPUshaders/vphongblinnphongshader.glsl", "://resources/GPUshaders/fphongblinnphongshader.glsl");
     initShader(GLShader::GOURAUDPHONG_SHADER, "://resources/GPUshaders/vgouraudphongshader.glsl", "://resources/GPUshaders/fgouraudphongshader.glsl");
 }
 
@@ -192,7 +191,6 @@ void GLWidget::saveAnimation() {
 }
 
 void GLWidget::activaColorShader() {
-    //TO DO: Pràctica 2: A implementar a la fase 1
     qDebug()<<"Estic a Color Shader";
     currentShader = GLShader::COLOR;
     useShader(currentShader);
@@ -200,7 +198,6 @@ void GLWidget::activaColorShader() {
 }
 
 void GLWidget::activaDepthShader() {
-    //TO DO: Pràctica 2: A implementar a la fase 1
     qDebug()<<"Estic a Depth Shader";
     currentShader = GLShader::DEPTH;
     useShader(currentShader);
@@ -208,7 +205,6 @@ void GLWidget::activaDepthShader() {
 }
 
 void GLWidget::activaNormalShader() {
-    //TO DO: Pràctica 2: A implementar a la fase 1
     qDebug()<<"Estic a Normal Shader";
     currentShader = GLShader::NORMAL;
     useShader(currentShader);
@@ -216,17 +212,21 @@ void GLWidget::activaNormalShader() {
 }
 
 void GLWidget::activaGouraudShader() {
-    //TO DO: Pràctica 2:  implementar a la fase 1
     qDebug()<<"Estic a Gouraud - Phong shader";
     currentShader = GLShader::GOURAUDPHONG;
     useShader(currentShader);
     updateShader();
 }
+
 void GLWidget::activaPhongShader() {
-    //TO DO: Pràctica 2: A implementar a la fase 1
     qDebug()<<"Estic a Phong Shader";
     currentShader = GLShader::PHONG;
     useShader(currentShader);
+
+    /* Set the useBlinnPhong uniform variable */
+    GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
+    glUniform1i(useBlinnPhongLocation, false);
+
     updateShader();
 }
 
@@ -236,10 +236,14 @@ void GLWidget::activaGouraudBlinnShader() {
 }
 
 void GLWidget::activaBlinnPhongShader() {
-    //TO DO: Pràctica 2: A implementar a la fase 1
     qDebug()<<"Estic a Phong Blinn-Phong Shader";
-    currentShader = GLShader::PHONGBLINNPHONG;
+    currentShader = GLShader::PHONG;
     useShader(currentShader);
+
+    /* Set the useBlinnPhong uniform variable */
+    GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
+    glUniform1i(useBlinnPhongLocation, true);
+
     updateShader();
 }
 
@@ -287,10 +291,6 @@ void GLWidget::useShader(GLShader::SHADER_TYPES s) {
         case GLShader::PHONG:
             program = shaderList[GLShader::PHONG_SHADER]->getProgram();
             shaderList[GLShader::PHONG_SHADER]->activateShader(program);
-            break;
-        case GLShader::PHONGBLINNPHONG:
-            program = shaderList[GLShader::PHONGBLINNPHONG_SHADER]->getProgram();
-            shaderList[GLShader::PHONGBLINNPHONG_SHADER]->activateShader(program);
             break;
         case GLShader::TOON:
             program = shaderList[GLShader::TOON_SHADER]->getProgram();

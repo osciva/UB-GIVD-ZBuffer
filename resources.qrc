@@ -19,8 +19,6 @@
         <file>resources/GPUshaders/vphongshader.glsl</file>
         <file>resources/GPUshaders/vgouraudphongshader.glsl</file>
         <file>resources/GPUshaders/fgouraudphongshader.glsl</file>
-        <file>resources/GPUshaders/vphongblinnphongshader.glsl</file>
-        <file>resources/GPUshaders/fphongblinnphongshader.glsl</file>
         <file>resources/GPUshaders/vtoonshader.glsl</file>
         <file>resources/GPUshaders/ftoonshader.glsl</file>
     </qresource>

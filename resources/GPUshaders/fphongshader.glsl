@@ -37,6 +37,9 @@ uniform Material material;
 /* Observer position */
 uniform vec4 obs;
 
+/* Shading model switch */
+uniform bool useBlinnPhong;
+
 void main()
 {
     /* I = kaIa (ambient) + kdId cos(L, N) (diffuse) + ksIs cos(V, R)^alpha (specular) */
@@ -47,7 +50,7 @@ void main()
 
     vec4 N = fNormal;
     vec4 V = normalize(obs - fPosition);
-    vec4 L, R;
+    vec4 L, R, H;
 
     float a, b, c, alpha, dist, attenuation;
 
@@ -71,10 +74,18 @@ void main()
             attenuation = 1.0;
         }
 
-        R = reflect(-L, N);
         alpha = material.shininess;
         Id = lights[i].id * material.Kd * max(dot(N, L), 0.0);
-        Is = lights[i].is * material.Ks * pow(max(dot(V, R), 0.0), alpha);
+        R = reflect(-L, N);
+
+        /* Comprovem si s'ha activat BlinnPhong */
+        if(useBlinnPhong) {
+            H = normalize(L+V);
+            Is = lights[i].is * material.Ks * pow(max(dot(N,H), 0.0), material.shininess);
+        } else {
+            Is = lights[i].is * material.Ks * pow(max(dot(V, R), 0.0), alpha);
+        }
+
         Ia = lights[i].ia * material.Ka;
 
         Itotal += (Id + Is) * attenuation + Ia;
