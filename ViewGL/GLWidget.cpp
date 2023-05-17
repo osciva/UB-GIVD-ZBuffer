@@ -267,6 +267,23 @@ void GLWidget::activaToonShader() {
     updateShader();
 }
 
+void GLWidget::activaNightVision() {
+     qDebug()<<"Estic a Night Vision";
+
+     currentShader = GLShader::PHONG;
+     useShader(currentShader);
+
+     /* Set the useBlinnPhong uniform variable */
+     GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
+     glUniform1i(useBlinnPhongLocation, false);
+
+     /* Set the useNightVision uniform variable */
+     GLint useNightVisionLocation = program->uniformLocation("useNightVision");
+     glUniform1i(useNightVisionLocation, true);
+
+     updateShader();
+}
+
 void GLWidget::activaReflection() {
    //TO DO: Pràctica 2:  implementar a la fase 2
      qDebug()<<"Estic a Reflection";

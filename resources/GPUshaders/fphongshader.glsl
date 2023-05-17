@@ -37,8 +37,13 @@ uniform Material material;
 /* Observer position */
 uniform vec4 obs;
 
+uniform vec2 viewportSize;
+
 /* Shading model switch */
 uniform bool useBlinnPhong;
+
+/* Night vision model switch */
+uniform bool useNightVision;
 
 void main()
 {
@@ -89,6 +94,24 @@ void main()
         Ia = lights[i].ia * material.Ka;
 
         Itotal += (Id + Is) * attenuation + Ia;
+    }
+
+    if (useNightVision) {
+        /* Calculem la distància des del gl_FragCoordCalculate distance al centre del viewport */
+        vec2 viewportCenter = viewportSize / 2.0;
+        float pixelDist = distance(gl_FragCoord.xy, viewportCenter);
+
+        /* Comprovem si està dins del radi */
+        if (pixelDist <= viewportSize.y / 4.0) {
+            /* Calculem Phong com abans però només considerant el canal verd */
+            /* Posem a 0 els canals vermell i blau */
+            Itotal.r = 0.0;
+            Itotal.b = 0.0;
+
+        } else {
+            /* La resta de color negre */
+            Itotal = vec3(0.0, 0.0, 0.0);
+        }
     }
 
     colorOut = vec4(Itotal, 1.0);

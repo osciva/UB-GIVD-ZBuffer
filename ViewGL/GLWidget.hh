@@ -57,7 +57,7 @@ public slots:
     void activaBlinnPhongShader();
     void activaToonShader();
 
-
+    void activaNightVision();
     void activaEnvMapping();
     void activaReflection();
     void activaTransparency();
