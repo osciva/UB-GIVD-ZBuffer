@@ -110,7 +110,6 @@ void GPUMesh::toGPU(shared_ptr<QGLShaderProgram> pr) {
 
 void GPUMesh::toGPUTexture(shared_ptr<QGLShaderProgram> pr){
     texture->bind(0);
-    pr->setUniformValue("texMap", 0);
 }
 
 
@@ -126,9 +125,11 @@ void GPUMesh::draw(){
     // TO  DO: A modificar a la fase 1 de la practica 2
     // Cal activar també les normals  a la GPU
     this->material->toGPU(program);
+
     if(texture){
         this->toGPUTexture(program);
     }
+
     glBindVertexArray( vao );
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
@@ -138,15 +139,13 @@ void GPUMesh::draw(){
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
-
 }
 
 /**
  * @brief GPUMesh::make
  */
 void GPUMesh::make(){
-    // TO  DO: A modificar a la fase 1 de la practica 2
-    // Cal calcular la normal a cada vertex a la CPU
+    /* Cal calcular la normal a cada vertex a la CPU */
     Index = 0;
     for(unsigned int i=0; i<cares.size(); i++){
         for(unsigned int j=0; j<cares[i].idxVertices.size(); j++){
@@ -163,28 +162,31 @@ void GPUMesh::make(){
 
 
 /**
- * @brief GPUMesh::initTexture
+ * @brief GPUMesh::initTextura
  */
-void GPUMesh::initTexture()
+void GPUMesh::initTextura()
  {
     // TO DO: A implementar a la fase 1 de la practica 2
     // Cal inicialitzar la textura de l'objecte: veure l'exemple del CubGPUTextura
     qDebug() << "Initializing textures...";
-    //trabaja con la primera unidad de textura (GLTexture0)
+
+    /* Treballa amb la primera unitat de textura (GLTexture0) */
     glActiveTexture(GL_TEXTURE0);
-    //configuración wrapmode, la textura se repetirá si está fuera de 0-1
+
+    /* Configuració wrapmode, la textura es repetirà si està fora de 0-1 */
     texture->setWrapMode(QOpenGLTexture::Repeat);
-    //aplica filtros
+
+    /* Apliquem filtres */
     texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
     texture->setMagnificationFilter(QOpenGLTexture::Linear);
-    //enlaza con el canal
-    texture->bind(0);
 
+    /* Bind amb el canal */
+    texture->bind(0);
  }
 
 void GPUMesh::setTexture(shared_ptr<QOpenGLTexture> t){
    texture = t;
-   initTexture();
+   initTextura();
 }
 
 void GPUMesh::setMaterial(shared_ptr<GPUMaterial> m) {

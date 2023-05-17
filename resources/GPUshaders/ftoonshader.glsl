@@ -48,7 +48,7 @@ void main()
     else
         color = vec4(0.2, 0.1 ,0.1, 1.0);
 
-    /* Calculem la silueta amb la fòrmula cos(alfa), on alfa
+    /* [OPCIONAL: Èmfasi de siluetes]-> Calculem la silueta amb la fòrmula cos(alfa), on alfa
     és el producte escalar entre la normal i el vector visió. */
 
     /* Si alfa = 0 tenim una cantonada. */

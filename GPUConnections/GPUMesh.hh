@@ -54,10 +54,9 @@ private:
 
     shared_ptr<QOpenGLTexture> texture;
 
-
     void make();
 
     void setTexture(shared_ptr<QOpenGLTexture> t);
-    void initTexture();
+    void initTextura();
 };
 
