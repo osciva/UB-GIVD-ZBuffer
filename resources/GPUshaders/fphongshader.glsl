@@ -19,7 +19,7 @@ struct Light
 
 uniform Light lights[1];
 
-/* Llum global */
+/* Global light */
 uniform vec3 ambientGlobalLight;
 
 /* Struct material */
@@ -34,12 +34,12 @@ struct Material
 
 uniform Material material;
 
-/* Posició de l'observador*/
+/* Observer position */
 uniform vec4 obs;
 
 void main()
 {
-    /* I = kaIa (ambient) + kdId cos( ⃗ L , ⃗ N ) (difosa) + ksIs cos( ⃗V, ⃗R)α (especular) */
+    /* I = kaIa (ambient) + kdId cos(L, N) (diffuse) + ksIs cos(V, R)^alpha (specular) */
     vec3 Itotal = ambientGlobalLight * material.Ka;
     vec3 Id;
     vec3 Is;
@@ -47,38 +47,38 @@ void main()
 
     vec4 N = fNormal;
     vec4 V = normalize(obs - fPosition);
-    vec4 L, H;
+    vec4 L, R;
 
-    float a, b, c, dist, attenuation;
+    float a, b, c, alpha, dist, attenuation;
 
-    for(int i = 0; i < lights.length(); i++){
+    for (int i = 0; i < lights.length(); i++) {
         /* Point light */
-        if(lights[i].type == 0){
+        if (lights[i].type == 0) {
             L = normalize(lights[i].position - fPosition);
             dist = length(L);
 
-            /*  Guardem els coeficients d'atenuació */
+            /* Store attenuation coeficients */
             a = lights[i].coeficients.x;
             b = lights[i].coeficients.y;
             c = lights[i].coeficients.z;
 
-            /* Càlcul de l'atenuació */
-            attenuation = (a*dist*dist) + (b*dist) + c;
+            /* Attenuation calculation */
+            attenuation = 1.0 / (a * dist * dist + b * dist + c);
         }
-
-        /* Llum direccional (no tenim posició, només direcció) */
-        else if(lights[i].type == 1){
+        /* Directional light (no position, only direction) */
+        else if (lights[i].type == 1) {
             L = normalize(-lights[i].direction);
             attenuation = 1.0;
         }
 
-        H = normalize(L+V);
-        Id = lights[i].id * material.Kd * max(dot(N,L), 0.0);
-        Is = lights[i].is * material.Ks * pow(max(dot(N,H), 0.0), material.shininess);
+        R = reflect(-L, N);
+        alpha = material.shininess;
+        Id = lights[i].id * material.Kd * max(dot(N, L), 0.0);
+        Is = lights[i].is * material.Ks * pow(max(dot(V, R), 0.0), alpha);
         Ia = lights[i].ia * material.Ka;
 
-        Itotal += (Id + Is)/attenuation + Ia;
+        Itotal += (Id + Is) * attenuation + Ia;
     }
 
-    colorOut =  vec4(Itotal,1.0);
+    colorOut = vec4(Itotal, 1.0);
 }
