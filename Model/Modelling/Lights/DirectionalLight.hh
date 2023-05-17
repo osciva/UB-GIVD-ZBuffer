@@ -5,7 +5,7 @@
 
 class DirectionalLight: public Light {
 public:
-    DirectionalLight() {};
+    DirectionalLight();
     /* En les llums direccionals no necessitem els coeficients d'atenuació
        (constants, lineals i quadràtics), ja que es considera que estan
        infinitament llunyans i la seva intensitat no disminueix amb la distància. */

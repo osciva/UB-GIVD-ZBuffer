@@ -5,7 +5,7 @@
 
 class SpotLight: public Light {
 public:
-    SpotLight() {};
+    SpotLight();
     SpotLight(vec3 posicio, vec3 direction, float opening, vec3 Ia, vec3 Id, vec3 Is, float a, float b, float c);
     virtual ~SpotLight() {}
 
