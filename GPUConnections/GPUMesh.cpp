@@ -113,7 +113,6 @@ void GPUMesh::toGPUTexture(shared_ptr<QGLShaderProgram> pr){
 }
 
 
-
 /**
  * Pintat en la GPU.
  * @brief GPUMesh::draw

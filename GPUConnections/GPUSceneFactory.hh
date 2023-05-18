@@ -17,8 +17,8 @@ public:
            TEMPORALVW
     } SCENE_TYPES;
 
-    GPUSceneFactory() {};
-    virtual ~GPUSceneFactory() {};
+    GPUSceneFactory() {}
+    virtual ~GPUSceneFactory() {}
 
     virtual shared_ptr<GPUScene> createScene() = 0;
     virtual shared_ptr<GPUScene> createScene(QString nomFitxer) = 0;

@@ -29,9 +29,6 @@ public:
         COLORMAP
     } MATERIAL_TYPES;
 
-    // AMPLIACIO: Posible objecte que no sigui un pla afitat: una esfera
-    shared_ptr<Object> basePlane;
-
     QString name;
 
     // dimensions de l'escena virtual que es renderintza: capsa mínima contenidora
@@ -58,12 +55,9 @@ public:
     // Retorna cert si existeix la interseccio, fals, en cas contrari
     virtual bool hit(Ray& raig, float tmin, float tmax, HitInfo& info) const override;
 
-
-
     // OPCIONAL: Mètode que retorna totes les interseccions que es troben al llarg del raig
     //    virtual bool allHits(const Ray& r, vector<shared_ptr<HitInfo> infos) const = 0;
 
     void update(int nframe);
-
 };
 

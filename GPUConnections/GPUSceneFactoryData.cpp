@@ -79,23 +79,27 @@ void GPUSceneFactoryData::read(const QJsonObject &json)
 
     if (json.contains("base") && json["base"].isObject()) {
         QJsonObject jbase = json["base"].toObject();
-        shared_ptr<Object> o;
+        shared_ptr<GPUFittedPlane> o;
+
         if (jbase.contains("type") && jbase["type"].isString()) {
 
             QString objStr = jbase["type"].toString().toUpper();
 
             // TO DO: Pràctica 2:  Afegeix l'objecte base a l'escena.
             // En aquestes linies es crea però no s'afegeix
-            // o = GPUObjectFactory::getInstance().createObject(ObjectFactory::getInstance().getObjectType(objStr));
-            // o->read(jbase);
+            o = GPUObjectFactory::getInstance().createFitted(ObjectFactory::getInstance().getObjectType(objStr));
+            o->read(jbase);
 
+            scene->setBasePlane(o);
         }
     }
 
     mapping = make_shared<VisualMapping>();
     mapping->read(json);
+
     if (json.contains("attributes") && json["attributes"].isArray()) {
       QJsonArray attributeMappingsArray = json["attributes"].toArray();
+
       for (int propIndex = 0; propIndex < attributeMappingsArray.size(); propIndex++) {
           QJsonObject propObject = attributeMappingsArray[propIndex].toObject();
           mapping->readAttribute(propObject);
@@ -205,14 +209,13 @@ shared_ptr<GPUScene> GPUSceneFactoryData::visualMaps() {
 
         // Per cada valor de l'atribut, cal donar d'alta un objecte (gizmo) a l'escena
         for (unsigned int j=0; j<dades[i].second.size(); j++) {
-            auto o = objectMaps(i);
+            auto o = objectMaps(i, j);
 
             // TODO: Pràctica 2: Afegir els materials
-            //o->setMaterial(materialMaps(i, j));
+            o->setMaterial(materialMaps(i, j));
 
              // Afegir objecte a l'escena virtual ja amb el seu material corresponent
-			 scene->addObject(o);
-
+             scene->addObject(o);
          }
     }
     return scene;
@@ -227,7 +230,7 @@ vec3 GPUSceneFactoryData::getPuntBase(ObjectFactory::OBJECT_TYPES gyzmo, vec2 pu
 }
 
 
-shared_ptr<GPUMesh> GPUSceneFactoryData::objectMaps(int i) {
+shared_ptr<GPUMesh> GPUSceneFactoryData::objectMaps(int i, int j) {
 
     // Gyzmo és el tipus d'objecte
 
@@ -236,6 +239,7 @@ shared_ptr<GPUMesh> GPUSceneFactoryData::objectMaps(int i) {
     o = dynamic_pointer_cast<GPUMesh>(GPUObjectFactory::getInstance().createObject(
                                           mapping->attributeMapping[i]->gyzmo));
 
+    vec3 y_plaBase = dynamic_pointer_cast<GPUFittedPlane>(scene->basePlane)->point;
     // TODO: Posa aqui el codi que tenies a la Pràctica 1
     //Fase 1. Cal situar l'objecte unitari creat al (0,0,0) a escala proporcional
     // monReal-monVirtual (valors de mapping) i el valor de la dada, i a la posició corresponent segons
@@ -243,16 +247,44 @@ shared_ptr<GPUMesh> GPUSceneFactoryData::objectMaps(int i) {
     // Dades (x, y, z) --> Escena Virtual (x_v, 0, z_v) i l'objecte escalat segons
     // la relació de y a escala amb el mon virtual
 
+    /* Guardem el punt en el món real i el valor que té en el món real*/
+    vec3 puntMonReal = vec3(dades[i].second[j][0], -1.0, dades[i].second[j][1]);
+    float valorMonReal = dades[i].second[j][2];
+    AttributeMapping* attributeMapping = mapping->attributeMapping[0];
+
     // a. Calcula primer l'escala
+    float valorMonVirtual;
+    shared_ptr<ScaleTG> sg;
+
+    float minVirtual = 0.1f, maxVirtual = (mapping->Vymax - mapping->Vymin) / 2;
+    float minReal = attributeMapping->minValue, maxReal = attributeMapping->maxValue;
+
+    valorMonVirtual = ((valorMonReal - minReal) / (maxReal - minReal));
+    valorMonVirtual = valorMonVirtual * (maxVirtual) + minVirtual;
+
+    sg = make_shared<ScaleTG>(vec3(valorMonVirtual, valorMonVirtual, -valorMonVirtual));
+
+    o->aplicaTG(sg);
+
     // b. Calcula la translació
-    // c. Aplica la TG a l'objecte usant
-    //        o->aplicaTG(transformacio)
+    float xVirtual, xReal = puntMonReal[0];
+    float yVirtual = 0.0;
+    float zVirtual, zReal = puntMonReal[2];
+
+    // Calculem x i z del punt virtual
+    xVirtual = (((xReal - mapping->Rxmin) * (mapping->Vxmax - mapping->Vxmin)) / (mapping->Rxmax - mapping->Rxmin)) + mapping->Vxmin;
+    zVirtual = (((zReal - mapping->Rzmin) * (mapping->Vzmax - mapping->Vzmin)) / (mapping->Rzmax - mapping->Rzmin)) + mapping->Vzmin;
+
+    vec3 puntVirtual = vec3(xVirtual, -yVirtual, -zVirtual);
+
+    shared_ptr<TranslateTG> tg = make_shared<TranslateTG>(puntVirtual);
+    o->aplicaTG(tg);
 
     return o;
 }
 
 // TODO Pràctica 2: Fase 1
-/*shared_ptr<Material> GPUSceneFactoryData::materialMaps(int i,  int j) {
+shared_ptr<GPUMaterial> GPUSceneFactoryData::materialMaps(int i,  int j) {
 
     AttributeMapping *propinfo = mapping->attributeMapping[i];
 
@@ -261,19 +293,15 @@ shared_ptr<GPUMesh> GPUSceneFactoryData::objectMaps(int i) {
 
     float valorDada = dades[i].second[j][2];
 
-
     // TODO: Pràctica 2: Fase 1: Cal fer una Factory de GPU Materials
-    //auto tMat = GPUMaterialFactory::getInstance().getIndexType(propinfo->material);
+    auto tMat = GPUMaterialFactory::getInstance().getIndexType(propinfo->material);
 
-    // Calcul de l'index de la paleta
+    /* Calcul de l'index de la paleta */
     int idx = (int)(255.0*(valorDada-propinfo->minValue)/(propinfo->maxValue-propinfo->minValue));
 
-    // TODO: Pràctica 2: Fase 1: Cal fer una Factory de GPU Materials
-    //auto tMat = GPUMaterialFactory::getInstance().getIndexType(propinfo->material);
-
-   // return GPUMaterialFactory::getInstance().createMaterial(propinfo->material->Ka,
-   //                                                      cm->getColor(idx),
-   //                                                      propinfo->material->Ks,
-   //                                                      propinfo->material->shininess,
-   //                                                      propinfo->material->opacity, tMat);
-}*/
+    return GPUMaterialFactory::getInstance().createMaterial(propinfo->material->Ka,
+                                                         cm->getColor(idx),
+                                                         propinfo->material->Ks,
+                                                         propinfo->material->shininess,
+                                                         propinfo->material->opacity, tMat);
+}

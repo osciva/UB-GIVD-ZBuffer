@@ -4,45 +4,63 @@ FittedPlane::FittedPlane()
 {
     qDebug() << "Estic en el constructor del FittedPlane\n";
     /* FittedPlane centrat al 0,0,0 amb dimensió 1 a totes les seves arestes */
-    w = 1.0;
-    h = 1.0;
-    d = 1.0;
+    normal = vec3(0.0, 0.0, 1.0);
+    point = vec3(0.0, 0.0, 0.0);
+    pmin = vec2(-0.5, -0.5);
+    pmax = vec2(0.5, 0.5);
 
-    /* vertex of a unit FittedPlanee centered at origin, sides aligned with axes */
-    vertex[0] = point4( -0.5, -0.5,  0.5, 1.0 );
-    vertex[1] = point4( -0.5,  0.5,  0.5, 1.0 );
-    vertex[2] = point4(  0.5,  0.5,  0.5, 1.0 );
-    vertex[3] = point4(  0.5, -0.5,  0.5, 1.0 );
+    /* Amb dos triangles ja formem un pla */
+    vertexs[0] = point4(point.x - pmin.x, point.y - pmin.y, point.z, 1.0);
+    vertexs[1] = point4(point.x - pmin.x, point.y + pmax.y, point.z, 1.0);
+    vertexs[2] = point4(point.x + pmax.x, point.y - pmin.y, point.z, 1.0);
+    vertexs[3] = point4(point.x + pmax.x, point.y + pmax.y, point.z, 1.0);
+
+    // RGBA colors
+    colors[0] = color4(1.0, 0.0, 0.0, 1.0);  // red
+    colors[1] = color4(0.0, 1.0, 0.0, 1.0);  // green
+    colors[2] = color4(0.0, 0.0, 1.0, 1.0);  // blue
+    colors[3] = color4(1.0, 1.0, 1.0, 1.0);  // white
+
+    make();
 }
 
-// Constructora amb tots els parametres
-FittedPlane::FittedPlane(int an, int al, int profu)
+/* Constructora amb tots els parametres */
+FittedPlane::FittedPlane(vec3 normal, vec3 point, vec2 pmin, vec2 pmax)
 {
     qDebug() << "Estic en el constructor parametritzat del FittedPlane\n";
-    w = an;
-    h = al;
-    d = profu;
+    this->normal = normal;
+    this->point = point;
+    this->pmin = pmin;
+    this->pmax = pmax;
+
+    /* Amb dos triangles ja formem un pla */
+    vertexs[0] = point4(point.x - pmin.x, point.y - pmin.y, point.z, 1.0);
+    vertexs[1] = point4(point.x - pmin.x, point.y + pmax.y, point.z, 1.0);
+    vertexs[2] = point4(point.x + pmax.x, point.y - pmin.y, point.z, 1.0);
+    vertexs[3] = point4(point.x + pmax.x, point.y + pmax.y, point.z, 1.0);
+
+    colors[0] = color4(1.0, 0.0, 0.0, 1.0);  // red
+    colors[1] = color4(0.0, 1.0, 0.0, 1.0);  // green
+    colors[2] = color4(0.0, 0.0, 1.0, 1.0);  // blue
+    colors[3] = color4(1.0, 1.0, 1.0, 1.0);  // white
+
+    make();
 }
 
-// Destructora
-FittedPlane::~FittedPlane()
+
+/* Generem els dos triangles */
+void FittedPlane::triangle(int a, int b, int c)
 {
+    vertexs_colors[Index] = colors[a]; points[Index] = vertexs[a]; Index++;
+    vertexs_colors[Index] = colors[b]; points[Index] = vertexs[b]; Index++;
+    vertexs_colors[Index] = colors[c]; points[Index] = vertexs[c]; Index++;
 }
 
-// quad generates two triangles for each face and assigns colors
-//    to the vertex
+void FittedPlane::make(){
+    qDebug() << "Inside FittedPlane make method\n";
+    Index = 0;
 
-void FittedPlane::quad( int a, int b, int c, int d )
-{
-    points[Index] = vertex[a]; Index++;
-    points[Index] = vertex[b]; Index++;
-    points[Index] = vertex[c]; Index++;
-    points[Index] = vertex[a]; Index++;
-    points[Index] = vertex[c]; Index++;
-    points[Index] = vertex[d]; Index++;
+    triangle(0, 1, 2);
+    triangle(2, 1, 3);
 }
 
-void FittedPlane::read(const QJsonObject &json)
-{
-
-}

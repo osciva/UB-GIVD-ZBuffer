@@ -17,4 +17,7 @@ private:
 public:
     shared_ptr<GPUMaterial> createMaterial(MaterialFactory::MATERIAL_TYPES t);
     shared_ptr<GPUMaterial> createMaterial(vec3 a, vec3 d, vec3 s, float shin, float opacity, MaterialFactory::MATERIAL_TYPES t);
+    MaterialFactory::MATERIAL_TYPES getIndexType (shared_ptr<GPUMaterial> m);
+    MaterialFactory::MATERIAL_TYPES getMaterialType( QString name);
+    QString        getNameType(MaterialFactory::MATERIAL_TYPES  t);
 };

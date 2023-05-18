@@ -8,14 +8,16 @@
 #include "GPUConnections/GPUSceneFactory.hh"
 #include "GPUConnections/GPUObjectFactory.hh"
 #include "GPUConnections/GPUScene.hh"
+#include "Model/Modelling/TG/TranslateTG.hh"
+#include "Model/Modelling/TG/ScaleTG.hh"
 
 // TODO Pràctica 2: Fase 1 construir la Factoria de Materials
-//#include "GPUConnections/GPUMaterialFactory.hh"
+#include "GPUConnections/GPUMaterialFactory.hh"
 
 class GPUSceneFactoryData: public GPUSceneFactory
 {
 public:
-    GPUSceneFactoryData(){};
+    GPUSceneFactoryData(){}
     GPUSceneFactoryData(shared_ptr<VisualMapping> mr);
 
     shared_ptr<GPUScene>  createScene(QString nomFitxer) override;
@@ -39,9 +41,8 @@ protected:
     void writeData (QJsonObject &json, int i) const ;
 
     shared_ptr<GPUScene>    visualMaps();
-    virtual shared_ptr<GPUMesh>   objectMaps(int i);
+    virtual shared_ptr<GPUMesh>   objectMaps(int i, int j);
     // TODO: Pràctica 2: Fase 1
-    // virtual shared_ptr<GPUMaterial> materialMaps(int i, int j);
-
+    virtual shared_ptr<GPUMaterial> materialMaps(int i, int j);
 };
 

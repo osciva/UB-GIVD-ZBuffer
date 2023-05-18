@@ -6,11 +6,11 @@ Object::Object()
 }
 
 
-void Object::setMaterial(shared_ptr<Material> m) {
+void Object::setMaterial(shared_ptr<GPUMaterial> m) {
     material = m;
 }
 
-shared_ptr<Material> Object::getMaterial() {
+shared_ptr<GPUMaterial> Object::getMaterial() {
     return material;
 }
 
@@ -21,10 +21,9 @@ void Object::read (const QJsonObject &json)
         if (auxMat.contains("type") && auxMat["type"].isString()) {
             QString tipus = auxMat["type"].toString().toUpper();
             MaterialFactory::MATERIAL_TYPES t = MaterialFactory::getInstance().getMaterialType(tipus);
-            material = MaterialFactory::getInstance().createMaterial(t);
+            material = GPUMaterialFactory::getInstance().createMaterial(t);
             material->read(auxMat);
         }
-
     }
 
     if (json.contains("name") && json["name"].isString())

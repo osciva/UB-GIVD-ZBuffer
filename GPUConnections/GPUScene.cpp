@@ -9,6 +9,9 @@ GPUScene::GPUScene()
     capsaMinima.a = 2;
     capsaMinima.h = 2;
     capsaMinima.p = 2;
+
+    shared_ptr<GPUFittedPlane> fitted = make_shared<GPUFittedPlane>();
+    setBasePlane(fitted);
 }
 /**
  * @brief GPUScene::~GPUScene
@@ -41,6 +44,7 @@ void GPUScene::toGPU(shared_ptr<QGLShaderProgram> p) {
                 mesh->toGPU(p);
         }
     }
+    if (this->basePlane) this->basePlane->toGPU(p);
 }
 
 /**
@@ -53,6 +57,7 @@ void GPUScene::draw() {
                 mesh->draw();
         }
     }
+    if (this->basePlane) this->basePlane->draw();
 }
 
 /**
@@ -91,4 +96,8 @@ void GPUScene::calculCapsaMinCont3DEscena()
     capsaMinima.a = pmax[0]-capsaMinima.pmin[0];
     capsaMinima.h = pmax[1]-capsaMinima.pmin[1];
     capsaMinima.p = pmax[2]-capsaMinima.pmin[2];
+}
+
+void GPUScene::setBasePlane(shared_ptr<GPUFittedPlane> plane) {
+    this->basePlane = plane;
 }

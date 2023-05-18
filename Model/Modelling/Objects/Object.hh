@@ -4,6 +4,7 @@
 #include "Model/Modelling/Animation.hh"
 
 #include "Model/Modelling/Materials/MaterialFactory.hh"
+#include "GPUConnections/GPUMaterialFactory.hh"
 #include "DataInOut/Serializable.hh"
 
 
@@ -14,7 +15,7 @@ using namespace std;
 class Object: public Hitable, public Animable, public Serializable {
   public:
     Object();
-    virtual ~Object() {};
+    virtual ~Object() {}
 
     // Metodes a implementar en les classes filles: son  metodes abstractes
     virtual bool hit(Ray& r, float tmin, float tmax, HitInfo& info) const override = 0;
@@ -27,12 +28,12 @@ class Object: public Hitable, public Animable, public Serializable {
     virtual void write(QJsonObject &json) const override;
     virtual void print(int indentation) const override;
 
-    void     setMaterial(shared_ptr<Material> m);
+    void     setMaterial(shared_ptr<GPUMaterial> m);
 
-    shared_ptr<Material> getMaterial();
+    shared_ptr<GPUMaterial> getMaterial();
     QString name;
 
 protected:
-    shared_ptr<Material> material;   // Material de l'objecte
+    shared_ptr<GPUMaterial> material;   // Material de l'objecte
 };
 

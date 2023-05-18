@@ -24,8 +24,8 @@ void AttributeMapping::read(const QJsonObject &json)
         QJsonObject auxMat = json["material"].toObject();
         if (auxMat.contains("type") && auxMat["type"].isString()) {
             QString tipus = auxMat["type"].toString().toUpper();
-            MaterialFactory::MATERIAL_TYPES t = MaterialFactory::getInstance().getMaterialType(tipus);
-            material = MaterialFactory::getInstance().createMaterial(t);
+            MaterialFactory::MATERIAL_TYPES t = GPUMaterialFactory::getInstance().getMaterialType(tipus);
+            material = GPUMaterialFactory::getInstance().createMaterial(t);
             material->read(auxMat);
         }
     }
@@ -33,7 +33,6 @@ void AttributeMapping::read(const QJsonObject &json)
         QString objStr = json["colorMap"].toString().toUpper();
         colorMapType = ColorMapStatic::getColorMapType(objStr);
     }
-
 }
 //! [0]
 
