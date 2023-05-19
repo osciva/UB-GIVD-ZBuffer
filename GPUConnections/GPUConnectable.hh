@@ -1,9 +1,9 @@
 #pragma once
 
-
+#include "library/Common.h"
 #include <memory>
 #include <stdlib.h>
-#include "library/Common.h"
+
 #include <QGLShaderProgram>
 
 

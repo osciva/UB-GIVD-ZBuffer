@@ -1,3 +1,4 @@
+#include "library/Common.h"
 #include "ViewGL/GLWidget.hh"
 
 
