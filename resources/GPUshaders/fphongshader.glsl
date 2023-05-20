@@ -2,6 +2,7 @@
 
 in vec4 fPosition;
 in vec4 fNormal;
+in vec4 color;
 out vec4 colorOut;
 
 /* Struct light */
@@ -134,8 +135,9 @@ void main()
         if (distanceToSphere <= 0.7) {
             /* Apply blue tint to fragments inside the sphere */
             Itotal.rgb *= vec3(0.6, 0.6, 1.5);
+            colorOut = vec4(Itotal, 1.0);
+        }else{
+            colorOut = color;
         }
-    }
-
-    colorOut = vec4(Itotal, 1.0);
+    }    
 }
