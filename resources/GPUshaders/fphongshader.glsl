@@ -45,6 +45,8 @@ uniform bool useBlinnPhong;
 /* Night vision model switch */
 uniform bool useNightVision;
 
+uniform bool useForniteStorm;
+
 void main()
 {
     /* I = kaIa (ambient) + kdId cos(L, N) (diffuse) + ksIs cos(V, R)^alpha (specular) */
@@ -112,6 +114,17 @@ void main()
             /* La resta de color negre */
             Itotal = vec3(0.0, 0.0, 0.0);
         }
+    }
+
+    if (useForniteStorm) {
+        /* Calculem la distància des del gl_FragCoordCalculate distance al centre del viewport */
+        /* Comprovem si està dins del radi */
+
+            /* La resta de color negre */
+        Itotal.r = Itotal.r * 0;
+        Itotal.g = Itotal.g * 0;
+        Itotal.b = Itotal.b;
+
     }
 
     colorOut = vec4(Itotal, 1.0);

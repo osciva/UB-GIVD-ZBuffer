@@ -277,7 +277,22 @@ void GLWidget::activaNightVision() {
 
      /* Set the useNightVision uniform variable */
      GLint useNightVisionLocation = program->uniformLocation("useNightVision");
-     glUniform1i(useBlinnPhongLocation, true);
+     glUniform1i(useNightVisionLocation, true);
+     updateShader();
+}
+
+void GLWidget::activaForniteStorm() {
+     qDebug()<<"Estic a Fornite Storm";
+
+     currentShader = GLShader::PHONG;
+     useShader(currentShader);
+     /* Set the useBlinnPhong uniform variable */
+     GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
+     glUniform1i(useBlinnPhongLocation, false);
+
+     /* Set the useNightVision uniform variable */
+     GLint useForniteStormLocation = program->uniformLocation("useForniteStorm");
+     glUniform1i(useForniteStormLocation, true);
      updateShader();
 }
 

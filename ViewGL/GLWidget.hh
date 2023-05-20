@@ -57,6 +57,7 @@ public slots:
     void activaBlinnPhongShader();
     void activaToonShader();
 
+    void activaForniteStorm();
     void activaNightVision();
     void activaEnvMapping();
     void activaReflection();
