@@ -132,10 +132,10 @@ void main()
         /* Check if the fragment is inside the sphere */
         if (distanceToSphere <= 0.7) {
             /* Apply blue tint to fragments inside the sphere */
-            Itotal.rgb *= vec3(0.6, 0.6, 1.5);
-            colorOut = vec4(Itotal, 1.0);
-        }else{
+            //color.g = 0.0;
             colorOut = color;
+        }else{
+            colorOut = vec4(Itotal, 1.0);
         }
     }else{
         colorOut = vec4(Itotal, 1.0);

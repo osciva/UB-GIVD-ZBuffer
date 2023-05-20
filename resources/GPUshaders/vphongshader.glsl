@@ -103,5 +103,6 @@ void main()
         Ia = lights[i].ia * material.Ka;
         Itotal += ((Id + Is)/attenuation) + Ia;
     }
+    Itotal.rgb *= vec3(0.6, 0.6, 1.5);
     color = vec4(Itotal,1.0);
 }
