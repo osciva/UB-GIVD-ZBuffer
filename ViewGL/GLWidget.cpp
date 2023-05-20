@@ -1,9 +1,11 @@
+#include "library/Common.h"
 #include "ViewGL/GLWidget.hh"
 
 
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers), parent) {
 
     setFocusPolicy( Qt::StrongFocus );
+
 
 }
 
@@ -219,8 +221,7 @@ void GLWidget::activaGouraudShader() {
 
     /* Set the useBlinnPhong uniform variable */
     GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
-    glUniform1i(useBlinnPhongLocation, false);
-
+    glUniform1i(useBlinnPhongLocation, false);  // Use the OpenGL function through glFuncs
     updateShader();
 }
 
@@ -228,11 +229,10 @@ void GLWidget::activaPhongShader() {
     qDebug()<<"Estic a Phong Shader";
     currentShader = GLShader::PHONG;
     useShader(currentShader);
+    GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
 
     /* Set the useBlinnPhong uniform variable */
-    GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
-    glUniform1i(useBlinnPhongLocation, false);
-
+    glUniform1i(useBlinnPhongLocation, false);  // Use the OpenGL function through glFuncs
     updateShader();
 }
 
@@ -240,10 +240,9 @@ void GLWidget::activaGouraudBlinnShader() {
     qDebug()<<"Estic a Gouraud - Blinn-Phong shader";
     currentShader = GLShader::GOURAUDPHONG;
     useShader(currentShader);
-
     /* Set the useBlinnPhong uniform variable */
     GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
-    glUniform1i(useBlinnPhongLocation, true);
+    glUniform1i(useBlinnPhongLocation, true);  // Use the OpenGL function through glFuncs
 
     updateShader();
 }
@@ -255,7 +254,7 @@ void GLWidget::activaBlinnPhongShader() {
 
     /* Set the useBlinnPhong uniform variable */
     GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
-    glUniform1i(useBlinnPhongLocation, true);
+    glUniform1i(useBlinnPhongLocation, false);  // Use the OpenGL function through glFuncs
 
     updateShader();
 }
@@ -272,15 +271,13 @@ void GLWidget::activaNightVision() {
 
      currentShader = GLShader::PHONG;
      useShader(currentShader);
-
      /* Set the useBlinnPhong uniform variable */
      GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
      glUniform1i(useBlinnPhongLocation, false);
 
      /* Set the useNightVision uniform variable */
      GLint useNightVisionLocation = program->uniformLocation("useNightVision");
-     glUniform1i(useNightVisionLocation, true);
-
+     glUniform1i(useBlinnPhongLocation, true);
      updateShader();
 }
 
