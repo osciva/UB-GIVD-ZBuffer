@@ -118,9 +118,7 @@ void main()
             /* La resta de color negre */
             Itotal = vec3(0.0, 0.0, 0.0);
         }
-    }
-
-    if (useForniteStorm) {
+    }else if (useForniteStorm) {
         /* Transform the 3d coordenates to 2d viewport ones */
         vec4 worldPosition = model_view * fPosition;
         vec4 projectedPosition = projection * worldPosition;
@@ -139,5 +137,7 @@ void main()
         }else{
             colorOut = color;
         }
-    }    
+    }else{
+        colorOut = vec4(Itotal, 1.0);
+    }
 }
