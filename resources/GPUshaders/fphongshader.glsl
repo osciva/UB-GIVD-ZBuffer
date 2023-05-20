@@ -39,6 +39,9 @@ uniform vec4 obs;
 
 uniform vec2 viewportSize;
 
+uniform mat4 model_view;
+uniform mat4 projection;
+
 /* Shading model switch */
 uniform bool useBlinnPhong;
 
@@ -117,14 +120,21 @@ void main()
     }
 
     if (useForniteStorm) {
-        /* Calculem la distància des del gl_FragCoordCalculate distance al centre del viewport */
-        /* Comprovem si està dins del radi */
+        /* Transform the 3d coordenates to 2d viewport ones */
+        vec4 worldPosition = model_view * fPosition;
+        vec4 projectedPosition = projection * worldPosition;
 
-            /* La resta de color negre */
-        Itotal.r = Itotal.r * 0;
-        Itotal.g = Itotal.g * 0;
-        Itotal.b = Itotal.b;
+        /* Center of the sphere in projection space */
+        vec4 sphereCenter = projection * vec4(0.0, 0.0, 0.0, 1.0);
 
+        /* Distance from the fragment to the center of the sphere in projection space */
+        float distanceToSphere = length(projectedPosition - sphereCenter);
+
+        /* Check if the fragment is inside the sphere */
+        if (distanceToSphere <= 0.7) {
+            /* Apply blue tint to fragments inside the sphere */
+            Itotal.rgb *= vec3(0.6, 0.6, 1.5);
+        }
     }
 
     colorOut = vec4(Itotal, 1.0);
