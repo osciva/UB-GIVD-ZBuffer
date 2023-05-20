@@ -99,68 +99,10 @@ Raona on es calcula la il·luminació i modifica convenientment els fitxers de l
 
 ### ZBufferToy outputs
 
-
-<p align="center">
-  <b>Color Shader</b>
-</p>
-
-<p align="center">
-  <img src="https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/3eceb573-c6e8-4105-a37c-2dba715994c8" alt="color">
-</p>
-
-<p align="center">
-  <b>Normal Shader</b>
-</p>
-
-<p align="center">
-  <img src="https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/26bf241e-6e3d-4d6a-9653-3a04cca247c2" alt="normal">
-</p>
-
-<p align="center">
-  <b>Depth Shader</b>
-</p>
-
-<p align="center">
-  <img src="https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/4cfda1c0-fdaa-4c4f-bc4e-f10a63495626" alt="depth">
-</p>
-
-<p align="center">
-  <b>Gouraud-Phong Shader</b>
-</p>
-
-<p align="center">
-  <img src="https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/42bfcc7f-674c-41bd-9751-2934a7742ed1" alt="Gouraud-Phong">
-</p>
-
-<p align="center">
-  <b>Phong Shader</b>
-</p>
-
-<p align="center">
-  <img src="https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/dbebb9e0-6967-4e5e-9444-be21f633b480" alt="Phong">
-</p>
-
-<p align="center">
-  <b>Gouraud-Blinn-Phong Shader</b>
-</p>
-
-<p align="center">
-  <img src="https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/cfe45e99-90ae-4357-abb4-799fcf167252" alt="Gouraud-BlinnPhong">
-</p>
-
-<p align="center">
-  <b>Blinn-Phong Shader</b>
-</p>
-
-<p align="center">
-  <img src="https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/36b73ebd-2c54-4424-879d-ff06182c0d4d" alt="Blinn-Phong">
-</p>
-
-<p align="center">
-  <b>Cell Shader</b>
-</p>
-
-<p align="center">
-  <img src="https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/a85ce1e8-8d3e-416a-b6e1-365d922640bd" alt="Toon">
-</p>
-
+| Color Shader | Normal Shader | Depth Shader |
+|--------------|---------------|--------------|
+| ![Color](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/3eceb573-c6e8-4105-a37c-2dba715994c8) | ![Normal](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/26bf241e-6e3d-4d6a-9653-3a04cca247c2) | ![Depth](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/4cfda1c0-fdaa-4c4f-bc4e-f10a63495626) |
+| Gouraud-Phong Shader | Phong Shader | Gouraud-Blinn-Phong Shader |
+| ![Gouraud-Phong](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/42bfcc7f-674c-41bd-9751-2934a7742ed1) | ![Phong](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/dbebb9e0-6967-4e5e-9444-be21f633b480) | ![Gouraud-BlinnPhong](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/cfe45e99-90ae-4357-abb4-799fcf167252) |
+| Blinn-Phong Shader | Cell Shader |
+| ![Blinn-Phong](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/36b73ebd-2c54-4424-879d-ff06182c0d4d) | ![Toon](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/a85ce1e8-8d3e-416a-b6e1-365d922640bd) |
