@@ -85,9 +85,9 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
     *  A més, si la teva escena està canviant (per exemple, si els objectes es mouen o canvien de color), hauràs de passar aquestes dades actualitzades a la GPU cada vegada que es produeixin aquests canvis, però          això és independent del canvi de shader.
 
     *  Prova a posar a la teva escena dos objectes amb materials diferents. Es pinta cadascun amb el seu material?
-       Sí, com es pot comprovar en la següent imatge, l'F16 es pinta de blanc i el cub es pinta d'un color vermellós. Hem utilitzat el color shader.
+       * Sí, com es pot comprovar en la següent imatge, l'F16 es pinta de blanc i el cub es pinta d'un color vermellós. Hem utilitzat el color shader.
     
-       ![2Materials](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/e977b9a3-9002-4e90-b782-3e86b77a1834)
+       <img src="https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/e977b9a3-9002-4e90-b782-3e86b77a1834" width="50%" height="50%">
 
     *  Fixa't que quan es llegeix un objecte, cada vèrtex ja té la seva normal. Com serà aquest valor de la normal? Uniform o no uniform? En la classe Camera utilitza el mètode toGPU per a passar l'observador als        shaders per a que es passi laposició de l'observador cada vegada que s'actualitza la posició de la càmera amb el ratolí. Com serà aquesta variable al shader? Uniform? O IN?
     
