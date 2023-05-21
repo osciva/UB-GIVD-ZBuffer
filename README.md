@@ -87,8 +87,9 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
     *  Prova a posar a la teva escena dos objectes amb materials diferents. Es pinta cadascun amb el seu material?
        * Sí, com es pot comprovar en la següent imatge, l'F16 es pinta de blanc i el cub es pinta d'un color vermellós. Hem utilitzat el color shader.
     
-       <img src="https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/e977b9a3-9002-4e90-b782-3e86b77a1834" width="50%" height="50%">
-
+       <p align="center">
+        <img width="300px" height="300px" src="https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/e977b9a3-9002-4e90-b782-3e86b77a1834" 
+       </p>
     *  Fixa't que quan es llegeix un objecte, cada vèrtex ja té la seva normal. Com serà aquest valor de la normal? Uniform o no uniform? En la classe Camera utilitza el mètode toGPU per a passar l'observador als        shaders per a que es passi laposició de l'observador cada vegada que s'actualitza la posició de la càmera amb el ratolí. Com serà aquesta variable al shader? Uniform? O IN?
     
     *  Cal tenir un parell de vèrtex-fragment shader? O dos?
@@ -137,6 +138,6 @@ Quina diferència hi ha amb el Gouraud-shading? On l'has de codificar? Necessite
 |--------------|---------------|--------------|
 | ![Color](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/3eceb573-c6e8-4105-a37c-2dba715994c8) | ![Normal](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/26bf241e-6e3d-4d6a-9653-3a04cca247c2) | ![Depth](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/4cfda1c0-fdaa-4c4f-bc4e-f10a63495626) |
 | Gouraud-Phong Shader | Phong Shader | Gouraud-Blinn-Phong Shader |
-| ![Gouraud-Phong](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/42bfcc7f-674c-41bd-9751-2934a7742ed1) | ![Phong](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/dbebb9e0-6967-4e5e-9444-be21f633b480) | ![Gouraud-BlinnPhong](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/cfe45e99-90ae-4357-abb4-799fcf167252) |
+| ![Gouraud-Phong](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/42bfcc7f-674c-41bd-9751-2934a7742ed1) | ![phong esfera](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/c633785b-0f05-4d2a-820c-af55135d02af) | ![Gouraud-BlinnPhong](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/cfe45e99-90ae-4357-abb4-799fcf167252) |
 | Blinn-Phong Shader | Cell Shader |
-| ![Blinn-Phong](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/36b73ebd-2c54-4424-879d-ff06182c0d4d) | ![Toon](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/a85ce1e8-8d3e-416a-b6e1-365d922640bd) |
+| ![blinn phong esfera](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/29ba8e06-bb97-4176-88f8-a4a82348731f)| ![Toon](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/a85ce1e8-8d3e-416a-b6e1-365d922640bd) |
