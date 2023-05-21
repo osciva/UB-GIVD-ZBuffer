@@ -55,13 +55,24 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
 
 - Preguntes -> Fase 1:
     *   On es declara la llum? Quan es passa a la GPU?
+        *   La llum es declara a LightFactory, al mètode createLight(). Es passa a la GPU amb el seu mètode toGPU()
     *   Què contindrà el "struct" de la GPU? Com l’estructurareu?
+        *   L'estructura per passar l'informació relativa a les llums cap a la GPU, serà la següent:
+         ```glsl
+        struct lights_id{
+            GLuint type;
+            GLuint ia;
+            GLuint id;
+            GLuint is;
+            GLuint coeficients;
+            GLuint position;       
+        }
     *   Si vols utilitzar diferents shaders en temps d'execució raona on s'inicialitzaran els shaders i com controlar quin shader s'usa? Cal tornar a passar l'escena a la GPU quan es canvia de shader?
-        * Per utilitzar diferents shaders en temps d'execució, primer es necessita inicialitzar els shaders que es vol utilitzar. Això es f fer al mètode initializeGL(), on es crida al mètode initShadersGPU().               Aquest mètode inicialitza diversos shaders amb codi vertex i fragment específic.
+        * Per utilitzar diferents shaders en temps d'execució, primer es necessita inicialitzar els shaders que es vol utilitzar. Això es f fer al mètode initializeGL(), on es crida al mètode initShadersGPU(). Aquest mètode inicialitza diversos shaders amb codi vertex i fragment específic.
 
-          Per controlar quin shader s'utilitza, es poden utilitzar mètodes separats que s'encarreguen d'activar un shader específic, com activaColorShader(), activaDepthShader(), activaNormalShader(), etc.                   Aquests mètodes primer estableixen la variable currentShader amb el tipus de shader desitjat i després criden a useShader(), que obté el programa de shader corresponent de la llista de shaders i activa             aquest programa.
+          Per controlar quin shader s'utilitza, es poden utilitzar mètodes separats que s'encarreguen d'activar un shader específic, com activaColorShader(), activaDepthShader(), activaNormalShader(), etc. Aquests mètodes primer estableixen la variable currentShader amb el tipus de shader desitjat i després criden a useShader(), que obté el programa de shader corr esponent de la llista de shaders i activa aquest programa.
 
-          Un cop s'ha canviat de shader, no cal tornar a passar tota l'escena a la GPU. No obstant això, és possible que s'hagi de passar dades específiques a la GPU que el nou shader utilitza. En el nostre cas es             veu que després de canviar el shader es crida a updateShader(), que passa les dades de llum a la GPU i actualitza l'escena a la GPU.
+          Un cop s'ha canviat de shader, no cal tornar a passar tota l'escena a la GPU. No obstant això, és possible que s'hagi de passar dades específiques a la GPU que el nou shader utilitza. En el nostre cas es veu que després de canviar el shader es crida a updateShader(), que passa les dades de llum a la GPU i actualitza l'escena a la GPU.
           
           ```glsl
           void GLWidget::updateShader() {
