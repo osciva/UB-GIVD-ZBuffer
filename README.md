@@ -80,19 +80,16 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
           Controller::getInstance()->getScene()->toGPU(program);
           updateGL();
           }
-          
-
-    *  A més, si la teva escena està canviant (per exemple, si els objectes es mouen o canvien de color), hauràs de passar aquestes dades actualitzades a la GPU cada vegada que es produeixin aquests canvis, però          això és independent del canvi de shader.
 
     *  Prova a posar a la teva escena dos objectes amb materials diferents. Es pinta cadascun amb el seu material?
        * Sí, com es pot comprovar en la següent imatge, l'F16 es pinta de blanc i el cub es pinta d'un color vermellós. Hem utilitzat el color shader.
     
        <p align="center">
-        <img width="50%" height="50%" src="https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/e977b9a3-9002-4e90-b782-3e86b77a1834">
+        <img width="300px" height="300px" src="https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/e977b9a3-9002-4e90-b782-3e86b77a1834">
        </p>
 
-
-    *  Fixa't que quan es llegeix un objecte, cada vèrtex ja té la seva normal. Com serà aquest valor de la normal? Uniform o no uniform? En la classe Camera utilitza el mètode toGPU per a passar l'observador als        shaders per a que es passi laposició de l'observador cada vegada que s'actualitza la posició de la càmera amb el ratolí. Com serà aquesta variable al shader? Uniform? O IN?
+    *  Fixa't que quan es llegeix un objecte, cada vèrtex ja té la seva normal. Com serà aquest valor de la normal? Uniform o no uniform? En la classe Camera utilitza el mètode toGPU per a passar l'observador als shaders per a que es passi la posició de l'observador cada vegada que s'actualitza la posició de la càmera amb el ratolí. Com serà aquesta variable al shader? Uniform? O IN?
+        *   El valor de la normal no ha de ser uniform ja que es diferent a cada vèrtex, en canvi, l'observador es comú, per això l'observador als shaders sí que és uniform.
     
     *  Cal tenir un parell de vèrtex-fragment shader? O dos? (Utilització del Gouraud-Phong i Gouraud-Blinn Phong)
         * No cal tenir dos parell de vèrtex-fragment, amb un encarregat del Gouraud (tant Gouraud-Phong com Gouraud-Blinn Phong) és suficient. Només hem de configurar una variable booleana uniform per saber si utilitzem Blinn Phong o, en cas de no estar activada, utilitzar Phong. El càlcul ho realitzem en el vertex shading, ja que el Gouraud ho calcula en aquest shader.
@@ -105,14 +102,12 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
                 R = reflect(-L, N);
                 Is = lights[i].is * material.Ks * pow(max(dot(V,R), 0.0), material.shininess);
             }
-        
-    
+      
     *  Raona on s'inicialitzaran els shaders i com controlar quin shader s'usa. Cal tornar a passar l'escena a la GPU quan es canvia de shader? I també la càmera?
-
+        *   Com hem mencionat anteriorment, un cop s'ha canviat de shader, no cal tornar a passar tota l'escena ni la càmara a la GPU. No obstant això, és possible que s'hagi de passar dades específiques a la GPU que el nou shader utilitza. En el nostre cas es veu que després de canviar el shader es crida a updateShader(), que passa les dades de llum a la GPU i actualitza l'escena a la GPU.
+        
     * Implementa el Phong-shading per a les dues versions de la fórmula de càlcul de la il·luminació. Quina diferència hi ha amb el Gouraud-shading? On l'has de codificar? Necessites uns nous vertex-shader i fragment-shader?
-      * En el Gouraud-Shading l'intensitat de la llum es calcula als vèrtexs dels triangles que formen la superfície. Llavors, aquestes intensitats s'interpolen linealment a través de les cares del triangle per obtenir el color de cada píxel. Aquesta tècnica és ràpida, però pot produir resultats no realistes quan es tracta de llum especular intensa o quan el model geomètric utilitza polígons grans. En canvi en el Phong Shading l'interpolació es realitza en els vectors normals als vèrtexs, no en les intensitats de la llum. Llavors, es calcula la intensitat de la llum a cada píxel utilitzant la normal interpolada. Aquesta tècnica és més costosa en termes de recursos computacionals, però produeix resultats més realistes, en especial quan es tracta de llum especular. 
-
-        Nosaltres per calcular el Gourud-Shading, codifiquem el càlcul del color en el vertex shader, en canvi el mateix càlcul ho codifiquem en el fragment quan es tracta de les dues versions del Phong-shading. Per tant si que necessitem d'un nou parell de shaders per tal de codificar el càlcul del color o en el vertex o en el fragment.
+        * En el Gouraud-Shading l'intensitat de la llum es calcula als vèrtexs dels triangles que formen la superfície. Llavors, aquestes intensitats s'interpolen linealment a través de les cares del triangle per obtenir el color de cada píxel. Aquesta tècnica és ràpida, però pot produir resultats no realistes quan es tracta de llum especular intensa o quan el model geomètric utilitza polígons grans. En canvi en el Phong Shading l'interpolació es realitza en els vectors normals als vèrtexs, no en les intensitats de la llum. Llavors, es calcula la intensitat de la llum a cada píxel utilitzant la normal interpolada. Aquesta tècnica és més costosa en termes de recursos computacionals, però produeix resultats més realistes, en especial quan es tracta de llum especular. Nosaltres per calcular el Gouraud-Shading, codifiquem el càlcul del color en el vertex shader, en canvi el mateix càlcul ho codifiquem en el fragment quan es tracta de les dues versions del Phong-shading. Per tant si que necessitem d'un nou parell de shaders per tal de codificar el càlcul del color o en el vertex o en el fragment.
 
     *  On s'implementarà el càlcul del color per a tenir més trencament entre las games de colors? Necessites uns nous vertex-shader i fragment-shader? 
        Raona on es calcula la il·luminació i modifica convenientment els fitxers de la pràctica. (Toon-shading)
