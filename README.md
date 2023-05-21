@@ -57,6 +57,13 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
     *   On es declara la llum? Quan es passa a la GPU?
     *   Què contindrà el "struct" de la GPU? Com l’estructurareu?
     *   Si vols utilitzar diferents shaders en temps d'execució raona on s'inicialitzaran els shaders i com controlar quin shader s'usa? Cal tornar a passar l'escena a la GPU quan es canvia de shader?
+        * Per utilitzar diferents shaders en temps d'execució, primer es necessita inicialitzar els shaders que es vol utilitzar. Això es f fer al mètode initializeGL(), on es crida al mètode initShadersGPU().               Aquest mètode inicialitza diversos shaders amb codi vertex i fragment específic.
+
+          Per controlar quin shader s'utilitza, es poden utilitzar mètodes separats que s'encarreguen d'activar un shader específic, com activaColorShader(), activaDepthShader(), activaNormalShader(), etc.                   Aquests mètodes primer estableixen la variable currentShader amb el tipus de shader desitjat i després criden a useShader(), que obté el programa de shader corresponent de la llista de shaders i activa             aquest programa.
+
+          Un cop s'ha canviat de shader, no cal tornar a passar tota l'escena a la GPU. No obstant això, és possible que s'hagi de passar dades específiques a la GPU que el nou shader utilitza. En el nostre cas es             veu que després de canviar el shader es crida a updateShader(), que passa les dades de llum a la GPU i actualitza l'escena a la GPU.
+
+A més, si la teva escena està canviant (per exemple, si els objectes es mouen o canvien de color), hauràs de passar aquestes dades actualitzades a la GPU cada vegada que es produeixin aquests canvis, però això és independent del canvi de shader.
     *   Prova a posar a la teva escena dos objectes amb materials diferents. Es pinta cadascun amb el seu material?
     *   Fixa't que quan es llegeix un objecte, cada vèrtex ja té la seva normal. Com serà aquest valor de la normal? Uniform o no uniform? En la classe Camera utilitza el mètode toGPU per a passar l'observador als shaders per a que es passi laposició de l'observador cada vegada que s'actualitza la posició de la càmera amb el ratolí. Com serà aquesta variable al shader? Uniform? O IN?
     *   Cal tenir un parell de vèrtex-fragment shader? O dos?
