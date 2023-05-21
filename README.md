@@ -62,6 +62,14 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
           Per controlar quin shader s'utilitza, es poden utilitzar mètodes separats que s'encarreguen d'activar un shader específic, com activaColorShader(), activaDepthShader(), activaNormalShader(), etc.                   Aquests mètodes primer estableixen la variable currentShader amb el tipus de shader desitjat i després criden a useShader(), que obté el programa de shader corresponent de la llista de shaders i activa             aquest programa.
 
           Un cop s'ha canviat de shader, no cal tornar a passar tota l'escena a la GPU. No obstant això, és possible que s'hagi de passar dades específiques a la GPU que el nou shader utilitza. En el nostre cas es             veu que després de canviar el shader es crida a updateShader(), que passa les dades de llum a la GPU i actualitza l'escena a la GPU.
+          
+          ```glsl
+          void GLWidget::updateShader() {
+          Controller::getInstance()->getSetUp()->lightsToGPU(program);
+          Controller::getInstance()->getScene()->toGPU(program);
+          updateGL();
+          }
+          
 
 A més, si la teva escena està canviant (per exemple, si els objectes es mouen o canvien de color), hauràs de passar aquestes dades actualitzades a la GPU cada vegada que es produeixin aquests canvis, però això és independent del canvi de shader.
     *   Prova a posar a la teva escena dos objectes amb materials diferents. Es pinta cadascun amb el seu material?
