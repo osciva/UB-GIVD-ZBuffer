@@ -171,6 +171,7 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
 
 ### Parts opcionals realitzades
 
+#### Èmfasi de siluetes
 Una de les dues parts opcionals que hem programat ha estat l'èmfasi de siluetes, que permet en el ToonShading ressaltar les siluetes dels objectes renderitzats, donant-los un aspecte més estilitzat i definint millor els contorns. La part del codi que implementa aquest opcional és la següent (toon shading fragment):
 
 
@@ -181,7 +182,15 @@ Una de les dues parts opcionals que hem programat ha estat l'èmfasi de siluetes
                     color *= silueta;
                   
 
-Una altre part opcional ha estat l'environmental mapping:
+
+<p align="center">
+ <img width="300px" height="300px" src="https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/593679e8-b645-47eb-bf33-2b2d2b497137">
+</p>
+
+
+
+
+#### Environmental mapping:
 L'environmental Mapping, és una tècnica utilitzada per a la decoració de l'entorn d'una escena gràfica mitjançant textures. L'objectiu és decorar l'entorn de la escena carregant un cub prou gran que envolti tota l'escena i aplicar una textura a aquest cub...
 Hem creat una classe cub que hereda de la clase Mesh i té els següents mètodes:
     Un constructor per defecte que crida al constructor GPUCub::GPUCub(float p) amb un valor de 10.0 com a paràmetre.
@@ -202,5 +211,6 @@ A més a la classe Widget.cpp hem afegit codi al mètode initializeGL, que s'exe
 |![Gouraud-Phong mono](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/38d30fa4-581d-4192-b6cd-86f8cf8c4165) | ![phong esfera](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/c633785b-0f05-4d2a-820c-af55135d02af) | ![Gouraud-Blinn-Phong mono](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/4a3c1cd9-1d11-4b30-9675-4758d2270a90)|
 | Blinn-Phong Shader | Cell Shader | Environmental Mapping |
 | ![blinn phong esfera](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/29ba8e06-bb97-4176-88f8-a4a82348731f)| ![Toon](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/a85ce1e8-8d3e-416a-b6e1-365d922640bd) | ![Environmental Mapping](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/47271218/c411b288-c34c-4215-a88f-bca54ceefa67) |
-
+| Fornite Storm |
+![ForniteStorm](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/1eaaf8d6-00a8-4260-97ef-9a838733fa20)
 
