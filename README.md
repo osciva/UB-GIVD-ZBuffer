@@ -173,10 +173,26 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
 
 Una de les dues parts opcionals que hem programat ha estat l'èmfasi de siluetes, que permet en el ToonShading ressaltar les siluetes dels objectes renderitzats, donant-los un aspecte més estilitzat i definint millor els contorns. La part del codi que implementa aquest opcional és la següent (toon shading fragment):
 
-silueta = dot(fNormal, normalize(obs - fPosition));
 
-if (silueta < 0.1)
-    color *= silueta;
+                
+                silueta = dot(fNormal, normalize(obs - fPosition));
+
+                if (silueta < 0.1)
+                    color *= silueta;
+                  
+
+Una altre part opcional ha estat l'environmental mapping:
+L'environmental Mapping, és una tècnica utilitzada per a la decoració de l'entorn d'una escena gràfica mitjançant textures. L'objectiu és decorar l'entorn de la escena carregant un cub prou gran que envolti tota l'escena i aplicar una textura a aquest cub...
+Hem creat una classe cub que hereda de la clase Mesh i té els següents mètodes:
+    Un constructor per defecte que crida al constructor GPUCub::GPUCub(float p) amb un valor de 10.0 com a paràmetre.
+    Un constructor amb paràmetres que rep un valor p per determinar la mida del cub. Defineix els vèrtexs del cub i crida a les funcions initVertex() i make() per inicialitzar les dades del cub.
+    Un mètode make() que genera els punts del cub a partir dels vèrtexs definits a initVertex(). Recorre les cares del cub i assigna els punts corresponents als vèrtexs de cada cara a l'array points.
+   Un mètode initTextura() que Inicialitza les textures del cub. Carrega les imatges de textura per a cada cara del cub i les assigna al cub utilitzant un objecte QOpenGLTexture. Estableix el format de la textura, genera mipmaps i assigna les dades de la imatge a cada cara del cub. També configura els paràmetres d'embolcall i filtratge de la textura.
+    Un mètode toGPU() que transfereix les dades del cub a la GPU. Aquest mètode assigna la textura del cub i crea un array de vèrtexs i un buffer per emmagatzemar les dades del cub. També especifica els formats dels atributs de vèrtex i habilita els atributs corresponents.
+    Un mètode draw() que dibuixa el cub a l'escena. Enllaça l'array i el buffer de vèrtexs, estableix el mode de dibuix de polígons i fa la crida a glDrawArrays per renderitzar el cub.
+    Un mètode initVertex() que inicialitza les cares i les imatges de textura del cub. Crea objectes Face per representar cada cara del cub i emmagatzema les imatges de textura corresponents al vector faces.
+
+A més a la classe Widget.cpp hem afegit codi al mètode initializeGL, que s'executa durant la inicialització de l'OpenGL i que configura el renderitzat de l'escena per a l'Environmental Mapping. Hem afegit codi que verifica si s'ha activat el mode CUBEMAP a la configuració de l'escena. Si és així, es canvia a l'shader del CUBEMAP, s'inicialitza la textura del cub, s'envia la càmera i el cub a la GPU, i finalment es dibuixa el cub. A més, hem implementat el mètode activaEnvMapping s'executa quan es vol activar l'Environmental Mapping. En aquest cas, es crea una instància de GPUCub si el mode CUBEMAP està desactivat, es configura el shader del CUBEMAP i es fan les actualitzacions necessàries.
 
 ### ZBufferToy outputs
 | Color Shader | Normal Shader | Depth Shader |
