@@ -289,24 +289,68 @@ void GLWidget::activaToonShader() {
 }
 
 void GLWidget::activaNightVision() {
-     qDebug()<<"Estic a Night Vision";
+    currentShader = GLShader::PHONG;
 
-     currentShader = GLShader::PHONG;
-     useShader(currentShader);
+    auto mainController = Controller::getInstance();
+    auto activeScene = mainController->getScene();
 
-     /* Set the useBlinnPhong uniform variable */
-     GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
-     glUniform1i(useBlinnPhongLocation, false);
+    shared_ptr<GPUCamera> mainCamera = mainController->getSetUp()->getCamera();
+    vec4 camDirection = mainCamera->vrp - mainCamera->origin;
+    vec3 planeNorm = normalize(vec3(camDirection.x, camDirection.y, camDirection.z));
 
-     /* Set the useNightVision uniform variable */
-     GLint useNightVisionLocation = program->uniformLocation("useNightVision");
-     glUniform1i(useNightVisionLocation, true);
+    // Discover an orthogonal vector to the plane normal
+    vec3 orthogonalVec;
+    if (abs(planeNorm.x) < 0.1 && abs(planeNorm.y) < 0.1)
+        orthogonalVec = vec3(1.0, 0.0, 0.0);  // Utilize the x-axis as orthogonal vector
+    else
+        orthogonalVec = vec3(0.0, 1.0, 0.0);  // Utilize the y-axis as orthogonal vector
 
-     /* Set the useNightVision uniform variable */
-     GLint useForniteStormLocation = program->uniformLocation("useForniteStorm");
-     glUniform1i(useForniteStormLocation, false);
+    // Determine two supplementary vectors on the plane
+    vec3 u = normalize(cross(planeNorm, orthogonalVec));
+    vec3 v = normalize(cross(planeNorm, u));
 
-     updateShader();
+    // Stage 3: Define a scaling factor for the plane
+    float scalePlane = 10.0;
+    auto minBoundingBox = activeScene->capsaMinima;
+
+    // Position of the plane at the backside of the bounding box
+    vec3 planePos = minBoundingBox.pmin + vec3(minBoundingBox.a, minBoundingBox.h, minBoundingBox.p);
+    qDebug() << "Plane Position:" << planePos.x << planePos.y << planePos.z;
+
+    // Compute the distance for plane movement based on its position
+    vec3 camPos = vec3(mainCamera->origin.x, mainCamera->origin.y, mainCamera->origin.z);
+    vec3 camToPlaneVector = planePos - camPos;
+    float moveDistance = length(camToPlaneVector);
+
+    // Relocate the plane behind the 3D model
+    vec3 planeCenter = camPos + planeNorm * (moveDistance + mainCamera->distancia);
+    qDebug() << "Plane Center:" << planeCenter.x << planeCenter.y << planeCenter.z;
+    vec3 minPoint = planeCenter - (u + v) * scalePlane;
+    qDebug() << "Min Point on Plane:" << minPoint.x << minPoint.y << minPoint.z;
+    vec3 maxPoint = planeCenter + (u + v) * scalePlane;
+    qDebug() << "Max Point on Plane:" << maxPoint.x << maxPoint.y << maxPoint.z;
+
+    // Construct GPUFittedPlane with minPoint and maxPoint
+    shared_ptr<GPUObject> gpuObj = make_shared<GPUFittedPlane>(minPoint, maxPoint);
+    // Remove previous fitted planes from the scene
+    activeScene->removeFittedPlanes();
+    activeScene->removeBaseObject(gpuObj);
+    activeScene->setBaseObject(gpuObj);
+    activeScene->addObject(gpuObj);
+
+    /* Set the useBlinnPhong uniform variable */
+    GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
+    glUniform1i(useBlinnPhongLocation, false);
+
+    /* Set the useNightVision uniform variable */
+    GLint useNightVisionLocation = program->uniformLocation("useNightVision");
+    glUniform1i(useNightVisionLocation, true);
+
+    /* Set the useNightVision uniform variable */
+    GLint useForniteStormLocation = program->uniformLocation("useForniteStorm");
+    glUniform1i(useForniteStormLocation, false);
+
+    updateShader();
 }
 
 void GLWidget::activaForniteStorm() {
@@ -346,6 +390,11 @@ void GLWidget::activaEnvMapping() {
 
     //currentShader = GLShader::CUBE_MAP;
     useShader(currentShader);
+
+    /* Set the useEnvMapping uniform variable */
+    GLint useEnvMapping = program->uniformLocation("useEnvMapping");
+    glUniform1i(useEnvMapping, true);
+
     updateShader();
 }
 
