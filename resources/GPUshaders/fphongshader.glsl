@@ -49,6 +49,7 @@ uniform bool useBlinnPhong;
 /* Night vision model switch */
 uniform bool useNightVision;
 
+/* Fornite storm model switch */
 uniform bool useForniteStorm;
 
 void main()
@@ -87,18 +88,17 @@ void main()
 
         alpha = material.shininess;
         Id = lights[i].id * material.Kd * max(dot(N, L), 0.0);
-        R = reflect(-L, N);
 
         /* Comprovem si s'ha activat BlinnPhong */
         if(useBlinnPhong) {
             H = normalize(L+V);
-            Is = lights[i].is * material.Ks * pow(max(dot(N,H), 0.0), material.shininess);
+            Is = lights[i].is * material.Ks * pow(max(dot(N,H), 0.0), alpha);
         } else {
+            R = reflect(-L, N);
             Is = lights[i].is * material.Ks * pow(max(dot(V, R), 0.0), alpha);
         }
 
         Ia = lights[i].ia * material.Ka;
-
         Itotal += (Id + Is) * attenuation + Ia;
     }
 
@@ -118,7 +118,7 @@ void main()
             /* La resta de color negre */
             Itotal = vec3(0.0, 0.0, 0.0);
         }
-    }else if (useForniteStorm) {
+    } else if (useForniteStorm) {
         /* Transform the 3d coordenates to 2d viewport ones */
         vec4 worldPosition = model_view * fPosition;
         vec4 projectedPosition = projection * worldPosition;
@@ -132,12 +132,11 @@ void main()
         /* Check if the fragment is inside the sphere */
         if (distanceToSphere <= 0.7) {
             /* Apply blue tint to fragments inside the sphere */
-            //color.g = 0.0;
             colorOut = color;
-        }else{
+        } else {
             colorOut = vec4(Itotal, 1.0);
         }
-    }else{
+    } else{
         colorOut = vec4(Itotal, 1.0);
     }
 }

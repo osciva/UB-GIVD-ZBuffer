@@ -229,10 +229,19 @@ void GLWidget::activaPhongShader() {
     qDebug()<<"Estic a Phong Shader";
     currentShader = GLShader::PHONG;
     useShader(currentShader);
-    GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
 
     /* Set the useBlinnPhong uniform variable */
+    GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
     glUniform1i(useBlinnPhongLocation, false);  // Use the OpenGL function through glFuncs
+
+    /* Set the useNightVision uniform variable */
+    GLint useNightVisionLocation = program->uniformLocation("useNightVision");
+    glUniform1i(useNightVisionLocation, false);
+
+    /* Set the useNightVision uniform variable */
+    GLint useForniteStormLocation = program->uniformLocation("useForniteStorm");
+    glUniform1i(useForniteStormLocation, false);
+
     updateShader();
 }
 
@@ -240,6 +249,7 @@ void GLWidget::activaGouraudBlinnShader() {
     qDebug()<<"Estic a Gouraud - Blinn-Phong shader";
     currentShader = GLShader::GOURAUDPHONG;
     useShader(currentShader);
+
     /* Set the useBlinnPhong uniform variable */
     GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
     glUniform1i(useBlinnPhongLocation, true);  // Use the OpenGL function through glFuncs
@@ -254,7 +264,15 @@ void GLWidget::activaBlinnPhongShader() {
 
     /* Set the useBlinnPhong uniform variable */
     GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
-    glUniform1i(useBlinnPhongLocation, false);  // Use the OpenGL function through glFuncs
+    glUniform1i(useBlinnPhongLocation, true);  // Use the OpenGL function through glFuncs
+
+    /* Set the useNightVision uniform variable */
+    GLint useNightVisionLocation = program->uniformLocation("useNightVision");
+    glUniform1i(useNightVisionLocation, false);
+
+    /* Set the useNightVision uniform variable */
+    GLint useForniteStormLocation = program->uniformLocation("useForniteStorm");
+    glUniform1i(useForniteStormLocation, false);
 
     updateShader();
 }
@@ -271,6 +289,7 @@ void GLWidget::activaNightVision() {
 
      currentShader = GLShader::PHONG;
      useShader(currentShader);
+
      /* Set the useBlinnPhong uniform variable */
      GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
      glUniform1i(useBlinnPhongLocation, false);
@@ -278,6 +297,11 @@ void GLWidget::activaNightVision() {
      /* Set the useNightVision uniform variable */
      GLint useNightVisionLocation = program->uniformLocation("useNightVision");
      glUniform1i(useNightVisionLocation, true);
+
+     /* Set the useNightVision uniform variable */
+     GLint useForniteStormLocation = program->uniformLocation("useForniteStorm");
+     glUniform1i(useForniteStormLocation, false);
+
      updateShader();
 }
 
@@ -293,6 +317,11 @@ void GLWidget::activaForniteStorm() {
      /* Set the useNightVision uniform variable */
      GLint useForniteStormLocation = program->uniformLocation("useForniteStorm");
      glUniform1i(useForniteStormLocation, true);
+
+     /* Set the useNightVision uniform variable */
+     GLint useNightVisionLocation = program->uniformLocation("useNightVision");
+     glUniform1i(useNightVisionLocation, false);
+
      updateShader();
 }
 
