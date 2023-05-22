@@ -13,6 +13,7 @@ SOURCES += \
     DataInOut/AttributeMapping.cpp \
     DataInOut/VisualMapping.cpp \
     GPUConnections/GPUCamera.cpp \
+    GPUConnections/GPUCub.cpp \
     GPUConnections/GPUDirectionalLight.cpp \
     GPUConnections/GPULambertian.cpp \
     GPUConnections/GPULight.cpp \
@@ -64,6 +65,7 @@ HEADERS += \
     DataInOut/VisualMapping.hh \
     GPUConnections/GPUCamera.hh \
     GPUConnections/GPUConnectable.hh \
+    GPUConnections/GPUCub.hh \
     GPUConnections/GPUDirectionalLight.hh \
     GPUConnections/GPULambertian.hh \
     GPUConnections/GPULight.hh \
