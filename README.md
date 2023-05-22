@@ -175,5 +175,7 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
 | ![Color](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/3eceb573-c6e8-4105-a37c-2dba715994c8) | ![Normal](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/26bf241e-6e3d-4d6a-9653-3a04cca247c2) | ![Depth](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/4cfda1c0-fdaa-4c4f-bc4e-f10a63495626) |
 | Gouraud-Phong Shader | Phong Shader | Gouraud-Blinn-Phong Shader |
 |![Gouraud-Phong mono](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/38d30fa4-581d-4192-b6cd-86f8cf8c4165) | ![phong esfera](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/c633785b-0f05-4d2a-820c-af55135d02af) | ![Gouraud-Blinn-Phong mono](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/4a3c1cd9-1d11-4b30-9675-4758d2270a90)|
-| Blinn-Phong Shader | Cell Shader |
-| ![blinn phong esfera](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/29ba8e06-bb97-4176-88f8-a4a82348731f)| ![Toon](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/a85ce1e8-8d3e-416a-b6e1-365d922640bd) |
+| Blinn-Phong Shader | Cell Shader | Environmental Mapping |
+| ![blinn phong esfera](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/29ba8e06-bb97-4176-88f8-a4a82348731f)| ![Toon](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/a85ce1e8-8d3e-416a-b6e1-365d922640bd) | ![Environmental Mapping](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/47271218/c411b288-c34c-4215-a88f-bca54ceefa67) |
+
+
