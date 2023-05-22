@@ -428,15 +428,19 @@ void GLWidget::setLighting(const QVector3D &lightPos, const QVector3D &Ia, const
     vec3 intensityA( Ia[0], Ia[1], Ia[2]);
     vec3 intensityD( Id[0], Id[1], Id[2]);
     vec3 intensityS( Is[0], Is[1], Is[2]);
+    vec3 coeficients(coefs[0], coefs[1], coefs[2]);
 
     auto lights = Controller::getInstance()->getSetUp()->getLights();
+
     lights[0]->setIa(intensityA);
     lights[0]->setId(intensityD);
     lights[0]->setIs(intensityS);
     lights[0]->setLightPosition(lightPosition);
+    lights[0]->setCoeficients(coeficients);
 
     /* Cridem a updateGL() per assegurar-nos que l'escena es torna a dibuixar amb la nova configuració de
        la llum. */
+    Controller::getInstance()->getSetUp()->toGPU(program);
     updateGL();
 }
 
