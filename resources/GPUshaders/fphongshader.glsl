@@ -133,10 +133,8 @@ void main()
         if (distanceToSphere <= 0.7) {
             /* Apply blue tint to fragments inside the sphere */
             colorOut = color;
-        } else {
-            colorOut = vec4(Itotal, 1.0);
         }
-    } else{
-        colorOut = vec4(Itotal, 1.0);
     }
+
+    colorOut = vec4(Itotal, 1.0);
 }
