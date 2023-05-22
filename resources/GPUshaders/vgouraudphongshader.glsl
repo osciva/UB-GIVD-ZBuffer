@@ -84,11 +84,11 @@ void main()
             attenuation = 1.0;
         }
 
-        H = normalize(L+V);
         Id = lights[i].id * material.Kd * max(dot(N,L), 0.0);
 
         /* Comprovem si s'ha activat BlinnPhong */
         if (useBlinnPhong) {
+            H = normalize(L+V);
             Is = lights[i].is * material.Ks * pow(max(dot(N,H), 0.0), material.shininess);
         } else {
             R = reflect(-L, N);

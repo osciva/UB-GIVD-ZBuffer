@@ -320,6 +320,9 @@ void GPUCamera::toGPU(shared_ptr<QGLShaderProgram> program)
 
     GLuint glObservador = program->uniformLocation("obs");
     glUniform4fv(glObservador, 1, origin);
+
+    GLuint glViewportSize = program->uniformLocation("viewportSize");
+    glUniform2f(glViewportSize, vp.a, vp.h);
 }
 
 void GPUCamera::setModelView(shared_ptr<QGLShaderProgram> program, mat4 m)

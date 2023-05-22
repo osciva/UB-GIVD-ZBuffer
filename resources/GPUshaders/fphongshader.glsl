@@ -2,6 +2,7 @@
 
 in vec4 fPosition;
 in vec4 fNormal;
+in vec4 color;
 out vec4 colorOut;
 
 /* Struct light */
@@ -37,8 +38,19 @@ uniform Material material;
 /* Observer position */
 uniform vec4 obs;
 
+uniform vec2 viewportSize;
+
+uniform mat4 model_view;
+uniform mat4 projection;
+
 /* Shading model switch */
 uniform bool useBlinnPhong;
+
+/* Night vision model switch */
+uniform bool useNightVision;
+
+/* Fornite storm model switch */
+uniform bool useForniteStorm;
 
 void main()
 {
@@ -76,19 +88,52 @@ void main()
 
         alpha = material.shininess;
         Id = lights[i].id * material.Kd * max(dot(N, L), 0.0);
-        R = reflect(-L, N);
 
         /* Comprovem si s'ha activat BlinnPhong */
         if(useBlinnPhong) {
             H = normalize(L+V);
-            Is = lights[i].is * material.Ks * pow(max(dot(N,H), 0.0), material.shininess);
+            Is = lights[i].is * material.Ks * pow(max(dot(N,H), 0.0), alpha);
         } else {
+            R = reflect(-L, N);
             Is = lights[i].is * material.Ks * pow(max(dot(V, R), 0.0), alpha);
         }
 
         Ia = lights[i].ia * material.Ka;
-
         Itotal += (Id + Is) * attenuation + Ia;
+    }
+
+    if (useNightVision) {
+        /* Calculem la distància des del gl_FragCoordCalculate distance al centre del viewport */
+        vec2 viewportCenter = viewportSize / 2.0;
+        float pixelDist = distance(gl_FragCoord.xy, viewportCenter);
+
+        /* Comprovem si està dins del radi */
+        if (pixelDist <= viewportSize.y / 4.0) {
+            /* Calculem Phong com abans però només considerant el canal verd */
+            /* Posem a 0 els canals vermell i blau */
+            Itotal.r = 0.0;
+            Itotal.b = 0.0;
+
+        } else {
+            /* La resta de color negre */
+            Itotal = vec3(0.0, 0.0, 0.0);
+        }
+    } else if (useForniteStorm) {
+        /* Transform the 3d coordenates to 2d viewport ones */
+        vec4 worldPosition = model_view * fPosition;
+        vec4 projectedPosition = projection * worldPosition;
+
+        /* Center of the sphere in projection space */
+        vec4 sphereCenter = projection * vec4(0.0, 0.0, 0.0, 1.0);
+
+        /* Distance from the fragment to the center of the sphere in projection space */
+        float distanceToSphere = length(projectedPosition - sphereCenter);
+
+        /* Check if the fragment is inside the sphere */
+        if (distanceToSphere <= 0.7) {
+            /* Apply blue tint to fragments inside the sphere */
+            colorOut = color;
+        }
     }
 
     colorOut = vec4(Itotal, 1.0);
