@@ -8,7 +8,7 @@
 
 ### Abstract
 
-Aquest projecte implementa l'algoritme Zbuffer en un entorn de renderitzat 3D. Utilitzant shaders i tècniques que hem aprés a classe de teoria, s'han creat escenes personalitzades com visió nocturna o una tempesta inspirada en Fortnite. L'algoritme Zbuffer s'utilitza per realitzar el renderitzat en temps real i gestionar la visibilitat dels objectes a l'escena. Els shaders programats ja els havíem vist a la primera pràctica amb RayTracing però ara ens hem encarregat de realitzar-los amb GLSL. Aquest projecte combina conceptes de gràfics per computador, programació de shaders i disseny d'escenes per oferir una experiència visualment atractiva i immersiva.
+Aquest projecte implementa l'algoritme ZBuffer en un entorn de renderitzat 3D. Utilitzant shaders i tècniques que hem aprés a classes de teoria, i també s'han creat escenes personalitzades com la visió nocturna o una tempesta inspirada en Fortnite. L'algoritme ZBuffer s'utilitza per realitzar el renderitzat en temps real i gestionar la visibilitat dels objectes a l'escena. Els shaders programats ja els havíem vist a la primera pràctica amb RayTracing però ara ens hem encarregat de realitzar-los amb GLSL. Aquest projecte combina conceptes de gràfics per computador, programació de shaders i disseny d'escenes per oferir una experiència visualment atractiva i immersiva.
 
 ### Features
 
@@ -23,7 +23,7 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
        - [✅] Pas a la GPU (Oscar & Noah)
        - [✅] Lectura de fitxers .json (Oscar & Noah)
     - Shading
-        - [✅] Color (Adrià & Alejandro)
+        - [✅] Color (Noah & Adrià & Alejandro)
         - [✅] Normal (Alejandro)
         - [✅] Depth (Adrià)
         - [✅] Phong-Gouraud (Alejandro)
@@ -42,20 +42,17 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
 - Fase 2 
     - [✅] Visió nocturna (Noah)
     - [✅] La Tempesta de Fornite (Adrià & Alejandro)
-    - [ ] Èmfasi de siluetes 
+    - [✅] Èmfasi de siluetes 
     - [ ] Mapping indirecte de textures
     - [ ] Animacions amb dades temporals
     - [ ] Normal mapping 
-    - [ ] Entorn amb textures
-    - [ ] Reflexions
-    - [ ] Transparències via objectes: 
-    - [ ] Transparències via environmental mapping
+    - [✅] Entorn amb textures
 
 ### Preguntes de la pràctica
 
 - Preguntes -> Fase 1:
     *   On es declara la llum? Quan es passa a la GPU?
-        *   La llum es declara a LightFactory, al mètode createLight(). Es passa a la GPU amb el seu mètode toGPU()
+        *   La llum es declara al mètode initializeGL() de la classe GLWidget, nosaltres creem una llum de tipus POINTLIGHT. Es passa a la GPU amb el seu mètode toGPU(), cridant-lo a través del mètode toGPU de la classe GPUSetUp, que a la vegada fa un set de la llum ambient i crida al mètode toGPU de cada llum guardada.
     *   Què contindrà el "struct" de la GPU relacionat amb la llum? Com l’estructurareu?
         *   L'estructura per passar l'informació relativa a les llums cap a la GPU, serà la següent:
             ```glsl
@@ -68,11 +65,11 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
                 GLuint position;       
             }
     *   Si vols utilitzar diferents shaders en temps d'execució raona on s'inicialitzaran els shaders i com controlar quin shader s'usa? Cal tornar a passar l'escena a la GPU quan es canvia de shader?
-        * Per utilitzar diferents shaders en temps d'execució, primer es necessita inicialitzar els shaders que es vol utilitzar. Això es f fer al mètode initializeGL(), on es crida al mètode initShadersGPU(). Aquest mètode inicialitza diversos shaders amb codi vertex i fragment específic.
+        * Per utilitzar diferents shaders en temps d'execució, primer es necessita inicialitzar els shaders que es vol utilitzar. Això es fa mitjançant un mètode anomenat initShadersGPU(), que es crida al mètode initializeGL(). Aquest mètode inicialitza diversos shaders amb codi vertex i fragment específic.
 
-          Per controlar quin shader s'utilitza, es poden utilitzar mètodes separats que s'encarreguen d'activar un shader específic, com activaColorShader(), activaDepthShader(), activaNormalShader(), etc. Aquests mètodes primer estableixen la variable currentShader amb el tipus de shader desitjat i després criden a useShader(), que obté el programa de shader corr esponent de la llista de shaders i activa aquest programa.
+          Per controlar quin shader s'utilitza, es poden utilitzar mètodes separats que s'encarreguen d'activar un shader específic, com activaColorShader(), activaDepthShader(), activaNormalShader(), etc. Aquests mètodes primer estableixen la variable currentShader amb el tipus de shader desitjat i després criden a useShader(), que obté el programa de shader corresponent de la llista de shaders i activa aquest programa.
 
-          Un cop s'ha canviat de shader, no cal tornar a passar tota l'escena a la GPU. No obstant això, és possible que s'hagi de passar dades específiques a la GPU que el nou shader utilitza. En el nostre cas es veu que després de canviar el shader es crida a updateShader(), que passa les dades de llum a la GPU i actualitza l'escena a la GPU.
+          Un cop s'ha canviat de shader, no cal tornar a passar tota l'escena a la GPU. No obstant això, és possible que s'hagi de passar dades específiques a la GPU que el nou shader utilitza. En el nostre cas es veu que després de canviar el shader es crida a updateShader(), que passa les dades de llum a la GPU, i també crida al mètode toGPU de l'escena.
           
           ```glsl
           void GLWidget::updateShader() {
@@ -89,7 +86,7 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
        </p>
 
     *  Fixa't que quan es llegeix un objecte, cada vèrtex ja té la seva normal. Com serà aquest valor de la normal? Uniform o no uniform? En la classe Camera utilitza el mètode toGPU per a passar l'observador als shaders per a que es passi la posició de l'observador cada vegada que s'actualitza la posició de la càmera amb el ratolí. Com serà aquesta variable al shader? Uniform? O IN?
-        *   El valor de la normal no ha de ser uniform ja que es diferent a cada vèrtex, en canvi, l'observador es comú, per això l'observador als shaders sí que és uniform.
+        *   El valor de la normal no ha de ser uniform ja que es diferent a cada vèrtex, en canvi l'observador es comú, per això l'observador als shaders sí que és uniform.
     
     *  Cal tenir un parell de vèrtex-fragment shader? O dos? (Utilització del Gouraud-Phong i Gouraud-Blinn Phong)
         * No cal tenir dos parell de vèrtex-fragment, amb un encarregat del Gouraud (tant Gouraud-Phong com Gouraud-Blinn Phong) és suficient. Només hem de configurar una variable booleana uniform per saber si utilitzem Blinn Phong o, en cas de no estar activada, utilitzar Phong. El càlcul ho realitzem en el vertex shading, ja que el Gouraud ho calcula en aquest shader.
@@ -104,7 +101,7 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
             }
       
     *  Raona on s'inicialitzaran els shaders i com controlar quin shader s'usa. Cal tornar a passar l'escena a la GPU quan es canvia de shader? I també la càmera?
-        *   Com hem mencionat anteriorment, un cop s'ha canviat de shader, no cal tornar a passar tota l'escena ni la càmara a la GPU. No obstant això, és possible que s'hagi de passar dades específiques a la GPU que el nou shader utilitza. En el nostre cas es veu que després de canviar el shader es crida a updateShader(), que passa les dades de llum a la GPU i actualitza l'escena a la GPU.
+        *   Com hem mencionat anteriorment, un cop s'ha canviat de shader, no cal tornar a passar la càmara a la GPU. No obstant això, és possible que s'hagi de passar dades específiques a la GPU que el nou shader utilitza. En el nostre cas es veu que després de canviar el shader es crida a updateShader(), que passa les dades de llum a la GPU i actualitza l'escena a la GPU.
         
     * Implementa el Phong-shading per a les dues versions de la fórmula de càlcul de la il·luminació. Quina diferència hi ha amb el Gouraud-shading? On l'has de codificar? Necessites uns nous vertex-shader i fragment-shader?
         * En el Gouraud-Shading l'intensitat de la llum es calcula als vèrtexs dels triangles que formen la superfície. Llavors, aquestes intensitats s'interpolen linealment a través de les cares del triangle per obtenir el color de cada píxel. Aquesta tècnica és ràpida, però pot produir resultats no realistes quan es tracta de llum especular intensa o quan el model geomètric utilitza polígons grans. En canvi en el Phong Shading l'interpolació es realitza en els vectors normals als vèrtexs, no en les intensitats de la llum. Llavors, es calcula la intensitat de la llum a cada píxel utilitzant la normal interpolada. Aquesta tècnica és més costosa en termes de recursos computacionals, però produeix resultats més realistes, en especial quan es tracta de llum especular. Nosaltres per calcular el Gouraud-Shading, codifiquem el càlcul del color en el vertex shader, en canvi el mateix càlcul ho codifiquem en el fragment quan es tracta de les dues versions del Phong-shading. Per tant si que necessitem d'un nou parell de shaders per tal de codificar el càlcul del color o en el vertex o en el fragment.
@@ -140,7 +137,7 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
 
 - Preguntes -> Fase 2:
     *   Detalla on es faria el càlcul? Amb quines coordenades? Amb coordenades de món? De càmera? O de viewport?
-        *   El càlcul es fa dins de la funció principal main() dins de l'if de "useNightVision". Es fa servir la variable gl_FragCoord, que conté les coordenades del fragment actual en el sistema de coordenades del viewport.
+        *   El càlcul es fa dins de la funció principal main() (del fragment shader) dins de l'if de "useNightVision". Es fa servir la variable gl_FragCoord, que conté les coordenades del fragment actual en el sistema de coordenades del viewport.
         
             ```glsl
             if (useNightVision) {
@@ -161,9 +158,9 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
                 }
             } 
     *   Com aconseguiries que els píxels de fons inclosos en el cercle de visió nocturna es pintessin també de color verd? 
-        *   Per aconseguir que els píxels de fons inclosos dins del cercle de visió nocturna es pintin de color verd, es pot utilitzar un pla ajustat (fitted plane) de color verd com a fons.
+        *   Per aconseguir que els píxels de fons inclosos dins del cercle de visió nocturna es pintin de color verd, es pot utilitzar un pla acotat (fitted plane) de color verd com a fons.
     *   Considera quants parells de vèrtex-fragment shaders has d’usar, a on cal considerar el test amb l’esfera, etc.
-        *   Només farem ús d'un parell de vèrtex-fragment shaders. El test amb l'esfera es considera de la següent manera a fphongshader.glsl:
+        *   Només farem ús d'un parell de vèrtex-fragment shaders (els que hem fet servir per Phong i Blinn-Phong, però ara afegim una variable booleana per saber si s'ha activat la tempesta de Fortnite). El test amb l'esfera es considera de la següent manera a fphongshader.glsl:
         
             ```glsl
              /* Check if the fragment is inside the sphere */
