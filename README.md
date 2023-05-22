@@ -46,7 +46,7 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
     - [ ] Mapping indirecte de textures
     - [ ] Animacions amb dades temporals
     - [ ] Normal mapping 
-    - [✅] Entorn amb textures
+    - [✅] Enviromental mapping
 
 ### Preguntes de la pràctica
 
@@ -168,6 +168,15 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
                 /* Apply blue tint to fragments inside the sphere */
                 Itotal.rgb *= vec3(0.6, 0.6, 1.5);
                 colorOut = vec4(Itotal, 1.0);
+
+### Parts opcionals realitzades
+
+Una de les dues parts opcionals que hem programat ha estat l'èmfasi de siluetes, que permet en el ToonShading ressaltar les siluetes dels objectes renderitzats, donant-los un aspecte més estilitzat i definint millor els contorns. La part del codi que implementa aquest opcional és la següent (toon shading fragment):
+
+silueta = dot(fNormal, normalize(obs - fPosition));
+
+if (silueta < 0.1)
+    color *= silueta;
 
 ### ZBufferToy outputs
 | Color Shader | Normal Shader | Depth Shader |
