@@ -12,13 +12,13 @@ GLShader::GLShader(const char* vShaderFile, const char* fShaderFile){
     program->addShader(fshader);
 }
 
-//Metode per activar un shader
+/* Metode per activar un shader */
 void GLShader::activateShader(shared_ptr<QGLShaderProgram> &program){
     program->link();
     program->bind();
 }
 
-//Metode per activar shaders de textures
+/* Metode per activar shaders de textures */
 void GLShader::activateShaderTexture(){
     //TO DO: Pràctica 2:  implementar a la fase 1
 }

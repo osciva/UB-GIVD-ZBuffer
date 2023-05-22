@@ -11,6 +11,15 @@ GPUMesh::GPUMesh()
 	make();
 }
 
+GPUMesh::GPUMesh(const int npoints) {
+    numPoints = npoints;
+    points = new vec4[numPoints];
+    normals = new vec4[numPoints];
+    colors = new vec4[numPoints];
+    textures = new vec2[numPoints];
+    this->material = make_shared<GPUMaterial>();
+}
+
 GPUMesh::GPUMesh(const QString &fileName): Mesh(fileName)
 {
     numPoints = NUMPOINTS;
@@ -66,8 +75,6 @@ GPUMesh::~GPUMesh() {
  * @param pr
  */
 void GPUMesh::toGPU(shared_ptr<QGLShaderProgram> pr) {
-    // TO  DO: A modificar a la fase 1 de la practica 2
-
     qDebug() << "Obj to GPU.....";
 
     program = pr;
@@ -110,6 +117,7 @@ void GPUMesh::toGPU(shared_ptr<QGLShaderProgram> pr) {
 
 void GPUMesh::toGPUTexture(shared_ptr<QGLShaderProgram> pr){
     texture->bind(0);
+    pr->setUniformValue("texMap", 0);
 }
 
 
