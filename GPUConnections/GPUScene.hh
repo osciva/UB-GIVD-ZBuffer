@@ -4,11 +4,10 @@
 #include <library/Common.h>
 using namespace Common;
 
-
 #include "GPUConnections/GPUConnectable.hh"
 #include "GPUConnections/GPUMesh.hh"
 #include "Model/Modelling/Scene.hh"
-
+#include "GPUConnections/GPUCub.hh"
 
 using namespace std;
 using namespace Common;
@@ -19,15 +18,19 @@ public:
 
     QString name;
 
-    // dimensions de l'escena virtual que es visualitza: capsa mínima contenidora
+    /* Dimensions de l'escena virtual que es visualitza: capsa mínima contenidora */
     vec3 pmin, pmax;
-    // Capsa contenedora de l'escena
+
+    /* Capsa contenedora de l'escena */
     Capsa3D capsaMinima;
 
-    // Vector d'objectes continguts a l'escena
+    /* Vector d'objectes continguts a l'escena */
     std::vector<shared_ptr<GPUMesh>> objects;
 
     GPUScene();
+
+    shared_ptr<GPUCub> cub;
+    bool CUBEMAP = false;
 
 
     // TO DO: Pràctica 2: Fase 1 Incloure el Fitted Plane que es pugui passar a la GPU

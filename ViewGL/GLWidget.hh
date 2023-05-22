@@ -96,6 +96,7 @@ private:
     unsigned int currentImage;
 
     GLShader::SHADER_TYPES currentShader;
+    bool cubeTexture = true;
 
     QPoint lastPos;   /* per interactuar amb la camera */
 

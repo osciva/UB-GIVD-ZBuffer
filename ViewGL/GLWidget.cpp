@@ -43,18 +43,6 @@ void GLWidget::initializeGL() {
     useShader(GLShader::DEFAULT);
 
     /* Creacio d'una Light per a poder modificar el seus valors amb la interficie */
-    // TO DO: Pràctica 2: Fase 1:  Canviar per a que siguin GPULigths i usar la factory GPULightFactory que facis nova
-    /*
-    std::vector<shared_ptr<GPULight>> ligths;
-    auto l  = GPULightFactory::getInstance().createLight(LightFactory::POINTLIGHT);
-    auto s = GPULightFactory::getInstance().createLight(LightFactory::DIRECTIONALLIGHT);
-    auto t = GPULightFactory::getInstance().createLight(LightFactory::SPOTLIGHT);
-
-    ligths.push_back(l);
-    ligths.push_back(s);
-    ligths.push_back(t);
-    */
-
     std::vector<shared_ptr<GPULight>> lights;
     auto l = GPULightFactory::getInstance().createLight(LightFactory::POINTLIGHT);
     lights.push_back(l);
@@ -83,8 +71,23 @@ void GLWidget::paintGL() {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
-    shared_ptr<GPUCamera> camera = Controller::getInstance()->getSetUp()->getCamera();
     auto scene = Controller::getInstance()->getScene();
+    shared_ptr<GPUCamera> camera = Controller::getInstance()->getSetUp()->getCamera();
+
+    if (scene->CUBEMAP) {
+        useShader(GLShader::CUBE_MAP);
+
+        if (cubeTexture) {
+            /* Fem set de la textura del cub un únic cop */
+            scene->cub->initTextura();
+            cubeTexture = false;
+        }
+        camera->toGPU(program);
+        scene->cub->toGPU(program);
+        scene->cub->draw();
+
+        useShader(currentShader);
+    }
 
     Controller::getInstance()->getSetUp()->toGPU(program);
     scene->toGPU(program);
@@ -118,6 +121,7 @@ void GLWidget::initShadersGPU(){
     initShader(GLShader::PHONG_SHADER, "://resources/GPUshaders/vphongshader.glsl", "://resources/GPUshaders/fphongshader.glsl");
     initShader(GLShader::GOURAUDPHONG_SHADER, "://resources/GPUshaders/vgouraudphongshader.glsl", "://resources/GPUshaders/fgouraudphongshader.glsl");
     initShader(GLShader::TOON_SHADER, "://resources/GPUshaders/vtoonshader.glsl", "://resources/GPUshaders/ftoonshader.glsl");
+    initShader(GLShader::CUBE_MAP_SHADER, "://resources/GPUshaders/vCubeShader.glsl", "://resources/GPUshaders/fCubeShader.glsl");
 }
 
 /**
@@ -331,8 +335,18 @@ void GLWidget::activaReflection() {
 }
 
 void GLWidget::activaEnvMapping() {
-    //TO DO: Pràctica 2:  implementar a la fase 2
     qDebug()<<"Estic a Environmental Mapping";
+
+    auto scene = Controller::getInstance()->getScene();
+
+    if (scene->CUBEMAP == false) {
+        scene->cub = make_shared<GPUCub>();
+        scene->CUBEMAP = true;
+    }
+
+    //currentShader = GLShader::CUBE_MAP;
+    useShader(currentShader);
+    updateShader();
 }
 
 void GLWidget::activaTransparency() {
@@ -365,6 +379,10 @@ void GLWidget::useShader(GLShader::SHADER_TYPES s) {
         case GLShader::TOON:
             program = shaderList[GLShader::TOON_SHADER]->getProgram();
             shaderList[GLShader::TOON_SHADER]->activateShader(program);
+            break;
+        case GLShader::CUBE_MAP:
+            program = shaderList[GLShader::CUBE_MAP_SHADER]->getProgram();
+            shaderList[GLShader::CUBE_MAP_SHADER]->activateShader(program);
             break;
         default:
             program = shaderList[GLShader::DEFAULT_SHADER]->getProgram();
@@ -410,15 +428,19 @@ void GLWidget::setLighting(const QVector3D &lightPos, const QVector3D &Ia, const
     vec3 intensityA( Ia[0], Ia[1], Ia[2]);
     vec3 intensityD( Id[0], Id[1], Id[2]);
     vec3 intensityS( Is[0], Is[1], Is[2]);
+    vec3 coeficients(coefs[0], coefs[1], coefs[2]);
 
     auto lights = Controller::getInstance()->getSetUp()->getLights();
+
     lights[0]->setIa(intensityA);
     lights[0]->setId(intensityD);
     lights[0]->setIs(intensityS);
     lights[0]->setLightPosition(lightPosition);
+    lights[0]->setCoeficients(coeficients);
 
     /* Cridem a updateGL() per assegurar-nos que l'escena es torna a dibuixar amb la nova configuració de
        la llum. */
+    Controller::getInstance()->getSetUp()->toGPU(program);
     updateGL();
 }
 

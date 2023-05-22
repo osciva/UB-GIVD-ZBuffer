@@ -19,7 +19,8 @@ public:
         NORMAL,
         GOURAUDPHONG,
         PHONG,
-        TOON
+        TOON,
+        CUBE_MAP
     } SHADER_TYPES;
 
     typedef enum SHADER_INDEX {
@@ -29,7 +30,8 @@ public:
         NORMAL_SHADER,
         GOURAUDPHONG_SHADER,
         PHONG_SHADER,
-        TOON_SHADER
+        TOON_SHADER,
+        CUBE_MAP_SHADER
     } SHADER_INDEX;
 
     GLShader(const char* vertexShaderFile, const char* fragmentShaderFile);

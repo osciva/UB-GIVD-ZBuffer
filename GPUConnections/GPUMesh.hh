@@ -15,6 +15,7 @@ class GPUMesh : public Mesh, public GPUConnectable, public QObject
 {
 public:
 	GPUMesh();
+    GPUMesh(const int npoints);
     GPUMesh(const QString &fileName);
     GPUMesh(const int npoints, const QString &fileName);
 
@@ -30,15 +31,9 @@ public:
     void read(const QJsonObject &json) override;
     void setMaterial(shared_ptr<GPUMaterial> m);
 
-
 private:
-    // Estructures per passar a la GPU
-    GLuint buffer;
-    GLuint vao;
-
     // Representació explícita de l'objecte per poder ser passat a la GPU
     int   numPoints;
-    vec4 *points;
     vec4 *normals;
 
     /* Materials */
@@ -50,13 +45,19 @@ private:
     vec2 *textures;
     bool hasTexture = false;
 
-    int Index; // index de control del numero de vèrtexs a passar a la GPU
-
-    shared_ptr<QOpenGLTexture> texture;
-
     void make();
 
     void setTexture(shared_ptr<QOpenGLTexture> t);
     void initTextura();
+
+protected:
+    // Estructures per passar a la GPU
+    GLuint buffer;
+    GLuint vao;
+
+    int Index; // index de control del numero de vèrtexs a passar a la GPU
+    vec4 *points;
+
+    shared_ptr<QOpenGLTexture> texture;
 };
 

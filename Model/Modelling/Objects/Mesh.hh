@@ -20,7 +20,7 @@ using namespace std;
 class Mesh : public Object
 {
 public:
-    Mesh() {};
+    Mesh() {}
     Mesh(const QString &fileName);
 
     virtual bool hit( Ray& r, float tmin, float tmax, HitInfo& info) const override;
