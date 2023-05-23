@@ -62,11 +62,15 @@ public slots:
     void activaEnvMapping();
     void activaReflection();
     void activaTransparency();
+    void activaTexture();
+
+    void desactivaTexture();
 
     void setPerspective(float nearPlane, float farPlane);
     void setLookAt(const QVector3D &eye, const QVector3D &center, const QVector3D& up);
     void setLighting(const QVector3D &lightPos, const QVector3D &Ia, const QVector3D &Id,
                     const QVector3D &Is, const QVector3D &coefs);
+    void setTextureFile();
 
     // Acció per activar a cada update del timer
     void setCurrentFrame();
@@ -97,6 +101,10 @@ private:
 
     GLShader::SHADER_TYPES currentShader;
     bool cubeTexture = true;
+
+    bool objectTexture = false;
+
+    bool useNightVision = false;
 
     QPoint lastPos;   /* per interactuar amb la camera */
 

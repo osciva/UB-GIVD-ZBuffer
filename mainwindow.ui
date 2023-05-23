@@ -1198,10 +1198,19 @@
     </property>
     <addaction name="actionAbout"/>
    </widget>
+   <widget class="QMenu" name="menuTextures">
+    <property name="title">
+     <string>Textures</string>
+    </property>
+    <addaction name="actionTexture_File"/>
+    <addaction name="actionActivate_Texture"/>
+    <addaction name="actionDesactivate_Texture"/>
+   </widget>
    <addaction name="menuModels"/>
    <addaction name="menuShaders"/>
    <addaction name="menuAdvanced"/>
    <addaction name="menuAbout"/>
+   <addaction name="menuTextures"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -1379,10 +1388,24 @@
     <string>Fornite Storm</string>
    </property>
   </action>
+  <action name="actionTexture_File">
+   <property name="text">
+    <string>Texture File</string>
+   </property>
+  </action>
+  <action name="actionActivate_Texture">
+   <property name="text">
+    <string>Activate Texture</string>
+   </property>
+  </action>
+  <action name="actionDesactivate_Texture">
+   <property name="text">
+    <string>Desactivate Texture</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-     <!-- Add Directional Light and SpotLight tabstops (and change their names) -->
   <tabstop>mainTabs</tabstop>
   <tabstop>persNearSpin</tabstop>
   <tabstop>persNearSlider</tabstop>
@@ -1397,8 +1420,6 @@
   <tabstop>lookUpXSpin</tabstop>
   <tabstop>lookUpYSpin</tabstop>
   <tabstop>lookUpZSpin</tabstop>
-  
-  <!-- Point Light -->
   <tabstop>lightPosXSpin</tabstop>
   <tabstop>lightPosYSpin</tabstop>
   <tabstop>lightPosZSpin</tabstop>
@@ -1411,8 +1432,6 @@
   <tabstop>lightIs1Spin</tabstop>
   <tabstop>lightIs2Spin</tabstop>
   <tabstop>lightIs3Spin</tabstop>
-  
-  <!-- Directional Light -->
   <tabstop>lightPosXSpinDir</tabstop>
   <tabstop>lightPosYSpinDir</tabstop>
   <tabstop>lightPosZSpinDir</tabstop>
@@ -1425,8 +1444,6 @@
   <tabstop>lightIs1SpinDir</tabstop>
   <tabstop>lightIs2SpinDir</tabstop>
   <tabstop>lightIs3SpinDir</tabstop>
-  
-  <!-- SpotLight -->
   <tabstop>lightPosXSpinSpot</tabstop>
   <tabstop>lightPosYSpinSpot</tabstop>
   <tabstop>lightPosZSpinSpot</tabstop>

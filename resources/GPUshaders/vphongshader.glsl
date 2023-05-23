@@ -2,6 +2,7 @@
 
 layout (location = 0) in vec4 vPosition;
 layout (location = 1) in vec4 normals;
+layout (location = 2) in vec2 vCoordTexture;
 
 uniform mat4 model_view;
 uniform mat4 projection;
@@ -9,6 +10,7 @@ uniform mat4 projection;
 out vec4 fNormal;
 out vec4 fPosition;
 out vec4 color;
+out vec2 v_texcoord;
 
 /* Struct light */
 struct Light
@@ -49,6 +51,9 @@ uniform bool useBlinnPhong;
 /* Fornite storm model switch */
 uniform bool useForniteStorm;
 
+/* Activate texture in object */
+uniform bool useTexture;
+
 void main()
 {
     gl_Position = projection * model_view * vPosition;
@@ -56,6 +61,10 @@ void main()
 
     fNormal = normals;
     fPosition = vPosition;
+
+    if (useTexture) {
+        v_texcoord = vCoordTexture;
+    }
 
     /* Si s'ha activat la Fornite Storm */
     if (useForniteStorm) {

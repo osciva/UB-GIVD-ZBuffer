@@ -68,6 +68,7 @@ void Mesh::load (QString fileName) {
                     // if it’s a texture (vt)
                     else if(lineParts.at(0).compare("vt", Qt::CaseInsensitive) == 0)
                     {
+                        this->hasTexture = true;
                         textVertexs.push_back(vec2(lineParts.at(1).toFloat(),
                                             lineParts.at(2).toFloat()));
                     }

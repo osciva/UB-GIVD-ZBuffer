@@ -42,7 +42,6 @@ public:
 
     virtual ~GPUScene();
 
-
     void setDimensions(vec3 p1, vec3 p2);
 
     // TODO Pràctica 2: Fase 1
@@ -52,12 +51,11 @@ public:
     // Pràctica 2 opcional: Posible objecte que no sigui un fitted plane: una esfera
     // void setBaseSphere(shared_ptr<Sphere> sphere);
 
-    void   addObject(shared_ptr<GPUMesh> obj);
+    void addObject(shared_ptr<GPUMesh> obj);
 
     void toGPU(shared_ptr<QGLShaderProgram> p) override;
     void draw() override;
 
     void calculCapsaMinCont3DEscena();
-
 };
 
