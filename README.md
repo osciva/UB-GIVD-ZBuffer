@@ -1,14 +1,18 @@
 # ZBufferToy
 
+
 ### Team B07:
 *   Oscar De Caralt Roy
 *   Alejandro Guzman Requena
 *   Adrià Alfonso Medero
 *   Noah Márquez Vara
 
+
 ### Abstract
 
+
 Aquest projecte implementa l'algoritme ZBuffer en un entorn de renderitzat 3D. Utilitzant shaders i tècniques que hem aprés a classes de teoria, i també s'han creat escenes personalitzades com la visió nocturna o una tempesta inspirada en Fortnite. L'algoritme ZBuffer s'utilitza per realitzar el renderitzat en temps real i gestionar la visibilitat dels objectes a l'escena. Els shaders programats ja els havíem vist a la primera pràctica amb RayTracing però ara ens hem encarregat de realitzar-los amb GLSL. Aquest projecte combina conceptes de gràfics per computador, programació de shaders i disseny d'escenes per oferir una experiència visualment atractiva i immersiva.
+
 
 ### Features
 
@@ -49,6 +53,7 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
     - [✅] Enviromental mapping
 
 ### Preguntes de la pràctica
+
 
 - Preguntes -> Fase 1:
     *   On es declara la llum? Quan es passa a la GPU?
@@ -99,7 +104,8 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
                 R = reflect(-L, N);
                 Is = lights[i].is * material.Ks * pow(max(dot(V,R), 0.0), material.shininess);
             }
-      
+
+
     *  Raona on s'inicialitzaran els shaders i com controlar quin shader s'usa. Cal tornar a passar l'escena a la GPU quan es canvia de shader? I també la càmera?
         *   Com hem mencionat anteriorment, un cop s'ha canviat de shader, no cal tornar a passar la càmara a la GPU. No obstant això, és possible que s'hagi de passar dades específiques a la GPU que el nou shader utilitza. En el nostre cas es veu que després de canviar el shader es crida a updateShader(), que passa les dades de llum a la GPU i actualitza l'escena a la GPU.
         
@@ -134,6 +140,8 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
                 color = vec4(0.4, 0.2, 0.2, 1.0);
             else
                 color = vec4(0.2, 0.1 ,0.1, 1.0)
+
+
 
 - Preguntes -> Fase 2:
     *   Detalla on es faria el càlcul? Amb quines coordenades? Amb coordenades de món? De càmera? O de viewport?
@@ -193,13 +201,13 @@ Una de les dues parts opcionals que hem programat ha estat l'èmfasi de siluetes
 #### Environmental mapping:
 L'environmental Mapping és una tècnica utilitzada per a la decoració de l'entorn d'una escena gràfica mitjançant textures. L'objectiu és decorar l'entorn de la escena carregant un cub prou gran que envolti tota l'escena i aplicar una textura a aquest cub.
 Per realitzar aquesta tasca hem creat una classe cub que hereda de la clase Mesh i té els següents mètodes:
-*  Un constructor per defecte que crida al constructor GPUCub::GPUCub(float p) amb un valor de 10.0 com a paràmetre.
-*  Un constructor amb paràmetres que rep un valor p per determinar la mida del cub. Defineix els vèrtexs del cub i crida a les funcions initVertex() i make() per inicialitzar les dades del cub.
-*  Un mètode make() que genera els punts del cub a partir dels vèrtexs definits a initVertex(). Recorre les cares del cub i assigna els punts corresponents als vèrtexs de cada cara a l'array points.
-*  Un mètode initTextura() que Inicialitza les textures del cub. Carrega les imatges de textura per a cada cara del cub i les assigna al cub utilitzant un objecte QOpenGLTexture. Estableix el format de la textura, genera mipmaps i assigna les dades de la imatge a cada cara del cub. També configura els paràmetres d'embolcall i filtratge de la textura.
-*   Un mètode toGPU() que transfereix les dades del cub a la GPU. Aquest mètode assigna la textura del cub i crea un array de vèrtexs i un buffer per emmagatzemar les dades del cub. També especifica els formats dels atributs de vèrtex i habilita els atributs corresponents.
-*   Un mètode draw() que dibuixa el cub a l'escena. Enllaça l'array i el buffer de vèrtexs, estableix el mode de dibuix de polígons i fa la crida a glDrawArrays per renderitzar el cub.
-*   Un mètode initVertex() que inicialitza les cares i les imatges de textura del cub. Crea objectes Face per representar cada cara del cub i emmagatzema les imatges de textura corresponents al vector faces.
+- Un constructor per defecte que crida al constructor GPUCub::GPUCub(float p) amb un valor de 10.0 com a paràmetre.
+- Un constructor amb paràmetres que rep un valor p per determinar la mida del cub. Defineix els vèrtexs del cub i crida a les funcions initVertex() i make() per inicialitzar les dades del cub.
+- Un mètode make() que genera els punts del cub a partir dels vèrtexs definits a initVertex(). Recorre les cares del cub i assigna els punts corresponents als vèrtexs de cada cara a l'array points.
+- Un mètode initTextura() que Inicialitza les textures del cub. Carrega les imatges de textura per a cada cara del cub i les assigna al cub utilitzant un objecte QOpenGLTexture. Estableix el format de la textura, genera mipmaps i assigna les dades de la imatge a cada cara del cub. També configura els paràmetres d'embolcall i filtratge de la textura.
+- Un mètode toGPU() que transfereix les dades del cub a la GPU. Aquest mètode assigna la textura del cub i crea un array de vèrtexs i un buffer per emmagatzemar les dades del cub. També especifica els formats dels atributs de vèrtex i habilita els atributs corresponents.
+- Un mètode draw() que dibuixa el cub a l'escena. Enllaça l'array i el buffer de vèrtexs, estableix el mode de dibuix de polígons i fa la crida a glDrawArrays per renderitzar el cub.
+- Un mètode initVertex() que inicialitza les cares i les imatges de textura del cub. Crea objectes Face per representar cada cara del cub i emmagatzema les imatges de textura corresponents al vector faces.
 
 A més a la classe Widget.cpp hem afegit codi al mètode initializeGL, que s'executa durant la inicialització de l'OpenGL i que configura el renderitzat de l'escena per a l'Environmental Mapping. Hem afegit codi que verifica si s'ha activat el mode CUBEMAP a la configuració de l'escena. Si és així, es canvia a l'shader del CUBEMAP, s'inicialitza la textura del cub, s'envia la càmera i el cub a la GPU, i finalment es dibuixa el cub. A més, hem implementat el mètode activaEnvMapping s'executa quan es vol activar l'Environmental Mapping. En aquest cas, es crea una instància de GPUCub si el mode CUBEMAP està desactivat, es configura el shader del CUBEMAP i es fan les actualitzacions necessàries.
 
