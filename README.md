@@ -10,6 +10,12 @@
 
 Aquest projecte implementa l'algoritme ZBuffer en un entorn de renderitzat 3D. Utilitzant shaders i tècniques que hem aprés a classes de teoria, i també s'han creat escenes personalitzades com la visió nocturna o una tempesta inspirada en Fortnite. L'algoritme ZBuffer s'utilitza per realitzar el renderitzat en temps real i gestionar la visibilitat dels objectes a l'escena. Els shaders programats ja els havíem vist a la primera pràctica amb RayTracing però ara ens hem encarregat de realitzar-los amb GLSL. Aquest projecte combina conceptes de gràfics per computador, programació de shaders i disseny d'escenes per oferir una experiència visualment atractiva i immersiva.
 
+NOTES IMPORTANTS:
+- Night Vision està parcialment implementada, es veu el cercle amb els objectes de dins amb només el canal verd, però el fons es continua veient en negre.
+- S'ha intentat implementar les textures en els objectes mitjançant fitxers, però només hem aconseguit que els objectes canviïn la seva Kd segons la textura. Per tal de provar-ho s'ha d'accedir al menú de Texture, seleccionar un fitxer de Textura, i llavors seleccionar Active Texture. Posteriorment escollim Phong o Blinn-Phong shading per veure-ho en funcionament. Creiem que segurament sigui un tema de com ho estem enviant a la GPU.
+- FittedPlane parcialment implementat. Compila sense cap error però no hem aconseguit visualitzar-ho a l'escena.
+- Hem implementat l'environmental mapping, però hem comprovat que només ens funcionava amb MacOS o bé establint al màxim les característiques de la màquina virtual.
+
 ### Features
 
 A continuació s'indica quines parts s'han fet i qui les ha implementat:
@@ -174,8 +180,7 @@ A continuació s'indica quines parts s'han fet i qui les ha implementat:
 #### Lectura de material .mtl juntament amb un fitxer .obj
 Durant la càrrega de l'objecte Mesh, el codi verifica si cada línia del fitxer conté la paraula clau "mtllib", que indica un fitxer de material (.mtl). Si es troba "mtllib", agafa el nom del fitxer .mtl associat, crea la ruta completa del fitxer i crida a la funció "loadMaterial" amb aquesta ruta. Aquesta funció carrega les propietats del material a partir del fitxer .mtl i les aplica a l'objecte Mesh. Així es pot renderitzar l'objecte amb el material correcte tal com es defineix en el fitxer .mtl. Es pot observar a continuació la part del codi del mètode load que llegeix el material (en cas de que el fitxer -obj el contingui):
   
-            ```glsl
-            } else if(lineParts.at(0).compare("mtllib", Qt::CaseInsensitive) == 0)
+             else if(lineParts.at(0).compare("mtllib", Qt::CaseInsensitive) == 0)
                     {
                         materialFileName = lineParts.at(1);
                         QString fullPath = basePath + QDir::separator() + materialFileName;
@@ -217,6 +222,6 @@ A més a la classe Widget.cpp hem afegit codi al mètode initializeGL, que s'exe
 |![Gouraud-Phong mono](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/38d30fa4-581d-4192-b6cd-86f8cf8c4165) | ![phong esfera](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/c633785b-0f05-4d2a-820c-af55135d02af) | ![Gouraud-Blinn-Phong mono](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/4a3c1cd9-1d11-4b30-9675-4758d2270a90)|
 | Blinn-Phong Shader | Cell Shader | Environmental Mapping |
 | ![blinn phong esfera](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/29ba8e06-bb97-4176-88f8-a4a82348731f)| ![Toon](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/a85ce1e8-8d3e-416a-b6e1-365d922640bd) | ![Environmental Mapping](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/47271218/c411b288-c34c-4215-a88f-bca54ceefa67) |
-| Fornite Storm |
-![ForniteStorm](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/1eaaf8d6-00a8-4260-97ef-9a838733fa20)
+| Fornite Storm | Night Vision |
+![ForniteStorm](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/81873328/1eaaf8d6-00a8-4260-97ef-9a838733fa20) | ![Night Vision](https://github.com/GiVD2022/p2-zbuffertoy-b07/assets/47271218/07fdf88a-7b7a-4ed8-8796-b83e9c4c19fa)
 
