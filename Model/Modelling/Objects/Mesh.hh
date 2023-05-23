@@ -35,6 +35,7 @@ public:
     vec3 Ka, Kd, Ks;
     float shininess;
     bool areMaterialValuesZero = true;
+    bool hasTexture = false;
 
     virtual ~Mesh();
 

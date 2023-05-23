@@ -2,8 +2,11 @@
 
 in vec4 fPosition;
 in vec4 fNormal;
+in vec2 v_texcoord;
 in vec4 color;
 out vec4 colorOut;
+
+uniform sampler2D texMap;
 
 /* Struct light */
 struct Light
@@ -52,6 +55,9 @@ uniform bool useNightVision;
 /* Fornite storm model switch */
 uniform bool useForniteStorm;
 
+/* Activate texture in object */
+uniform bool useTexture;
+
 void main()
 {
     /* I = kaIa (ambient) + kdId cos(L, N) (diffuse) + ksIs cos(V, R)^alpha (specular) */
@@ -87,7 +93,12 @@ void main()
         }
 
         alpha = material.shininess;
-        Id = lights[i].id * material.Kd * max(dot(N, L), 0.0);
+
+        if (useTexture) {
+            Id = lights[i].id * (texture(texMap, v_texcoord).rgb) * max(dot(N, L), 0.0);
+        } else {
+            Id = lights[i].id * material.Kd * max(dot(N, L), 0.0);
+        }
 
         /* Comprovem si s'ha activat BlinnPhong */
         if(useBlinnPhong) {

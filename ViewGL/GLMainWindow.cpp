@@ -546,13 +546,16 @@ void GLMainWindow::refreshWindow() {
     // a reflectir-ho a la visualització
 }
 
-
-// Connexions de les opcions dels menús dels shaders i els advanced
+/* Connexions de les opcions dels menús dels shaders i els advanced */
 void GLMainWindow::connectShaders()
 {
     connect(ui->actionColor_Shader, SIGNAL(triggered()), glWidget, SLOT(activaColorShader()));
     connect(this->ui->action_depth, SIGNAL(triggered()), glWidget, SLOT(activaDepthShader()));
     connect(this->ui->actionNormal_Shader, SIGNAL(triggered()), glWidget, SLOT(activaNormalShader()));
+
+    connect(this->ui->actionActivate_Texture, SIGNAL(triggered()), glWidget, SLOT(activaTexture()));
+    connect(this->ui->actionDesactivate_Texture, SIGNAL(triggered()), glWidget, SLOT(desactivaTexture()));
+    connect(this->ui->actionTexture_File, SIGNAL(triggered()), glWidget, SLOT(setTextureFile()));
 
     connect(this->ui->action_gouraud, SIGNAL(triggered()), glWidget, SLOT(activaGouraudShader()));
     connect(this->ui->action_phong, SIGNAL(triggered()), glWidget, SLOT(activaPhongShader()));

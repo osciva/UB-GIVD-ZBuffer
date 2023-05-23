@@ -8,7 +8,6 @@ uniform mat4 projection;
 out vec4 position;
 out vec3 v_texcoord;
 
-
 void main()
 {
   gl_Position = projection*model_view*vPosition;

@@ -80,7 +80,6 @@ void GPUMesh::toGPU(shared_ptr<QGLShaderProgram> pr) {
     program = pr;
 
     // Creació d'un vertex array object
-
     glGenVertexArrays( 1, &vao );
 
     // Creacio i inicialitzacio d'un vertex buffer object (VBO)
@@ -92,15 +91,17 @@ void GPUMesh::toGPU(shared_ptr<QGLShaderProgram> pr) {
     glBindBuffer( GL_ARRAY_BUFFER, buffer );
 
     // TO  DO: A modificar a la fase 1 de la practica 2
-    // Cal passar les normals a la GPU
+    /* Cal passar les normals a la GPU */
     glBufferData( GL_ARRAY_BUFFER, sizeof(vec4)*Index + sizeof(vec4)*Index, NULL, GL_STATIC_DRAW );
     glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(vec4)*Index, points );
-    // Materials
+
+    /* Normals */
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(vec4)*Index, sizeof(vec4)*Index, normals );
-    // Textures
+
+    /* Textures */
     glBufferSubData(GL_ARRAY_BUFFER, sizeof(vec4)*Index * 2,sizeof(vec2) * Index, textures);
 
-    // set up vertex arrays
+    /* Set up vertex arrays */
     glBindVertexArray( vao );
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0,  0);
     glEnableVertexAttribArray(0);
@@ -111,16 +112,14 @@ void GPUMesh::toGPU(shared_ptr<QGLShaderProgram> pr) {
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0,  (void*)(2*sizeof(vec4)*Index));
     glEnableVertexAttribArray(2);
 
+    glEnable( GL_DEPTH_TEST );
     glEnable(GL_TEXTURE_2D);
 }
-
 
 void GPUMesh::toGPUTexture(shared_ptr<QGLShaderProgram> pr){
     texture->bind(0);
     pr->setUniformValue("texMap", 0);
 }
-
-
 
 /**
  * Pintat en la GPU.
@@ -141,12 +140,14 @@ void GPUMesh::draw(){
     glBindVertexArray( vao );
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glDrawArrays( GL_TRIANGLES, 0, Index );
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
 }
 
 /**

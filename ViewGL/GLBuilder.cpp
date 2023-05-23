@@ -29,7 +29,6 @@ void GLBuilder::newVirtualScene()
     }
 }
 
-
 void GLBuilder::newDataScene()
 {
     QString fileName = QFileDialog::getOpenFileName();

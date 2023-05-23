@@ -21,7 +21,6 @@ GLWidget::~GLWidget() {
 
 }
 
-
 /* Interacció amb GL i inicialització dels programes a la GPU */
 
 /**
@@ -75,6 +74,10 @@ void GLWidget::paintGL() {
     shared_ptr<GPUCamera> camera = Controller::getInstance()->getSetUp()->getCamera();
 
     if (scene->CUBEMAP) {
+        /* Set the nightVision bool uniform variable */
+        GLint useNightVision = program->uniformLocation("useNightVision");
+        glUniform1i(useNightVision, this->useNightVision);
+
         useShader(GLShader::CUBE_MAP);
 
         if (cubeTexture) {
@@ -200,6 +203,9 @@ void GLWidget::saveAnimation() {
 void GLWidget::activaColorShader() {
     qDebug()<<"Estic a Color Shader";
     currentShader = GLShader::COLOR;
+
+    this->useNightVision = false;
+
     useShader(currentShader);
     updateShader();
 }
@@ -207,6 +213,9 @@ void GLWidget::activaColorShader() {
 void GLWidget::activaDepthShader() {
     qDebug()<<"Estic a Depth Shader";
     currentShader = GLShader::DEPTH;
+
+    this->useNightVision = false;
+
     useShader(currentShader);
     updateShader();
 }
@@ -214,6 +223,9 @@ void GLWidget::activaDepthShader() {
 void GLWidget::activaNormalShader() {
     qDebug()<<"Estic a Normal Shader";
     currentShader = GLShader::NORMAL;
+
+    this->useNightVision = false;
+
     useShader(currentShader);
     updateShader();
 }
@@ -221,6 +233,9 @@ void GLWidget::activaNormalShader() {
 void GLWidget::activaGouraudShader() {
     qDebug()<<"Estic a Gouraud - Phong shader";
     currentShader = GLShader::GOURAUDPHONG;
+
+    this->useNightVision = false;
+
     useShader(currentShader);
 
     /* Set the useBlinnPhong uniform variable */
@@ -232,6 +247,9 @@ void GLWidget::activaGouraudShader() {
 void GLWidget::activaPhongShader() {
     qDebug()<<"Estic a Phong Shader";
     currentShader = GLShader::PHONG;
+
+    this->useNightVision = false;
+
     useShader(currentShader);
 
     /* Set the useBlinnPhong uniform variable */
@@ -246,12 +264,19 @@ void GLWidget::activaPhongShader() {
     GLint useForniteStormLocation = program->uniformLocation("useForniteStorm");
     glUniform1i(useForniteStormLocation, false);
 
+    /* Set the texture bool uniform variable */
+    GLint useTexture = program->uniformLocation("useTexture");
+    glUniform1i(useTexture, this->objectTexture);
+
     updateShader();
 }
 
 void GLWidget::activaGouraudBlinnShader() {
     qDebug()<<"Estic a Gouraud - Blinn-Phong shader";
     currentShader = GLShader::GOURAUDPHONG;
+
+    this->useNightVision = false;
+
     useShader(currentShader);
 
     /* Set the useBlinnPhong uniform variable */
@@ -263,6 +288,9 @@ void GLWidget::activaGouraudBlinnShader() {
 
 void GLWidget::activaBlinnPhongShader() {
     qDebug()<<"Estic a Phong Blinn-Phong Shader";
+
+    this->useNightVision = false;
+
     currentShader = GLShader::PHONG;
     useShader(currentShader);
 
@@ -278,60 +306,72 @@ void GLWidget::activaBlinnPhongShader() {
     GLint useForniteStormLocation = program->uniformLocation("useForniteStorm");
     glUniform1i(useForniteStormLocation, false);
 
+    /* Set the texture bool uniform variable */
+    GLint useTexture = program->uniformLocation("useTexture");
+    glUniform1i(useTexture, this->objectTexture);
+
     updateShader();
 }
 
 void GLWidget::activaToonShader() {
     qDebug()<<"Estic a Toon";
     currentShader = GLShader::TOON;
+
+    this->useNightVision = false;
+
     useShader(currentShader);
     updateShader();
 }
 
 void GLWidget::activaNightVision() {
-     qDebug()<<"Estic a Night Vision";
+    qDebug()<<"Estic a Night Vision";
 
-     currentShader = GLShader::PHONG;
-     useShader(currentShader);
+    this->useNightVision = true;
 
-     /* Set the useBlinnPhong uniform variable */
-     GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
-     glUniform1i(useBlinnPhongLocation, false);
+    currentShader = GLShader::PHONG;
+    useShader(currentShader);
 
-     /* Set the useNightVision uniform variable */
-     GLint useNightVisionLocation = program->uniformLocation("useNightVision");
-     glUniform1i(useNightVisionLocation, true);
+    /* Set the useBlinnPhong uniform variable */
+    GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
+    glUniform1i(useBlinnPhongLocation, false);
 
-     /* Set the useNightVision uniform variable */
-     GLint useForniteStormLocation = program->uniformLocation("useForniteStorm");
-     glUniform1i(useForniteStormLocation, false);
+    /* Set the useNightVision uniform variable */
+    GLint useNightVisionLocation = program->uniformLocation("useNightVision");
+    glUniform1i(useNightVisionLocation, true);
 
-     updateShader();
+    /* Set the useNightVision uniform variable */
+    GLint useForniteStormLocation = program->uniformLocation("useForniteStorm");
+    glUniform1i(useForniteStormLocation, false);
+
+    updateShader();
 }
 
 void GLWidget::activaForniteStorm() {
-     qDebug()<<"Estic a Fornite Storm";
+    qDebug()<<"Estic a Fornite Storm";
 
-     currentShader = GLShader::PHONG;
-     useShader(currentShader);
-     /* Set the useBlinnPhong uniform variable */
-     GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
-     glUniform1i(useBlinnPhongLocation, false);
+    currentShader = GLShader::PHONG;
 
-     /* Set the useNightVision uniform variable */
-     GLint useForniteStormLocation = program->uniformLocation("useForniteStorm");
-     glUniform1i(useForniteStormLocation, true);
+    this->useNightVision = false;
 
-     /* Set the useNightVision uniform variable */
-     GLint useNightVisionLocation = program->uniformLocation("useNightVision");
-     glUniform1i(useNightVisionLocation, false);
+    useShader(currentShader);
+    /* Set the useBlinnPhong uniform variable */
+    GLint useBlinnPhongLocation = program->uniformLocation("useBlinnPhong");
+    glUniform1i(useBlinnPhongLocation, false);
 
-     updateShader();
+    /* Set the useNightVision uniform variable */
+    GLint useForniteStormLocation = program->uniformLocation("useForniteStorm");
+    glUniform1i(useForniteStormLocation, true);
+
+    /* Set the useNightVision uniform variable */
+    GLint useNightVisionLocation = program->uniformLocation("useNightVision");
+    glUniform1i(useNightVisionLocation, false);
+
+    updateShader();
 }
 
 void GLWidget::activaReflection() {
-   //TO DO: Pràctica 2:  implementar a la fase 2
-     qDebug()<<"Estic a Reflection";
+    //TO DO: Pràctica 2:  implementar a la fase 2
+    qDebug()<<"Estic a Reflection";
 }
 
 void GLWidget::activaEnvMapping() {
@@ -344,7 +384,6 @@ void GLWidget::activaEnvMapping() {
         scene->CUBEMAP = true;
     }
 
-    //currentShader = GLShader::CUBE_MAP;
     useShader(currentShader);
     updateShader();
 }
@@ -356,38 +395,38 @@ void GLWidget::activaTransparency() {
 
 void GLWidget::useShader(GLShader::SHADER_TYPES s) {
     switch (s) {
-        case GLShader::COLOR:
-            program = shaderList[GLShader::COLOR_SHADER]->getProgram();
-            shaderList[GLShader::COLOR_SHADER]->activateShader(program);
-            break;
-        case GLShader::DEPTH:
-            program = shaderList[GLShader::DEPTH_SHADER]->getProgram();
-            shaderList[GLShader::DEPTH_SHADER]->activateShader(program);
-            break;
-        case GLShader::NORMAL:
-            program = shaderList[GLShader::NORMAL_SHADER]->getProgram();
-            shaderList[GLShader::NORMAL_SHADER]->activateShader(program);
-            break;
-        case GLShader::GOURAUDPHONG:
-            program = shaderList[GLShader::GOURAUDPHONG_SHADER]->getProgram();
-            shaderList[GLShader::PHONG_SHADER]->activateShader(program);
-            break;
-        case GLShader::PHONG:
-            program = shaderList[GLShader::PHONG_SHADER]->getProgram();
-            shaderList[GLShader::PHONG_SHADER]->activateShader(program);
-            break;
-        case GLShader::TOON:
-            program = shaderList[GLShader::TOON_SHADER]->getProgram();
-            shaderList[GLShader::TOON_SHADER]->activateShader(program);
-            break;
-        case GLShader::CUBE_MAP:
-            program = shaderList[GLShader::CUBE_MAP_SHADER]->getProgram();
-            shaderList[GLShader::CUBE_MAP_SHADER]->activateShader(program);
-            break;
-        default:
-            program = shaderList[GLShader::DEFAULT_SHADER]->getProgram();
-            shaderList[GLShader::DEFAULT_SHADER]->activateShader(program);
-            break;
+    case GLShader::COLOR:
+        program = shaderList[GLShader::COLOR_SHADER]->getProgram();
+        shaderList[GLShader::COLOR_SHADER]->activateShader(program);
+        break;
+    case GLShader::DEPTH:
+        program = shaderList[GLShader::DEPTH_SHADER]->getProgram();
+        shaderList[GLShader::DEPTH_SHADER]->activateShader(program);
+        break;
+    case GLShader::NORMAL:
+        program = shaderList[GLShader::NORMAL_SHADER]->getProgram();
+        shaderList[GLShader::NORMAL_SHADER]->activateShader(program);
+        break;
+    case GLShader::GOURAUDPHONG:
+        program = shaderList[GLShader::GOURAUDPHONG_SHADER]->getProgram();
+        shaderList[GLShader::PHONG_SHADER]->activateShader(program);
+        break;
+    case GLShader::PHONG:
+        program = shaderList[GLShader::PHONG_SHADER]->getProgram();
+        shaderList[GLShader::PHONG_SHADER]->activateShader(program);
+        break;
+    case GLShader::TOON:
+        program = shaderList[GLShader::TOON_SHADER]->getProgram();
+        shaderList[GLShader::TOON_SHADER]->activateShader(program);
+        break;
+    case GLShader::CUBE_MAP:
+        program = shaderList[GLShader::CUBE_MAP_SHADER]->getProgram();
+        shaderList[GLShader::CUBE_MAP_SHADER]->activateShader(program);
+        break;
+    default:
+        program = shaderList[GLShader::DEFAULT_SHADER]->getProgram();
+        shaderList[GLShader::DEFAULT_SHADER]->activateShader(program);
+        break;
     }
 }
 
@@ -444,6 +483,28 @@ void GLWidget::setLighting(const QVector3D &lightPos, const QVector3D &Ia, const
     updateGL();
 }
 
+void GLWidget::activaTexture() {
+    this->objectTexture = true;
+}
+
+void GLWidget::desactivaTexture() {
+    this->objectTexture = false;
+}
+
+void GLWidget::setTextureFile()
+{
+    QString file = QFileDialog::getOpenFileName();
+
+    shared_ptr<QOpenGLTexture> texture;
+
+    texture = make_shared<QOpenGLTexture>(QImage(file).mirrored());
+
+    auto scene = Controller::getInstance()->getScene();
+
+    /* Per ara es posa la textura al primer objecte de l'escena */
+    scene->objects[0]->setTexture(texture);
+}
+
 /**  Mètodes d'interacció amb el ratolí */
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
@@ -458,8 +519,8 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
     if (event->buttons() & Qt::LeftButton)
     {
         if(lastPos.y()!= event->y() && lastPos.x()!= event->x()) {
-           setXRotation(dy);
-           setYRotation(dx);
+            setXRotation(dy);
+            setYRotation(dx);
         } else if(lastPos.y()!= event->y()) {// rotar la camera
             setXRotation(dy);
         } else if (lastPos.x()!= event->x()) {
@@ -467,11 +528,11 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
         }
 
     } else if (event->buttons() & Qt::RightButton) {
-       // Zoom: canviar la mida de la window
+        // Zoom: canviar la mida de la window
         if(lastPos.y()> event->y())
-             Zoom(-1);
+            Zoom(-1);
         else
-             Zoom(1);
+            Zoom(1);
     }
 
     lastPos = event->pos();
